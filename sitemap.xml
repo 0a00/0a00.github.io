@@ -2,18 +2,18 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://0a00.github.io/2022/11/12/bac5/</loc>
+    <loc>https://0a00.github.io/2022/11/17/bc6/</loc>
     
-    <lastmod>2022-11-17</lastmod>
+    <lastmod>2022-11-20</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>https://0a00.github.io/2022/11/17/bc6/</loc>
+    <loc>https://0a00.github.io/2022/11/12/bac5/</loc>
     
-    <lastmod>2022-11-17</lastmod>
+    <lastmod>2022-11-20</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -74,105 +74,6 @@
   </url>
   
   <url>
-    <loc>https://0a00.github.io/2022/10/30/test9/</loc>
-    
-    <lastmod>2022-11-01</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://0a00.github.io/2022/10/30/test10/</loc>
-    
-    <lastmod>2022-11-01</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://0a00.github.io/2022/11/01/hello-world/</loc>
-    
-    <lastmod>2022-11-01</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://0a00.github.io/2022/10/30/test17/</loc>
-    
-    <lastmod>2022-10-30</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://0a00.github.io/2022/10/30/test16/</loc>
-    
-    <lastmod>2022-10-30</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://0a00.github.io/2022/10/30/test15/</loc>
-    
-    <lastmod>2022-10-30</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://0a00.github.io/2022/10/30/test14/</loc>
-    
-    <lastmod>2022-10-30</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://0a00.github.io/2022/10/30/test13/</loc>
-    
-    <lastmod>2022-10-30</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://0a00.github.io/2022/10/30/test12/</loc>
-    
-    <lastmod>2022-10-30</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://0a00.github.io/2022/10/30/test11/</loc>
-    
-    <lastmod>2022-10-30</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://0a00.github.io/2022/10/30/test8/</loc>
-    
-    <lastmod>2022-10-30</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://0a00.github.io/link/index.html</loc>
     
     <lastmod>2022-10-25</lastmod>
@@ -202,7 +103,7 @@
 
   <url>
     <loc>https://0a00.github.io/</loc>
-    <lastmod>2022-11-17</lastmod>
+    <lastmod>2022-11-20</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
@@ -210,56 +111,28 @@
   
   <url>
     <loc>https://0a00.github.io/tags/vulnhub/</loc>
-    <lastmod>2022-11-17</lastmod>
+    <lastmod>2022-11-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://0a00.github.io/tags/web/</loc>
-    <lastmod>2022-11-17</lastmod>
+    <lastmod>2022-11-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://0a00.github.io/tags/all/</loc>
-    <lastmod>2022-11-17</lastmod>
+    <lastmod>2022-11-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://0a00.github.io/tags/%E9%9D%B6%E5%9C%BA/</loc>
-    <lastmod>2022-11-17</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://0a00.github.io/tags/test/</loc>
-    <lastmod>2022-11-17</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://0a00.github.io/tags/%E6%A0%87%E7%AD%BE1/</loc>
-    <lastmod>2022-11-17</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://0a00.github.io/tags/%E6%A0%87%E7%AD%BE2/</loc>
-    <lastmod>2022-11-17</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://0a00.github.io/tags/%E6%A0%87%E7%AD%BE3/</loc>
-    <lastmod>2022-11-17</lastmod>
+    <lastmod>2022-11-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
@@ -268,42 +141,14 @@
   
   <url>
     <loc>https://0a00.github.io/categories/%E9%9D%B6%E5%9C%BA/</loc>
-    <lastmod>2022-11-17</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://0a00.github.io/categories/%E5%88%86%E7%B1%BB1/</loc>
-    <lastmod>2022-11-17</lastmod>
+    <lastmod>2022-11-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://0a00.github.io/categories/%E9%9D%B6%E5%9C%BA/vulnhub/</loc>
-    <lastmod>2022-11-17</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://0a00.github.io/categories/%E5%88%86%E7%B1%BB1/%E5%88%86%E7%B1%BB2/</loc>
-    <lastmod>2022-11-17</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://0a00.github.io/categories/%E5%88%86%E7%B1%BB3/</loc>
-    <lastmod>2022-11-17</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://0a00.github.io/categories/%E5%88%86%E7%B1%BB3/%E5%88%86%E7%B1%BB4/</loc>
-    <lastmod>2022-11-17</lastmod>
+    <lastmod>2022-11-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
