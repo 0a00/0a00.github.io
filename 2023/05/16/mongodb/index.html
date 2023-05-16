@@ -1,0 +1,233 @@
+<!DOCTYPE html><html lang="[&quot;zh-CN&quot;,&quot;default&quot;,&quot;zh-TW&quot;,&quot;en&quot;,&quot;default&quot;]" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>MongoDB 未授权访问 | 方糖</title><meta name="author" content="方糖"><meta name="copyright" content="方糖"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="MongoDB 未授权访问">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MongoDB 未授权访问">
+<meta property="og:url" content="https://0a00.github.io/2023/05/16/mongodb/index.html">
+<meta property="og:site_name" content="方糖">
+<meta property="og:description" content="MongoDB 未授权访问">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://0a00.github.io/imgs/bg.jpg">
+<meta property="article:published_time" content="2023-05-16T11:40:14.000Z">
+<meta property="article:modified_time" content="2023-05-16T11:45:34.568Z">
+<meta property="article:author" content="方糖">
+<meta property="article:tag" content="未授权访问">
+<meta property="article:tag" content="漏洞复现">
+<meta property="article:tag" content="MongoDB">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://0a00.github.io/imgs/bg.jpg"><link rel="shortcut icon" href="/imgs/gt.png"><link rel="canonical" href="https://0a00.github.io/2023/05/16/mongodb/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":true,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: {"chs_to_cht":"你已切换为繁体","cht_to_chs":"你已切换为简体","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#1f1f1f","position":"bottom-left"},
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  }
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'MongoDB 未授权访问',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-05-16 19:45:34'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="//at.alicdn.com/t/c/font_3738306_q9h4a254rm.css"><meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/rss2.xml" title="方糖" type="application/rss+xml">
+</head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/imgs/gt.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">8</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">14</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">10</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);" rel="external nofollow noreferrer"><i class="fa-fw fas fa-light fa-book"></i><span> 文章</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);" rel="external nofollow noreferrer"><i class="fa-fw fas  fa-folder-open"></i><span> 分类</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/archlinux/"><i class="fa-fw iconfont icon-archlinux"></i><span> Arch</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);" rel="external nofollow noreferrer"><i class="fa-fw fas  fa-heartbeat"></i><span> 清单</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/images/"><i class="fa-fw fas fa-images"></i><span> 图库</span></a></li><li><a class="site-page child" href="/books/"><i class="fa-fw fas fa-light fa-book"></i><span> 书籍</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg fixed" id="page-header" style="background-image: url('/imgs/bg.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="方糖"><img class="site-icon" src="/imgs/gt.png"/></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);" rel="external nofollow noreferrer"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);" rel="external nofollow noreferrer"><i class="fa-fw fas fa-light fa-book"></i><span> 文章</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);" rel="external nofollow noreferrer"><i class="fa-fw fas  fa-folder-open"></i><span> 分类</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/archlinux/"><i class="fa-fw iconfont icon-archlinux"></i><span> Arch</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);" rel="external nofollow noreferrer"><i class="fa-fw fas  fa-heartbeat"></i><span> 清单</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/images/"><i class="fa-fw fas fa-images"></i><span> 图库</span></a></li><li><a class="site-page child" href="/books/"><i class="fa-fw fas fa-light fa-book"></i><span> 书籍</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);" rel="external nofollow noreferrer"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">MongoDB 未授权访问</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-05-16T11:40:14.000Z" title="发表于 2023-05-16 19:40:14">2023-05-16</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-05-16T11:45:34.568Z" title="更新于 2023-05-16 19:45:34">2023-05-16</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%9C%AA%E6%8E%88%E6%9D%83%E8%AE%BF%E9%97%AE/">未授权访问</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%9C%AA%E6%8E%88%E6%9D%83%E8%AE%BF%E9%97%AE/MongoDB/">MongoDB</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">318</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>1分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="MongoDB 未授权访问"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><div class="note red icon-padding modern"><i class="note-icon fas fa-fan"></i><p>方糖的博客</p>
+</div>
+
+<div class="note orange icon-padding modern"><i class="note-icon fas fa-battery-half"></i><p>安全小技巧</p>
+</div>
+
+<div class="note blue icon-padding modern"><i class="note-icon fas fa-bullhorn"></i><p>新的一年快到了….</p>
+</div>
+
+<div class="note purple icon-padding modern"><i class="note-icon far fa-hand-scissors"></i><p>剪刀石头布,哈，我又赢了 </p>
+</div>
+
+<div class="timeline #5effff"><div class='timeline-item headline'><div class='timeline-item-title'><div class='item-circle'><p>2023</p>
+</div></div></div><div class='timeline-item'><div class='timeline-item-title'><div class='item-circle'><p>05-16</p>
+</div></div><div class='timeline-item-content'><h1 id="漏洞介绍"><a href="#漏洞介绍" class="headerlink" title="漏洞介绍"></a>漏洞介绍</h1><p>默认开启 MongoDB 服务不添加任何参数时，是没有任何权限验证的，可以直接无密码连接登陆，端口 27017</p>
+<h1 id="漏洞利用"><a href="#漏洞利用" class="headerlink" title="漏洞利用"></a>漏洞利用</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mongo  --host ip  --port 27017  直接连接数据库</span><br></pre></td></tr></table></figure>
+
+<h1 id="漏洞加固"><a href="#漏洞加固" class="headerlink" title="漏洞加固"></a>漏洞加固</h1><ul>
+<li>为 MongoDB 添加认证</li>
+<li>启动时候添加 —auth参数</li>
+<li>给 MongoDB 添加用户</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">use admin <span class="comment">#使用admin库</span></span><br><span class="line"></span><br><span class="line">db.addUser(<span class="string">&quot;root&quot;</span>, <span class="string">&quot;123456&quot;</span>) <span class="comment">#添加用户名root密码123456的用户</span></span><br><span class="line"></span><br><span class="line">db.auth(<span class="string">&quot;root&quot;</span>,<span class="string">&quot;123456&quot;</span>) <span class="comment">#验证下是否添加成功，返回1说明成功</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>禁用HTTP 和REST 端口</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">MongoDB 自身带有一个 HTTP 服务和并支持 REST 接口。</span><br><span class="line">在2.6以后这些接口默认是关闭的。mongoDB 默认会使用默认端口监听web服务，</span><br><span class="line">一般不需要通过 web 方式进行远程管理，建议禁用。</span><br><span class="line">修改配置文件或在启动的时候选择 –nohttpinterface 参数 nohttpinterface=<span class="literal">false</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>限制绑定ip</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">启动时加入参数--bind_ip 127.0.0.1</span><br><span class="line"></span><br><span class="line">或在/etc/mongodb.conf文件中添加以下内容：bind_ip = 127.0.0.1</span><br></pre></td></tr></table></figure>
+
+</div></div></div>
+
+<div class="note red icon-padding modern"><i class="note-icon fas fa-fan"></i><p>啊，再见了，再见了，哈</p>
+</div>
+
+<div class="note orange icon-padding modern"><i class="note-icon fas fa-battery-half"></i><p>我们会再见的对么</p>
+</div>
+
+<div class="note blue icon-padding modern"><i class="note-icon fas fa-bullhorn"></i><p>再见你要幸福</p>
+</div>
+
+<div class="note purple icon-padding modern"><i class="note-icon far fa-hand-scissors"></i><p>燕子，燕子</p>
+</div>
+
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://0a00.github.io">方糖</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://0a00.github.io/2023/05/16/mongodb/">https://0a00.github.io/2023/05/16/mongodb/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow noreferrer" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://0a00.github.io" target="_blank">方糖</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E6%9C%AA%E6%8E%88%E6%9D%83%E8%AE%BF%E9%97%AE/">未授权访问</a><a class="post-meta__tags" href="/tags/%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/">漏洞复现</a><a class="post-meta__tags" href="/tags/MongoDB/">MongoDB</a></div><div class="post_share"><div class="social-share" data-image="/imgs/bg.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i> 打赏</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/imgs/wx.png" target="_blank"><img class="post-qr-code-img" src="/imgs/wx.png" alt="wechat"/></a><div class="post-qr-code-desc">wechat</div></li><li class="reward-item"><a href="/imgs/zfb.jpg" target="_blank"><img class="post-qr-code-img" src="/imgs/zfb.jpg" alt="alipay"/></a><div class="post-qr-code-desc">alipay</div></li></ul></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2023/05/16/jenkins/" title="JenKins 未授权访问"><img class="cover" src="/imgs/bg.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">JenKins 未授权访问</div></div></a></div><div class="next-post pull-right"><a href="/2023/05/16/zookeeper/" title="ZooKeeper 未授权访问"><img class="cover" src="/imgs/bg.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">ZooKeeper 未授权访问</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2023/05/16/jenkins/" title="JenKins 未授权访问"><img class="cover" src="/imgs/bg.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="fas fa-history fa-fw"></i> 2023-05-16</div><div class="title">JenKins 未授权访问</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/imgs/gt.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">方糖</div><div class="author-info__description">嘿嘿 呼呼 嘻嘻 哈哈</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">8</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">14</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">10</div></a></div><a id="card-info-btn" target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/0a00"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="/rss2.xml" target="_blank" title="RSS订阅"><i class="fas fa-solid fa-rss" style="color: #ffaa00;"></i></a><a class="social-icon" href="/sitemap.xml" target="_blank" title="站点地图"><i class="fas fa-solid fa-sitemap" style="color: #aaaa7f;"></i></a><a class="social-icon" href="mailto:xxxxxx@gmail.com" rel="external nofollow noreferrer" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #6673c6;"></i></a><a class="social-icon" href="https://github.com/0a00" rel="external nofollow noreferrer" target="_blank" title="Github"><i class="fab fa-github" style="color: #aa557f;"></i></a><a class="social-icon" href="https://mp.weixin.qq.com/mp/appmsgalbum?__biz=Mzk0NDQwMDY1Nw==&amp;action=getalbum&amp;album_id=2544073848816992258&amp;scene=173&amp;from_msgid=2247483792&amp;from_itemidx=1&amp;count=3&amp;nolastread=1#wechat_redirect" rel="external nofollow noreferrer" target="_blank" title="微信公众号"><i class="fa-brands fa-weixin" style="color: #7bb65b;"></i></a><a class="social-icon" href="https://music.163.com/#/user/home?id=1364059112" rel="external nofollow noreferrer" target="_blank" title="网易云"><i class="fas fa-solid fa-music" style="color: #ff0000;"></i></a><a class="social-icon" href="https://0a00.github.io/" target="_blank" title="mac"><i class="fas fa-brands fa-apple" style="color: #55aaff;"></i></a><a class="social-icon" href="https://0a00.github.io/" target="_blank" title="linux"><i class="fas fa-brands fa-linux" style="color: #ffaaff;"></i></a><a class="social-icon" href="https://0a00.github.io/" target="_blank" title="windowss"><i class="fa-brands fa-windows" style="color: #35a0a0;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">满怀热爱 勇往直前</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%BC%8F%E6%B4%9E%E4%BB%8B%E7%BB%8D"><span class="toc-number">1.</span> <span class="toc-text">漏洞介绍</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8"><span class="toc-number">2.</span> <span class="toc-text">漏洞利用</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%BC%8F%E6%B4%9E%E5%8A%A0%E5%9B%BA"><span class="toc-number">3.</span> <span class="toc-text">漏洞加固</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2023/05/16/ElasticSearch/" title="ElasticSearch 未授权访问"><img src="/imgs/bg.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="ElasticSearch 未授权访问"/></a><div class="content"><a class="title" href="/2023/05/16/ElasticSearch/" title="ElasticSearch 未授权访问">ElasticSearch 未授权访问</a><time datetime="2023-05-16T12:15:53.000Z" title="发表于 2023-05-16 20:15:53">2023-05-16</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/05/16/zookeeper/" title="ZooKeeper 未授权访问"><img src="/imgs/bg.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="ZooKeeper 未授权访问"/></a><div class="content"><a class="title" href="/2023/05/16/zookeeper/" title="ZooKeeper 未授权访问">ZooKeeper 未授权访问</a><time datetime="2023-05-16T11:48:16.000Z" title="发表于 2023-05-16 19:48:16">2023-05-16</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/05/16/mongodb/" title="MongoDB 未授权访问"><img src="/imgs/bg.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="MongoDB 未授权访问"/></a><div class="content"><a class="title" href="/2023/05/16/mongodb/" title="MongoDB 未授权访问">MongoDB 未授权访问</a><time datetime="2023-05-16T11:40:14.000Z" title="发表于 2023-05-16 19:40:14">2023-05-16</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/05/16/jenkins/" title="JenKins 未授权访问"><img src="/imgs/bg.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="JenKins 未授权访问"/></a><div class="content"><a class="title" href="/2023/05/16/jenkins/" title="JenKins 未授权访问">JenKins 未授权访问</a><time datetime="2023-05-16T11:34:19.000Z" title="发表于 2023-05-16 19:34:19">2023-05-16</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/05/15/redis/" title="redis 未授权访问"><img src="/imgs/bg.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="redis 未授权访问"/></a><div class="content"><a class="title" href="/2023/05/15/redis/" title="redis 未授权访问">redis 未授权访问</a><time datetime="2023-05-15T09:41:29.000Z" title="发表于 2023-05-15 17:41:29">2023-05-15</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('/imgs/bg.jpg')"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2023 By 方糖</div><div class="footer_custom_text">Power by Hexo | Butterfly</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="translateLink" type="button" title="简繁转换">繁</button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.js"></script><script>function panguFn () {
+  if (typeof pangu === 'object') pangu.autoSpacingPage()
+  else {
+    getScript('https://cdn.jsdelivr.net/npm/pangu/dist/browser/pangu.min.js')
+      .then(() => {
+        pangu.autoSpacingPage()
+      })
+  }
+}
+
+function panguInit () {
+  if (false){
+    GLOBAL_CONFIG_SITE.isPost && panguFn()
+  } else {
+    panguFn()
+  }
+}
+
+document.addEventListener('DOMContentLoaded', panguInit)</script><div class="js-pjax"></div><script defer="defer" id="fluttering_ribbon" mobile="true" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-fluttering-ribbon.min.js"></script><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/click-show-text.min.js" data-mobile="true" data-text="I,LOVE,YOU,Linux,Hacker,Arch Linux,Flag,Rce,CTF,XSS,CSRF,Exploit,Payload,POC,EXP,DDOS,Kali,Sqlmap,Nessus,AWVS,Xray,Burp suite,Metasploit" data-fontsize="15px" data-random="true" async="async"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div class="no-result" id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>
