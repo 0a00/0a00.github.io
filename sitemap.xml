@@ -354,13 +354,6 @@
   </url>
   
   <url>
-    <loc>https://0a00.github.io/categories/%E6%9C%AA%E6%8E%88%E6%9D%83%E8%AE%BF%E9%97%AE/jenkins/</loc>
-    <lastmod>2023-05-18</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://0a00.github.io/categories/%E6%9C%AA%E6%8E%88%E6%9D%83%E8%AE%BF%E9%97%AE/ElasticSearch/</loc>
     <lastmod>2023-05-18</lastmod>
     <changefreq>weekly</changefreq>
@@ -376,6 +369,13 @@
   
   <url>
     <loc>https://0a00.github.io/categories/tool/docker/</loc>
+    <lastmod>2023-05-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://0a00.github.io/categories/%E6%9C%AA%E6%8E%88%E6%9D%83%E8%AE%BF%E9%97%AE/jenkins/</loc>
     <lastmod>2023-05-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
