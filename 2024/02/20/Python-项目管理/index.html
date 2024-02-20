@@ -1,0 +1,1332 @@
+<!DOCTYPE html><html lang="[&quot;zh-CN&quot;,&quot;default&quot;,&quot;zh-TW&quot;,&quot;en&quot;,&quot;default&quot;]" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Python 项目管理 | 方糖</title><meta name="author" content="方糖"><meta name="copyright" content="方糖"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="Python 项目管理">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python 项目管理">
+<meta property="og:url" content="https://0a00.github.io/2024/02/20/Python-%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/index.html">
+<meta property="og:site_name" content="方糖">
+<meta property="og:description" content="Python 项目管理">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://0a00.github.io/imgs/bg.jpg">
+<meta property="article:published_time" content="2024-02-20T05:43:42.000Z">
+<meta property="article:modified_time" content="2024-02-20T05:46:17.592Z">
+<meta property="article:author" content="方糖">
+<meta property="article:tag" content="python">
+<meta property="article:tag" content="pip">
+<meta property="article:tag" content="poetry">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://0a00.github.io/imgs/bg.jpg"><link rel="shortcut icon" href="/imgs/gt.png"><link rel="canonical" href="https://0a00.github.io/2024/02/20/Python-%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":true,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: {"chs_to_cht":"你已切换为繁体","cht_to_chs":"你已切换为简体","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#1f1f1f","position":"bottom-left"},
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  }
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Python 项目管理',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-02-20 13:46:17'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="//at.alicdn.com/t/c/font_3738306_q9h4a254rm.css"><meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/rss2.xml" title="方糖" type="application/rss+xml">
+</head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/imgs/gt.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">18</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">30</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">24</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);" rel="external nofollow noreferrer"><i class="fa-fw fas fa-light fa-book"></i><span> 文章</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);" rel="external nofollow noreferrer"><i class="fa-fw fas  fa-folder-open"></i><span> 分类</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/archlinux/"><i class="fa-fw iconfont icon-archlinux"></i><span> Arch</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);" rel="external nofollow noreferrer"><i class="fa-fw fas  fa-heartbeat"></i><span> 清单</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/images/"><i class="fa-fw fas fa-images"></i><span> 图库</span></a></li><li><a class="site-page child" href="/books/"><i class="fa-fw fas fa-light fa-book"></i><span> 书籍</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg fixed" id="page-header" style="background-image: url('/imgs/bg.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="方糖"><img class="site-icon" src="/imgs/gt.png"/></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);" rel="external nofollow noreferrer"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);" rel="external nofollow noreferrer"><i class="fa-fw fas fa-light fa-book"></i><span> 文章</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);" rel="external nofollow noreferrer"><i class="fa-fw fas  fa-folder-open"></i><span> 分类</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/archlinux/"><i class="fa-fw iconfont icon-archlinux"></i><span> Arch</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);" rel="external nofollow noreferrer"><i class="fa-fw fas  fa-heartbeat"></i><span> 清单</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/images/"><i class="fa-fw fas fa-images"></i><span> 图库</span></a></li><li><a class="site-page child" href="/books/"><i class="fa-fw fas fa-light fa-book"></i><span> 书籍</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);" rel="external nofollow noreferrer"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Python 项目管理</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-02-20T05:43:42.000Z" title="发表于 2024-02-20 13:43:42">2024-02-20</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-02-20T05:46:17.592Z" title="更新于 2024-02-20 13:46:17">2024-02-20</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Python/">Python</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Python/%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/">项目管理</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">12.7k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>47分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Python 项目管理"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><div class="note red icon-padding modern"><i class="note-icon fas fa-fan"></i><p>奇奇怪怪</p>
+</div>
+
+<div class="note orange icon-padding modern"><i class="note-icon fas fa-battery-half"></i><p>安全小技巧</p>
+</div>
+
+<div class="note blue icon-padding modern"><i class="note-icon fas fa-bullhorn"></i><p>新的一天开始了</p>
+</div>
+
+<div class="note purple icon-padding modern"><i class="note-icon far fa-hand-scissors"></i><p>剪刀石头布,哈，我又赢了 </p>
+</div>
+
+<div class="timeline green"><div class='timeline-item headline'><div class='timeline-item-title'><div class='item-circle'><p>2024</p>
+</div></div></div><div class='timeline-item'><div class='timeline-item-title'><div class='item-circle'><p>02-20</p>
+</div></div><div class='timeline-item-content'><hr>
+<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><aside>
+🔫 在学习使用 python 的过程中，会遇到诸如创建、使用、部署、测试 python 项目，不可避免的会遇到各种环境，依赖，版本兼容等等各种问题，本文章围绕这些主题，介绍当下主流的几种解决方案。
+
+<p>本文章的目的旨在帮助大家更好的学习关于 python 项目环境管理的相关主题知识。相信看完这篇文章后，大家对 python 的项目管理方式，各种环境配置，依赖解决，版本控制等等问题都能够手到擒来。能够清晰的找到问题的解决方案。文章较长，耐心观看。</p>
+</aside>
+
+<h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><aside>
+🔫 Python 项目管理是什么，关于本文章在此提到的 Python 项目管理指的是在使用 Python 过程中，对于 Python 的测试环境、项目文件、目录结构、版本控制、虚拟环境物理环境、依赖包管理等等的问题解决方案的集合。本文章会通过当下主流的相关工具进行论述，涉及到官方工具以及开源社区的工具。
+
+<p>当涉及到 Python 项目管理时，有许多工具可供选择，如 pip、pipx、conda、pipenv、poetry 和 rye 等。这些工具都有各自的特点和优势，可以帮助测试人员以及开发者更好地组织、部署和维护Python项目。本文章会逐个介绍这几款工具的特点、功能，以及使用方式，使用场景。可根据自己的工作流，习惯，选择合适的产品使用。</p>
+</aside>
+
+<h2 id="依赖包"><a href="#依赖包" class="headerlink" title="依赖包"></a>依赖包</h2><blockquote>
+<p>Python的依赖包是指在Python生态系统中，开发者可以通过软件仓库来获取和安装的第三方模块或库。这些依赖包是由Python社区的开发者们开发和维护的，用于扩展Python的功能和提供各种功能和工具。在一个使用python开发的项目中，需要先安装相关依赖包才可以运行。</p>
+</blockquote>
+<h2 id="项目文件"><a href="#项目文件" class="headerlink" title="项目文件"></a>项目文件</h2><blockquote>
+<p>在一个 python 项目中，可能会存在着，<code>requirements.txt</code>，<code>setup.py</code>，<code>Pipfile</code> 和 <code>Pipfile.lock</code>，**<code>poetry.lock</code>**  等等文件，这些都是定义当前项目所需要的依赖包的相关文件，用于确定当前项目运行、测试等等所需要的依赖包</p>
+</blockquote>
+<h2 id="requirements-txt"><a href="#requirements-txt" class="headerlink" title="requirements.txt"></a><strong>requirements.txt</strong></h2><blockquote>
+<p><code>requirements.txt</code>是一个在python项目中常见的文本文件，用于列出项目所依赖的具体Python库及其版本号。</p>
+</blockquote>
+<p>例如：</p>
+<blockquote>
+</blockquote>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">SomeProject</span><br><span class="line">SomeProject == <span class="number">1.3</span></span><br><span class="line">SomeProject &gt;= <span class="number">1.2</span>, &lt; <span class="number">2.0</span></span><br><span class="line">SomeProject[foo, bar]</span><br><span class="line">SomeProject ~= <span class="number">1.4</span><span class="number">.2</span></span><br><span class="line">SomeProject == <span class="number">5.4</span> ; python_version &lt; <span class="string">&#x27;3.8&#x27;</span></span><br><span class="line">SomeProject ; sys_platform == <span class="string">&#x27;win32&#x27;</span></span><br><span class="line">requests [security] &gt;= <span class="number">2.8</span><span class="number">.1</span>, == <span class="number">2.8</span>.* ; python_version &lt; <span class="string">&quot;2.7&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="虚拟环境"><a href="#虚拟环境" class="headerlink" title="虚拟环境"></a>虚拟环境</h2><blockquote>
+<p>Python 虚拟环境是一种用于隔离Python项目的方式，创建一个独立的Python环境，使得每个项目都可以拥有自己的依赖库和运行环境、程序版本，而不会相互干扰。从而不会导致多个项目之间因为依赖版本问题导致运行错误等等。所以在使用python时，可以为每个项目设置一个虚拟环境。物理环境则相反。</p>
+</blockquote>
+<hr>
+<h1 id="Pip"><a href="#Pip" class="headerlink" title="Pip"></a>Pip</h1><aside>
+🔫 pip 是 Python 的包安装程序。可以使用 pip 从 Python 包索引和其他索引安装包。
+
+<p>项目地址：<a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/pypa/pip">https://github.com/pypa/pip</a></p>
+</aside>
+
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a><strong>安装</strong></h2><ul>
+<li>安装 <code>python</code> 后也包含了 <code>pip</code>。关于 python 的安装方法</li>
+<li>windows：使用系统上的微软商店安装，搜索python，选择版本，点击安装，会自动配置好环境变量等环境。也可使用包管理器安装</li>
+<li>linux：使用包管理器安装</li>
+<li>mac：使用包管理器安装</li>
+</ul>
+<aside>
+🔫 `python --version` 检测python版本信息
+`python -m pip --version` 检测pip版本信息
+
+<p>如果执行成功表明安装成功，某些情况可能安装后会没有 pip 命令，使用python执行以下命令进行安装pip 。 <code>python -m ensurepip --upgrade</code>  .</p>
+<p>或者直接从系统软件仓库安装pip。如 arch linux 系统下使用 <code>yay -S python-pip</code></p>
+</aside>
+
+<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><ul>
+<li><strong>升级</strong> <code>python -m pip install --upgrade pip</code></li>
+<li><strong>安装软件包</strong></li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">python -m pip install SomePackage            </span><br><span class="line">python -m pip install SomePackage==<span class="number">1.0</span><span class="number">.4</span>    </span><br><span class="line">python -m pip install <span class="string">&#x27;SomePackage&gt;=1.0.4&#x27;</span>    </span><br><span class="line"></span><br><span class="line">**项目文件中存在 requirements.txt 文件，以下命令安装该项目声明的所有依赖</span><br><span class="line">python -m pip install -r requirements.txt</span><br><span class="line"></span><br><span class="line">使用freeze命令根据当前文件夹生成requirements.txt</span><br><span class="line">python -m pip freeze &gt; requirements.txt**</span><br><span class="line"></span><br><span class="line">指定包升级</span><br><span class="line">python -m pip install --upgrade PackageName</span><br><span class="line"></span><br><span class="line">升级所有</span><br><span class="line">python -m pip install --upgrade </span><br><span class="line"></span><br><span class="line">在“可编辑”模式下安装本地项目。方便本地调试修改包测试</span><br><span class="line">python -m pip install -e .                # 本地目录安装包</span><br><span class="line">python -m pip install -e path/to/project  # 指定目录安装包</span><br><span class="line"></span><br><span class="line">指定软件仓库镜像地址安装包</span><br><span class="line">python -m pip install --index-url http:<span class="comment">//my.package.repo/simple/ PackageName</span></span><br><span class="line"></span><br><span class="line">要列出已安装的软件包：</span><br><span class="line">python -m pip <span class="built_in">list</span></span><br><span class="line"></span><br><span class="line">要显示有关已安装软件包的详细信息，请执行以下操作：</span><br><span class="line">python -m pip show sphinx</span><br><span class="line"></span><br><span class="line">用户安装，将包安装到用户特定的目录，实现与全局包隔离不冲突</span><br><span class="line">python -m pip install --user SomePackage</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>卸载软件包</strong></li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">卸载指定软件包</span><br><span class="line">python -m pip uninstall simplejson  </span><br><span class="line"></span><br><span class="line">卸载requirements.txt 文件中列出的软件包</span><br><span class="line">python -m pip uninstall -r requirements.txt </span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>常用功能</strong></li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">python -m pip <span class="built_in">list</span>  列出所有</span><br><span class="line"></span><br><span class="line">显示有关一个或多个已安装软件包的信息。</span><br><span class="line">python -m pip show sphinx</span><br><span class="line"></span><br><span class="line">生成需求文件</span><br><span class="line">python -m pip freeze &gt; requirements.txt</span><br><span class="line"></span><br><span class="line">根据需求（及其所有依赖项）构建python包，然后安装</span><br><span class="line">python -m pip wheel --wheel-dir=/tmp/wheelhouse SomePackage</span><br><span class="line">python -m pip install --no-index --find-links=/tmp/wheelhouse SomePackage</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>配置</strong></li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">配置默认pypi镜像地址，解决可能会存在的网络问题</span><br><span class="line">pip config <span class="built_in">set</span> global.index-url https:<span class="comment">//pypi.tuna.tsinghua.edu.cn/simple</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><strong>总结</strong></p>
+</blockquote>
+<p>pip 是 python 默认的包管理器，使用广泛，但是在python的完整工作流中，功能单一不全，无环境隔离等功能，适合临时使用。</p>
+<blockquote>
+</blockquote>
+<hr>
+<h1 id="Pipx"><a href="#Pipx" class="headerlink" title="Pipx"></a>Pipx</h1><aside>
+🔫 在隔离环境中安装和运行 Python 应用程序，该工具会直接把软件仓库的python包安装到隔离环境中。
+
+<p>pip 是适用于库和应用程序的通用包安装程序，没有环境隔离。Pipx 是专门为应用程序安装而设计的，因为它增加了隔离性，但仍使应用程序在 shell 中可用：Pipx 为每个应用程序及其关联的包创建一个隔离的环境。</p>
+<p>项目地址：<a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/pypa/pipx">https://github.com/pypa/pipx</a></p>
+</aside>
+
+<h2 id="安装-pipx"><a href="#安装-pipx" class="headerlink" title="安装 pipx"></a><strong>安装 pipx</strong></h2><ul>
+<li>使用pip安装pipx，<code>pip install --user  pipx</code></li>
+<li>添加环境变量保证可以直接运行 <code>python -m pipx ensurepath</code></li>
+</ul>
+<blockquote>
+<p><strong>升级 pipx</strong></p>
+</blockquote>
+<ul>
+<li><code>python3 -m pip install --user -U pipx</code>  || -U 就是 - -upgrade</li>
+</ul>
+<h2 id="使用-1"><a href="#使用-1" class="headerlink" title="使用"></a><strong>使用</strong></h2><ul>
+<li>使用 pipx 安装python包</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">pipx install PACKAGE 安装指定包</span><br><span class="line"></span><br><span class="line">pipx reinstall-all 重新安装已经安装的所有包</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>或者，您可以在不安装程序的情况下运行它：</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">pipx run pycowsay moooo!</span><br><span class="line"></span><br><span class="line">可以运行本地文件，以及远程仓库软件包</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>列出安装的包</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pipx <span class="built_in">list</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>更新包</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pipx upgrade package  更新指定包</span><br><span class="line">pipx upgrade-all   更新所有包</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>删除包</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pipx uninstall package 删除指定包</span><br><span class="line">pipx uninstall-all 删除所有包</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>pipx runpip</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">从虚拟环境中运行pip命令</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><strong>总结</strong></p>
+</blockquote>
+<p>pipx 仅用于应用程序使用：您可以使用它安装 CLI 应用程序。所以使用场景仅仅是用它来安装使用一些python应用程序，pipx会自动隔离它们。并不作为项目环境，依赖管理，版本控制等使用场景。</p>
+<blockquote>
+</blockquote>
+<hr>
+<h1 id="Pipenv"><a href="#Pipenv" class="headerlink" title="Pipenv"></a>Pipenv</h1><aside>
+💩 Pipenv 是一个 Python virtualenv 管理工具，它支持多种系统，并很好地整合了 pip、python（使用系统 python、pyenv，或 asdf）和 virtualenv 。
+
+<p>Pipenv 会自动为您的项目创建和管理虚拟环境，并在您安装&#x2F;卸载软件包 <code>Pipfile</code> 时添加&#x2F;删除软件包。它还生成一个项目 <code>Pipfile.lock</code> ，用于确定包。</p>
+<p>项目地址：<a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/pypa/pipenv">https://github.com/pypa/pipenv</a><br>官方文档：<a target="_blank" rel="noopener external nofollow noreferrer" href="https://pipenv.pypa.io/en/latest/">https://pipenv.pypa.io/en/latest/</a></p>
+</aside>
+
+<blockquote>
+<p>功能特点</p>
+</blockquote>
+<ul>
+<li>您不再需要单独使用 <code>pip</code> 和 <code>virtualenv</code> ：它们协同工作。</li>
+<li>管理虚拟环境以及依赖包</li>
+</ul>
+<hr>
+<blockquote>
+<p>安装</p>
+</blockquote>
+<ul>
+<li><code>pip install --user pipenv</code>  使用 pip 安装。</li>
+</ul>
+<h1 id="常用功能"><a href="#常用功能" class="headerlink" title="常用功能"></a>常用功能</h1><ul>
+<li><code>Pipfile.lock</code> 替换了大多数 Python 项目中使用的 <code>requirements.txt</code> 文件，并增加了跟踪上次锁定的包哈希的安全优势。此文件通过锁定操作自动管理。应将 <code>Pipfile</code> 和 <code>Pipfile.lock</code> 添加到项目的源代码管理中。</li>
+<li><code>pipenv install -r path/to/requirements.txt</code>   从<code>requirements.txt</code>  导入包到<code>pipfile</code></li>
+<li><code>pipenv requirements</code>    从<code>pipfile</code> 文件中生成<code>requirements.txt</code> 输出</li>
+</ul>
+<h2 id="参数选项"><a href="#参数选项" class="headerlink" title="参数选项"></a>参数选项</h2><ul>
+<li><code>--where</code>  输出项目环境物理路径</li>
+<li><code>--venv</code>   输出虚拟环境路径</li>
+<li><code>--py</code>     输出虚拟环境下 python 可执行文件路径</li>
+<li><code>--envs</code> 输出环境变量选项</li>
+<li><code>--rm</code>  删除当前目录下的虚拟环境</li>
+<li><code>--support</code>   输出<code>pipfile.lock</code>  文件内容</li>
+<li><code>--site-packages / --no-site-packages</code>   开启虚拟环境下的<code>site-packages</code></li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">操作系统接口的特定于平台的 Python 绑定通常只能通过系统包管理器使用，因此无法安装到具有 pip 的虚拟环境中。在这些情况下，可以创建具有系统 site-packages 目录访问权限的虚拟环境：</span><br><span class="line">$ pipenv --site-packages</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>--python</code>  指定 python 版本号</li>
+<li><code>--clear</code>  清除 pip pipenv 的缓存文件</li>
+<li><code>-q, --quiet</code>  安静模式</li>
+<li><code>--pypi-mirror</code>  设置软件包源</li>
+<li><code>pipenv check</code>  检查 PyUp Safety 安全漏洞以及 Pipfile 中提供的 PEP 508 标记。</li>
+<li><code>pipenv clean [OPTIONS]</code>   卸载 Pipfile.lock 中未指定的所有包。</li>
+<li><code>pipenv graph [OPTIONS]</code>  显示当前安装的依赖项关系图信息。</li>
+<li><code>pipenv install [OPTIONS] [PACKAGES]…</code>   安装提供的包并将它们添加到 Pipfile，或者（如果没有提供包），从 Pipfile 安装所有包。</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pipenv install --dev 从Pipfile安装开发包类别和默认包类别</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>pipenv lock [OPTIONS]</code>  生成 Pipfile.lock。</li>
+<li><code>pipenv open [OPTIONS] MODULE</code>    在编辑器中查看给定的模块。</li>
+<li><code>pipenv requirements [OPTIONS]</code>  从 Pipfile.lock 生成 requirements.txt。</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pipenv requirements --dev  包含dev包</span><br><span class="line">pipenv requirements &gt; requirements.txt  </span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>pipenv run [OPTIONS] COMMAND [ARGS]…</code>   运行一个安装在 virtualenv 中的命令。</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pipenv run pip freeze 输出 requirements.txt 列表</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>pipenv shell [OPTIONS] [SHELL_ARGS]...</code>  在 virtualenv 中生成一个 shell。</li>
+<li><code>pipenv sync [OPTIONS]</code> 安装 Pipfile.lock 中指定的所有包。</li>
+<li><code>pipenv uninstall [OPTIONS] [PACKAGES]…</code>  卸载提供的包并将其从 Pipfile 中删除。</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pipenv uninstall --all  删除虚拟环境中的所有包，但不删除pipfile 文件</span><br><span class="line">pipenv uninstall --all-dev  从虚拟环境中删除所有开发包，并删除pipfile文件</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>pipenv update [OPTIONS] [PACKAGES]…</code>  在未指定包或升级时运行锁定，然后进行同步。</li>
+<li><code>pipenv upgrade [OPTIONS] [PACKAGES]…</code>  解析提供的包并将它们添加到 Pipfile，或者（如果没有给出包），将结果合并到 Pipfile.lock</li>
+<li><code>pipenv verify [OPTIONS]</code>  验证 Pipfile.lock 中的哈希值是否为最新。</li>
+</ul>
+<h2 id="工作流程"><a href="#工作流程" class="headerlink" title="工作流程"></a>工作流程</h2><ul>
+<li><code>cd myproject</code> 进入项目文件夹</li>
+<li><code>pipenv sync</code>   如果有pipfile文件，从pipfile文件安装包</li>
+<li><code>pipenv install &lt;package&gt;</code>  安装包，将包添加到pipfile文件中</li>
+<li><code>pipenv install --dev</code>    安装所有包，以及dev包</li>
+<li><code>pipenv update</code>  更新所有包</li>
+<li><code>pipenv upgrade &lt;package&gt;</code>  指定包更新</li>
+<li><code>pipenv shell</code>  进入虚拟环境交互式shell</li>
+</ul>
+<blockquote>
+<p><strong>总结</strong></p>
+</blockquote>
+<p>pipenv 简洁易用，对于需要快速部署环境隔离，项目运行部署，pipenv是一个不错的选择，pipenv拥有版本控制，环境隔离，依赖安装等等功能。使用场景，当前有一个python项目需要测试运行，需要使用到隔离环境，安装依赖，pipenv是可以说最快速的一个方案。</p>
+<blockquote>
+</blockquote>
+<hr>
+<h1 id="Conda"><a href="#Conda" class="headerlink" title="Conda"></a>Conda</h1><aside>
+🔫 适用于任何语言的包、依赖和环境管理 - Python、R、Ruby、Lua、Scala、Java、JavaScript、C/C++、Fortran 等。在 Windows、macOS 和 Linux 上运行的开源包管理系统和环境管理系统。Conda 可快速安装、运行和更新包及其依赖项。Conda 可以轻松地在本地计算机上创建、保存、加载和切换环境。
+
+</aside>
+
+<h2 id="安装-1"><a href="#安装-1" class="headerlink" title="安装"></a>安装</h2><blockquote>
+<p>conda 的安装包分为两种 Miniconda 和 Anaconda。根据自己需求选择包安装。</p>
+</blockquote>
+<p>Miniconda 是 Anaconda 提供的最小安装程序。如果您想自己安装大多数软件包，请使用此安装程序。</p>
+<p>Anaconda Distribution 是一个功能齐全的安装程序，带有一套用于数据科学的软件包，以及 Anaconda Navigator，一个用于处理 conda 环境的 GUI 应用程序。</p>
+<blockquote>
+</blockquote>
+<hr>
+<ul>
+<li>windows安装：<a target="_blank" rel="noopener external nofollow noreferrer" href="https://docs.conda.io/projects/miniconda/en/latest/">https://docs.conda.io/projects/miniconda/en/latest/</a>  下载适用于系统版本包</li>
+<li>mac 安装：使用包管理器安装，如 brew</li>
+<li>linux 安装：使用对应发行版包管理器安装，如 pacman</li>
+</ul>
+<blockquote>
+<p>打开命令行执行命令验证是否安装成功：<code>conda --version</code></p>
+</blockquote>
+<h2 id="使用-2"><a href="#使用-2" class="headerlink" title="使用"></a>使用</h2><ul>
+<li><code>conda --version</code>  查看conda信息</li>
+<li><code>conda update conda</code>  更新conda</li>
+<li><code>conda --help</code>  查看帮助信息</li>
+<li><code>conda create -h</code> 指定命令查看帮助信息</li>
+<li><code>conda info --verbose</code>   显示conda所有信息</li>
+</ul>
+<h3 id="环境管理"><a href="#环境管理" class="headerlink" title="环境管理"></a>环境管理</h3><aside>
+🔫 关于环境的创建，管理，配置
+
+</aside>
+
+<ul>
+<li><code>conda create --name &lt;my-env&gt;</code>  创建环境</li>
+<li><code>conda create -n myenv python=3.9</code> 指定python版本创建</li>
+<li><code>conda create -n myenv scipy</code>  指定特定软件包创建</li>
+<li><code>conda create -n myenv scipy=0.17.3</code>  指定特点版本软件包创建</li>
+<li><code>conda create -n myenv python=3.9 scipy=0.17.3 astroid babel</code>  指定python 版本，软件包版本创建</li>
+<li><code>conda run -n my-python-env python --version</code>  使用conda环境运行软件包</li>
+<li><code>conda install -n myenv pip</code>  在环境中使用pip，应该在conda确实没有包安装的时候才使用pip</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Pip 应该运行（ --upgrade-strategy only-<span class="keyword">if</span>-needed 默认值）。</span><br><span class="line">不要将 pip 与 --user 参数一起使用，避免所有用户安装。</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><code>.condarc</code>  这个配置文件存在每次创建环境自动安装的软件包，可以修改添加删除</p>
+</blockquote>
+<p><code>conda create --no-default-packages -n myenv python</code>  指定<code>--no-default-packages</code> 选项表示不安装 <code>.condarc</code> 文件中的包</p>
+<blockquote>
+</blockquote>
+<ul>
+<li><code>conda create --name myclone --clone myenv</code>  复制一个存在的环境</li>
+<li><code>conda activate myenv</code>  激活环境，指定环境名称或者路径</li>
+<li><code>conda deactivate</code>   停用环境</li>
+<li><code>conda env list</code> 环境列表</li>
+<li><code>conda list</code> 列出环境中的软件包</li>
+<li><code>conda env config vars list</code>  列出环境变量</li>
+<li><code>conda env config vars set my_var=value</code> 设置环境变量，设置环境变量后需要重新激活环境</li>
+<li><code>conda env config vars unset my_var -n test-env</code> 取消设置环境变量</li>
+<li><code>conda env export &gt; environment.yml</code>  导出环境</li>
+</ul>
+<blockquote>
+<p>还原环境</p>
+</blockquote>
+<ul>
+<li><code>conda list --revisions</code> 列出历史环境</li>
+<li><code>conda install --revision=REVNUM</code>  指定历史环境还原</li>
+<li><code>conda remove --name myenv --all</code>   删除环境</li>
+</ul>
+<h3 id="软件包管理"><a href="#软件包管理" class="headerlink" title="软件包管理"></a>软件包管理</h3><aside>
+🔫 关于使用 conda 管理软件包，搜索，安装，更新，删除等等。
+
+</aside>
+
+<blockquote>
+<p><code>conda config --add channels conda-forge</code><br><code>conda config --set channel_priority strict</code></p>
+</blockquote>
+<p>☺️ 添加conda-forge通道的软件包，里面包含除了默认仓库的大量软件包</p>
+<blockquote>
+</blockquote>
+<ul>
+<li><code>conda search scipy</code>   搜索指定软件包</li>
+<li><code>conda install --name myenv scipy</code>   安装指定软件包到指定环境</li>
+<li><code>conda install scipy</code>  安装到当前环境</li>
+<li><code>conda install scipy=0.15.0</code>  指定版本号</li>
+<li><code>conda install scipy curl</code>  一次安装多个</li>
+</ul>
+<blockquote>
+<p>如果某个包无法从 conda 或 Anaconda.org 获得，您可以通过 conda-forge 或其他包管理器（如 pip）找到并安装该包。</p>
+</blockquote>
+<ul>
+<li><code>conda install pip</code>  在当前环境安装 pip 集成使用</li>
+</ul>
+<blockquote>
+<p><code>conda config --set pip_interop_enabled True</code> </p>
+</blockquote>
+<p>提高与 pip 的互操作性#，通过这种互操作性，conda 可以使用 pip-installed 包来满足依赖项，干净地删除 pip-installed 的软件，并在适当的时候用 conda 包替换它们。</p>
+<blockquote>
+</blockquote>
+<ul>
+<li><code>conda search package_name --info</code>  列出包依赖</li>
+<li><code>conda update biopython</code> 更新指定软件包</li>
+<li><code>conda update python</code>  更新环境中的python</li>
+<li><code>conda update conda</code>  更新conda本身</li>
+<li><code>conda update --update-all</code>    更新环境中所有已安装的软件包。</li>
+<li><code>conda update --force-reinstall</code>    确保卸载并重新安装当前操作的任何用户请求的包，即使该包已存在于环境中。</li>
+<li><code>conda update numpy --no-pin</code>  跳过版本限制更新包</li>
+<li><code>conda config --add create_default_packages PACKAGENAME1 PACKAGENAME2</code>  添加默认软件包，创建新环境，默认软件包将安装在所有环境中。也可以编辑 <code>.condarc</code>   文件</li>
+<li><code>conda remove -n myenv scipy</code> 指定包删除</li>
+<li><code>conda remove scipy</code>  删除当前环境中的指定包</li>
+<li><code>conda remove scipy curl</code>  删除多个包</li>
+<li><code>conda clean --all</code>  删除索引缓存、锁定文件、未使用的缓存包、压缩包和日志文件。</li>
+<li><code>conda list</code>   列出当前环境安装的所有包</li>
+<li><code>conda list -n myenv</code>  列出指定环境名称的所有包</li>
+</ul>
+<h3 id="python-管理"><a href="#python-管理" class="headerlink" title="python 管理"></a>python 管理</h3><aside>
+🔫 conda 中的 python 版本控制，程序管理。Conda 将 Python 与任何其他包相同，因此可以轻松管理和更新多个安装。
+
+</aside>
+
+<ul>
+<li><code>conda search python</code>  搜索可用的python包</li>
+<li><code>conda update python</code>  更新python</li>
+<li><code>conda install python=3.10</code>  安装指定版本</li>
+</ul>
+<h3 id="environment-yaml-文件"><a href="#environment-yaml-文件" class="headerlink" title="environment.yaml 文件"></a>environment.yaml 文件</h3><aside>
+🔫 该文件为conda项目文件，文件内容指定了项目名称，软件包通道，依赖包。
+
+</aside>
+
+<blockquote>
+<p>例如</p>
+</blockquote>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">name: my-project</span><br><span class="line">channels:</span><br><span class="line">  - defaults</span><br><span class="line">dependencies:</span><br><span class="line">  - python</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>Name ： 环境名称指定</li>
+<li>Channels： 软件包渠道，可指定，<code>defaults</code>,<code>conda-forge</code> 或 <code>bioconda</code>等等。</li>
+</ul>
+<blockquote>
+<p><strong>官方Channels由Anaconda公司维护，包括：</strong></p>
+<ul>
+<li><strong>defaults</strong>：默认的Channel，包含Anaconda公司提供的核心包和工具。</li>
+<li><strong>conda-forge</strong>：由社区维护的Channel，包含丰富的包和工具，包括许多最新版本的软件。</li>
+<li><strong>bioconda</strong>：专门用于生物信息学相关包的Channel。</li>
+<li><strong>conda-envs</strong>：专门用于为特定项目创建虚拟环境的Channel。</li>
+</ul>
+<p>可自行选择到各大镜像站选择 channels （软件仓库）</p>
+</blockquote>
+<ul>
+<li>Dependencies： 指定依赖包，如python，pip等等。</li>
+</ul>
+<blockquote>
+<p><code>conda env create --file environment.yml</code> 随后指定项目文件创建环境，<br><code>conda env update --file environment.yml</code>  修改文件后，指定项目文件更新</p>
+</blockquote>
+<hr>
+<h3 id="conda配置文件-condarc"><a href="#conda配置文件-condarc" class="headerlink" title="conda配置文件 .condarc"></a>conda配置文件 <strong><code>.condarc</code></strong></h3><aside>
+🔫 conda 配置文件 是一个 `.condarc` 可选的运行时配置文件，它允许高级用户配置 conda 的各个方面，例如搜索包的通道、代理设置和环境目录。
+
+<p>运行 <code>conda config</code> 命令自动生成相关文件，可以使用<code>conda config</code> 控制，也可以使用编辑器修改。</p>
+</aside>
+
+<ul>
+<li><code>conda config --show</code>  显示计算和编译的配置值。未给出参数，则显示所有配置值的信息。</li>
+<li><code>conda config --describe</code> 列出所有配置文件信息，可配置选项。</li>
+<li><code>conda config --get</code>  获取所有配置信息</li>
+<li><code>conda config --get channels</code> 指定配置获取</li>
+<li><code>conda config --show-sources</code>   显示所有配置文件源及其内容</li>
+<li><code>conda config --add channels http://conda.anaconda.org/mutirri</code>  添加配置</li>
+<li><code>conda config --remove channels http://conda.anaconda.org/mutirri</code> 删除配置</li>
+<li><code>conda config --remove-key channels</code> 删除某个键值</li>
+</ul>
+<blockquote>
+<p><strong>示例文件</strong></p>
+</blockquote>
+<p>下面命令可列出所有配置文件信息</p>
+<blockquote>
+<ul>
+<li><code>conda config --describe</code> 列出所有配置文件信息，可配置选项。</li>
+</ul>
+</blockquote>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"># This is a sample .condarc file.</span><br><span class="line"># It adds the r Anaconda.org channel and enables</span><br><span class="line"><span class="meta"># the show_channel_urls option.</span></span><br><span class="line"></span><br><span class="line"><span class="meta"># channel locations. These override conda defaults, i.e., conda will</span></span><br><span class="line"><span class="meta"># search *only* the channels listed here, in the order given.</span></span><br><span class="line"># Use <span class="string">&quot;defaults&quot;</span> to automatically include all <span class="keyword">default</span> channels.</span><br><span class="line"># Non-url channels will be interpreted as Anaconda.org usernames</span><br><span class="line"># (this can be changed by modifying the channel_alias key; see below).</span><br><span class="line"># The <span class="keyword">default</span> is just <span class="string">&#x27;defaults&#x27;</span>.</span><br><span class="line">channels:</span><br><span class="line">  - r</span><br><span class="line">  - defaults</span><br><span class="line"></span><br><span class="line"># Show channel URLs when displaying what is going to be downloaded</span><br><span class="line"><span class="meta"># and in <span class="string">&#x27;conda list&#x27;</span>. The default is False.</span></span><br><span class="line">show_channel_urls: True</span><br><span class="line"></span><br><span class="line"># For more information about this file see:</span><br><span class="line"><span class="meta"># https:<span class="comment">//conda.io/docs/user-guide/configuration/use-condarc.html</span></span></span><br></pre></td></tr></table></figure>
+
+<h2 id="可选优化"><a href="#可选优化" class="headerlink" title="可选优化"></a>可选优化</h2><h3 id="libmamba-solver"><a href="#libmamba-solver" class="headerlink" title="libmamba solver"></a><strong>libmamba solver</strong></h3><aside>
+🔫 libmamba-solver 是 conda 包管理器的新求解器。它比经典求解器更快。要启用它，请先安装 `conda-libmamba-solver` 到 `base` 环境中
+
+</aside>
+
+<ul>
+<li><code>conda install -n base conda-libmamba-solver</code></li>
+<li>然后添加到 <code>solver: libmamba</code> 到<code>~/.condarc</code></li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">~/.condarc</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line">solver: libmamba</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><strong>总结</strong></p>
+</blockquote>
+<p>conda 是一个成熟的 python 项目管理的工具，conda 的优势在于其跨平台性、语言无关性和环境管理功能。带有版本控制，环境隔离，依赖包管理，软件包管理等等功能，对数据科学相关工作的用户尤其友好，conda 在数据科学、机器学习、人工智能等领域得到广泛应用。</p>
+<blockquote>
+</blockquote>
+<hr>
+<h1 id="Poetry"><a href="#Poetry" class="headerlink" title="Poetry"></a>Poetry</h1><aside>
+🔫 Poetry 是 Python 中用于依赖管理和打包的工具。它允许您声明项目所依赖的库，并将为您管理（安装/更新）它们。Poetry 提供了一个锁文件来确保可重复安装，并且可以构建您的项目以进行分发到pypi等仓库。该项目也是本文章提到的管理工具中 star 最多的。其次是文章中提到的pipenv，poetry可以简单理解为pipenv的超集。
+
+<p>项目地址：<a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/python-poetry/poetry">https://github.com/python-poetry/poetry</a></p>
+</aside>
+
+<h2 id="安装-2"><a href="#安装-2" class="headerlink" title="安装"></a>安装</h2><aside>
+🍂 官方推荐直接将poetry安装到隔离环境中，保证与系统的其余部分隔离。在此介绍一种简单的方法，将poetry安装到隔离环境中使用。这里使用到文章上面部分介绍到的pipx。使用pipx将poetry安装到隔离环境中用于测试。这也是官方的推荐方式之一。
+
+</aside>
+
+<ul>
+<li><code>pipx install poetry</code>  安装</li>
+<li><code>pipx install poetry==1.2.0</code> 指定版本安装</li>
+<li><code>pipx upgrade poetry</code>  更新</li>
+<li><code>pipx uninstall poetry</code> 卸载</li>
+</ul>
+<blockquote>
+<p>执行 <code>poetry -V</code>  或者 <code>poetry about</code> 查看版本信息，全局信息，验证是否安装成功。</p>
+</blockquote>
+<h2 id="管理-poetry-安装本身"><a href="#管理-poetry-安装本身" class="headerlink" title="管理 poetry 安装本身"></a>管理 poetry 安装本身</h2><aside>
+🍂 `self add` 命令的工作方式与 `add` 命令完全相同。但是，不同的是，所管理的包是针对 Poetry 的运行时环境的。
+
+</aside>
+
+<ul>
+<li><code>poetry search poetry-plug</code>   搜索插件</li>
+<li><code>poetry self add poetry-plugin-export</code>  安装插件</li>
+<li><code>poetry self add poetry-core@latest</code>  更新到最新版本 <code>poetry-core</code></li>
+<li><code>poetry self add artifacts-keyring</code>  添加密钥环提供程序 <code>artifacts-keyring</code></li>
+<li><code>poetry self update</code>  在其当前运行时环境中更新 Poetry 版本。</li>
+<li><code>poetry self lock</code>  锁定 poetry 本身的依赖到<code>poetry.lock</code> 文件</li>
+<li><code>poetry self show</code> 查看 poetry本身</li>
+<li><code>poetry self show plugins</code>  显示本身插件</li>
+<li><code>poetry self remove poetry-plugin-export</code>  删除插件</li>
+<li><code>poetry self install --sync</code>   针对 poetry 本身安装</li>
+</ul>
+<h2 id="使用-3"><a href="#使用-3" class="headerlink" title="使用"></a>使用</h2><h3 id="全局选项"><a href="#全局选项" class="headerlink" title="全局选项"></a><strong>全局选项</strong></h3><ul>
+<li><code>--verbose (-v|vv|vvv)</code> ：增加消息的详细程度：“-v”表示正常输出，“-vv”表示更详细的输出，“-vvv”表示调试。</li>
+<li><code>--help (-h)</code> ：显示帮助信息。</li>
+<li><code>--quiet (-q)</code> ：不输出任何消息。</li>
+<li><code>--ansi</code> ：强制 ANSI 输出。</li>
+<li><code>--ansi</code> ：强制 ANSI 输出。</li>
+<li><code>--version (-V)</code> ：显示此应用程序版本。</li>
+<li><code>--no-interaction (-n)</code> ：不要问任何互动性问题。</li>
+<li><code>--no-plugins</code> ：禁用插件。</li>
+<li><code>--no-cache</code> ：禁用诗歌源缓存。</li>
+<li><code>--directory=DIRECTORY (-C)</code> ：Poetry 命令的工作目录（默认为当前工作目录）。</li>
+</ul>
+<h3 id="创建新项目"><a href="#创建新项目" class="headerlink" title="创建新项目"></a>创建新项目</h3><ul>
+<li><code>poetry new poetry-demo</code>  创建一个项目，指定名称为<code>poetry-demo</code>,可随意，项目文件包含以下内容。</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">poetry-demo</span><br><span class="line">├── pyproject.toml</span><br><span class="line">├── README.md</span><br><span class="line">├── poetry_demo</span><br><span class="line">│   └── __init__.py</span><br><span class="line">└── tests</span><br><span class="line">    └── __init__.py</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><code>pyproject.toml</code> 文件</p>
+</blockquote>
+<p><code>pyproject.toml</code> 文件是这里最重要的。这将协调您的项目及其依赖项。目前，它看起来像这样：</p>
+<blockquote>
+</blockquote>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">[tool.poetry]</span><br><span class="line">name = <span class="string">&quot;poetry-demo&quot;</span></span><br><span class="line">version = <span class="string">&quot;0.1.0&quot;</span></span><br><span class="line">description = <span class="string">&quot;&quot;</span></span><br><span class="line">authors = [<span class="string">&quot;Sébastien Eustace &lt;sebastien@eustace.io&gt;&quot;</span>]</span><br><span class="line">readme = <span class="string">&quot;README.md&quot;</span></span><br><span class="line">packages = [&#123;include = <span class="string">&quot;poetry_demo&quot;</span>&#125;]</span><br><span class="line"></span><br><span class="line">[tool.poetry.dependencies]</span><br><span class="line">python = <span class="string">&quot;^3.7&quot;</span></span><br><span class="line"></span><br><span class="line">[build-system]</span><br><span class="line">requires = [<span class="string">&quot;poetry-core&quot;</span>]</span><br><span class="line">build-backend = <span class="string">&quot;poetry.core.masonry.api&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="初始化已存在项目"><a href="#初始化已存在项目" class="headerlink" title="初始化已存在项目"></a>初始化已存在项目</h3><ul>
+<li>Poetry 可用于“初始化”预填充的目录，而不是创建新项目。进入项目目录</li>
+<li><code>poetry init</code>   执行后交互式创建</li>
+</ul>
+<h3 id="安装依赖项"><a href="#安装依赖项" class="headerlink" title="安装依赖项"></a>安装依赖项</h3><ul>
+<li><code>poetry install</code>    该命令通过读取<code>pyproject.toml</code> 文件中的依赖包列表进行依赖安装。会有以下两种情况。</li>
+<li>第一种情况：项目中没有 <code>poetry.lock</code> 文件，会自动在项目中生成**<code>poetry.lock</code>** 文件，Poetry 只需解析 <code>pyproject.toml</code> 文件中列出的所有依赖项并下载其文件的最新版本。当 Poetry 完成安装后，它会将下载的所有包及其确切版本写入 <code>poetry.lock</code> 文件，并将项目锁定到这些特定版本。应将 <code>poetry.lock</code> 文件提交到项目存储库，以便所有处理该项目的人员都锁定到相同版本的依赖项。</li>
+<li>第二种情况：已经存在**<code>poetry.lock</code>**文件以及 <code>pyproject.toml</code>，运行 <code>install</code>会解析安装该文件列出的所有依赖包，</li>
+<li>作为应用程序开发人员应该将该两个文件提交到项目中确保能构建同样的依赖环境。作为库开发人员应该省略 <code>poetry.lock</code>文件</li>
+</ul>
+<h3 id="添加安装依赖"><a href="#添加安装依赖" class="headerlink" title="添加安装依赖"></a>添加安装依赖</h3><ul>
+<li><code>$ poetry add pendulum</code>  该命令会将指定依赖软件包添加到<code>pyproject.toml</code>文件和<code>poetry.lock</code>文件中，并安装该软件包。</li>
+</ul>
+<h3 id="依赖包更新"><a href="#依赖包更新" class="headerlink" title="依赖包更新"></a>依赖包更新</h3><ul>
+<li><code>poetry.lock</code> 文件阻止您自动获取最新版本的依赖包。 要更新到最新版本，请使用 <code>update</code>命令。 这将根据<code>pyproject.toml文件</code>获取最新的匹配版本，并使用新版本更新锁定文件（<code>poetry.lock</code>）。 （这相当于删除 <code>poetry.lock</code>文件并再次运行 <code>install</code>。）</li>
+<li><code>poetry update</code></li>
+<li><code>poetry update requests toml</code> 指定包更新</li>
+<li>该更新命令并不会修改<code>pyproject.toml</code> 文件，依然按照文件内容更新，可以使用 <code>add</code> 更新</li>
+</ul>
+<h3 id="依赖包删除"><a href="#依赖包删除" class="headerlink" title="依赖包删除"></a>依赖包删除</h3><ul>
+<li><code>poetry remove pendulum</code>  指定包删除</li>
+<li><code>poetry remove mkdocs --group docs</code> 指定依赖组删除指定包</li>
+</ul>
+<h3 id="虚拟环境-1"><a href="#虚拟环境-1" class="headerlink" title="虚拟环境"></a>虚拟环境</h3><ul>
+<li>默认情况下，新建项目或者初始化项目都会建立虚拟隔离环境</li>
+<li><strong>激活虚拟环境的最简单方法是使用 <code>poetry shell</code> 创建嵌套 shell。测试环境时需先激活</strong></li>
+<li><code>poetry run python -V</code>  该 run 命令在项目的 virtualenv 中执行给定的命令。</li>
+<li><code>poetry cache list</code> 列出缓存</li>
+<li><code>poetry cache clear pypi --all</code> 删除缓存</li>
+<li><code>poetry env use /full/path/to/python</code>   使用环境，</li>
+<li><code>poetry env info</code>  查看环境信息</li>
+<li><code>poetry env info --path</code>  指定目标查看环境信息</li>
+<li><code>poetry env list</code>  列出环境</li>
+<li><code>poetry env list --full-path</code>     列出完整路径环境</li>
+<li><code>poetry env remove /full/path/to/python</code>  删除环境</li>
+<li><code>poetry env remove --all</code>  删除全部环境</li>
+</ul>
+<h3 id="执行脚本"><a href="#执行脚本" class="headerlink" title="执行脚本"></a>执行脚本</h3><ul>
+<li>要运行脚本，只需使用 <code>poetry run python your_script.py</code> .同样，如果您有命令行工具，例如 <code>pytest</code> or <code>black</code> ，则可以使用 <code>poetry run pytest</code> .</li>
+</ul>
+<h3 id="依赖包搜索"><a href="#依赖包搜索" class="headerlink" title="依赖包搜索"></a>依赖包搜索</h3><ul>
+<li><code>poetry search requests pendulum</code>  搜索指定包</li>
+</ul>
+<h3 id="软件仓库"><a href="#软件仓库" class="headerlink" title="软件仓库"></a>软件仓库</h3><ul>
+<li><code>poetry source add pypi-test https://test.pypi.org/simple/</code>  添加<code>pypi-test</code> 源</li>
+<li><code>poetry source show</code> 显示软件源信息</li>
+<li><code>poetry source show pypi-test</code> 指定名称显示</li>
+<li><code>poetry source remove pypi-test</code>  删除源</li>
+</ul>
+<h2 id="依赖管理"><a href="#依赖管理" class="headerlink" title="依赖管理"></a>依赖管理</h2><h3 id="依赖组"><a href="#依赖组" class="headerlink" title="依赖组"></a>依赖组</h3><ul>
+<li>poetry 提供了可将依赖包分组的功能。用途：例如你的项目中会用到某些包来生成文档等等功能，但是该依赖包并不是项目运行所需要的，所以可以将其分组到其它依赖组中。</li>
+<li>文件示例：</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[tool.poetry.group.test]  # This part can be left out</span><br><span class="line"></span><br><span class="line">[tool.poetry.group.test.dependencies]</span><br><span class="line">pytest = <span class="string">&quot;^6.0.0&quot;</span></span><br><span class="line">pytest-mock = <span class="string">&quot;*&quot;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>定义dev依赖</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[tool.poetry.group.dev.dependencies]</span><br><span class="line">pytest = <span class="string">&quot;^6.0.0&quot;</span></span><br><span class="line">pytest-mock = <span class="string">&quot;*&quot;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>可选组，依赖项组可以声明为可选。有一组仅在特定环境或特定用途中需要的依赖项时，这很有意义。</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[tool.poetry.group.docs]</span><br><span class="line">optional = <span class="literal">true</span></span><br><span class="line"></span><br><span class="line">[tool.poetry.group.docs.dependencies]</span><br><span class="line">mkdocs = <span class="string">&quot;*&quot;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>poetry install --with docs</code>  指定组安装依赖</li>
+<li><code>poetry add pytest --group test</code>  指定组添加依赖，如果该组尚不存在，则将自动创建该组。</li>
+<li><code>poetry install</code>  默认安装所有组依赖</li>
+<li><code>poetry install --without test,docs</code> 指定排除组依赖安装</li>
+<li><code>poetry install --only docs</code>  仅安装指定依赖</li>
+<li><code>poetry install --only main</code>  仅安装项目运行依赖</li>
+<li><code>poetry remove mkdocs --group docs</code>  从组中删除依赖</li>
+<li><code>poetry install --sync</code>  同步依赖项，依赖项同步可确保 <code>poetry.lock</code> 文件中锁定的依赖项是环境中唯一存在的依赖项，从而删除任何不必要的内容。</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">poetry install --without dev --sync</span><br><span class="line">poetry install --with docs --sync</span><br><span class="line">poetry install --only dev</span><br><span class="line"></span><br><span class="line">可组合使用</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><code>add</code> 命令将所需的软件包添加到您的 <code>pyproject.toml</code> 并安装它们。如果不指定版本约束，poetry 会根据可用的包版本选择合适的版本。</p>
+</blockquote>
+<ul>
+<li><code>poetry add requests pendulum</code>  将包添加到<code>pyproject.toml</code> 并安装</li>
+<li><code>poetry add &quot;pendulum&gt;=2.0.5&quot;</code>  指定版本</li>
+<li><code>poetry add git+https://github.com/sdispater/pendulum.git</code>  指定git</li>
+<li><code>poetry add ./my-package/</code></li>
+<li><code>poetry add ../my-package/dist/my_package-0.1.0.whl</code>  指定本地目录或文件</li>
+</ul>
+<blockquote>
+<p><strong>信息查询</strong></p>
+</blockquote>
+<ul>
+<li><code>poetry show</code> 列出所有可用的包，可以使用以下 <code>show</code> 命令。</li>
+<li><code>poetry show pendulum</code>  指定包列出详细信息</li>
+<li><code>poetry config --list</code>  列出配置信息</li>
+<li><code>poetry check</code>  该 <code>check</code> 命令验证 <code>pyproject.toml</code> 文件的内容及其与 <code>poetry.lock</code> 文件的一致性。</li>
+<li><code>poetry version</code>  显示poetry 版本号</li>
+<li><code>poetry about</code>  <code>about</code> 命令显示有关 Poetry 的全局信息，包括当前版本和 <code>poetry-core</code> 的版本。</li>
+<li><code>poetry help</code>  显示全局帮助信息</li>
+<li><code>poetry show --help</code>  显示指定命令帮助信息</li>
+<li><code>poetry list</code> 列出所有可用的poetry命令</li>
+</ul>
+<blockquote>
+<p><strong>环境导出</strong></p>
+</blockquote>
+<ul>
+<li><code>poetry export -f requirements.txt --output requirements.txt</code>  此命令将锁定文件导出为其他格式。</li>
+<li><code>--format (-f)</code> ：要导出到的格式（默认值： <code>requirements.txt</code> ）。目前，仅 <code>constraints.txt</code> 和 <code>requirements.txt</code> 受支持。</li>
+</ul>
+<h2 id="项目发布"><a href="#项目发布" class="headerlink" title="项目发布"></a>项目发布</h2><aside>
+🍂 poetry 可以将项目打包发送到pypi库，或者私有仓库。
+
+</aside>
+
+<ul>
+<li>Poetry 要求所有项目都符合 PEP 440 标准。</li>
+<li>可选发布<code>poetry.lock</code>文件，不发布可选将起添加到<code>.gitignore</code>文件（git）</li>
+</ul>
+<blockquote>
+<p>发布到pypi</p>
+</blockquote>
+<ul>
+<li><code>poetry build</code>  将项目打包，此命令将以两种不同的格式打包库： <code>sdist</code> 是源格式， <code>wheel</code> 是 <code>compiled</code> 包格式。</li>
+<li>sdist 格式是源代码格式，包含了 Python 源代码、许可证文件、README 文件等。用户需要自行编译 sdist 格式包才能安装使用。需要发布到 PyPI 的 Python 包必须使用 sdist 格式</li>
+<li>wheel 格式是二进制格式，包含了编译好的 Python 代码、依赖库等。用户可以直接安装 wheel 格式包，无需自行编译。</li>
+<li><code>poetry publish</code>  将打包好的包进行发布，需要提前注册用户并且已正确配置凭据。如果要同时生成和发布包，只需传递该 <code>--build</code> 选项即可。</li>
+<li>api token 注册pypi后账户查看。</li>
+<li>请注意，建议在将包上传到 PyPI 时使用 API 令牌。创建新令牌后，您可以告诉 Poetry 使用它：<code>poetry config pypi-token.pypi &lt;my-token&gt;</code></li>
+<li>使用密码：<code>poetry config http-basic.pypi &lt;username&gt; &lt;password&gt;</code></li>
+</ul>
+<h3 id="存储库"><a href="#存储库" class="headerlink" title="存储库"></a>存储库</h3><aside>
+🍂 Poetry 支持使用 PyPI 和私有存储库来发现包以及发布项目。默认使用 pypi 。
+
+</aside>
+
+<ul>
+<li><code>poetry source add  foo https://pypi.example.org/simple/</code>    添加存储库</li>
+<li><code>poetry add --source foo private-package</code>  指定存储库安装包</li>
+</ul>
+<h2 id="环境配置"><a href="#环境配置" class="headerlink" title="环境配置"></a>环境配置</h2><aside>
+🍂 关于 poetry 的配置，可以通过命令配置，也可以使用配置文件编辑配置
+
+</aside>
+
+<h3 id="命令配置"><a href="#命令配置" class="headerlink" title="命令配置"></a>命令配置</h3><ul>
+<li><code>poetry config --list</code>  列出当前配置信息</li>
+<li><code>poetry config virtualenvs.path</code>  指定值查看配置信息</li>
+<li><code>poetry config virtualenvs.path /path/to/cache/directory/virtualenvs</code>  添加或更新配置</li>
+<li><code>poetry config virtualenvs.path --unset</code>  删除特定配置</li>
+</ul>
+<blockquote>
+<p>环境变量配置方法</p>
+</blockquote>
+<p>环境变量必须以 <code>POETRY_</code> 设置的大写名称为前缀，并由大写名称组成，点和短划线替换为下划线，下面是一个示例：</p>
+<p>但是我这边测试不需要加上 <code>POETRY</code> 前缀，加上识别不了环境变量，可自己环境测试。</p>
+<blockquote>
+</blockquote>
+<ul>
+<li><code>export POETRY_VIRTUALENVS_PATH=/path/to/virtualenvs/directory</code></li>
+<li><code>export POETRY_HTTP_BASIC_MY_REPOSITORY_PASSWORD=secret</code></li>
+</ul>
+<h3 id="项目配置文件-pyproject-toml"><a href="#项目配置文件-pyproject-toml" class="headerlink" title="项目配置文件 pyproject.toml"></a>项目配置文件 <code>pyproject.toml</code></h3><aside>
+🍂 `pyproject.toml` 文件是每一各项目的配置文件，用于配置当前项目的配置信息，版本，依赖控制等等。
+
+<p>创建项目或者，初始化项目会自动生成。</p>
+</aside>
+
+<blockquote>
+<p>配置文件示例：</p>
+</blockquote>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">name = <span class="string">&quot;my-package&quot;</span>   <span class="comment">// 包名</span></span><br><span class="line">version = <span class="string">&quot;0.1.0&quot;</span>  <span class="comment">// 版本</span></span><br><span class="line">description = <span class="string">&quot;A short description of the package.&quot;</span> <span class="comment">// 描述</span></span><br><span class="line">license = <span class="string">&quot;MIT&quot;</span> <span class="comment">// 许可证</span></span><br><span class="line">authors = [</span><br><span class="line">    <span class="string">&quot;Sébastien Eustace &lt;sebastien@eustace.io&gt;&quot;</span>,</span><br><span class="line">] <span class="comment">// 作者</span></span><br><span class="line">maintainers = [</span><br><span class="line">    <span class="string">&quot;John Smith &lt;johnsmith@example.org&gt;&quot;</span>,</span><br><span class="line">    <span class="string">&quot;Jane Smith &lt;janesmith@example.org&gt;&quot;</span>,</span><br><span class="line">] <span class="comment">//维护者</span></span><br><span class="line">[tool.poetry]</span><br><span class="line"># ...</span><br><span class="line">readme = [<span class="string">&quot;docs/README1.md&quot;</span>, <span class="string">&quot;docs/README2.md&quot;</span>] <span class="comment">// 自述文件</span></span><br><span class="line">homepage = <span class="string">&quot;https://python-poetry.org/&quot;</span>  <span class="comment">// 项目主页网站</span></span><br><span class="line">repository = <span class="string">&quot;https://github.com/python-poetry/poetry&quot;</span>  <span class="comment">//存储库</span></span><br><span class="line">documentation = <span class="string">&quot;https://python-poetry.org/docs/&quot;</span> <span class="comment">// 文档</span></span><br><span class="line">keywords = [<span class="string">&quot;packaging&quot;</span>, <span class="string">&quot;poetry&quot;</span>]  <span class="comment">// 关键字</span></span><br><span class="line">[tool.poetry]</span><br><span class="line"># ...</span><br><span class="line">classifiers = [</span><br><span class="line">    <span class="string">&quot;Topic :: Software Development :: Build Tools&quot;</span>,</span><br><span class="line">    <span class="string">&quot;Topic :: Software Development :: Libraries :: Python Modules&quot;</span></span><br><span class="line">]  <span class="comment">// 分类</span></span><br><span class="line">[tool.poetry]</span><br><span class="line"># ...</span><br><span class="line">packages = [</span><br><span class="line">    &#123; include = <span class="string">&quot;my_package&quot;</span> &#125;,</span><br><span class="line">    &#123; include = <span class="string">&quot;extra_package/**/*.py&quot;</span> &#125;,</span><br><span class="line">]  <span class="comment">//要包含在最终发行版中的包和模块的列表。</span></span><br><span class="line">[tool.poetry.dependencies]</span><br><span class="line">requests = <span class="string">&quot;^2.13.0&quot;</span>  <span class="comment">// pypi 中的依赖指定</span></span><br><span class="line"></span><br><span class="line">[[tool.poetry.source]]</span><br><span class="line">name = <span class="string">&quot;private&quot;</span></span><br><span class="line">url = <span class="string">&quot;http://example.com/simple&quot;</span> <span class="comment">// 其他存储库依赖指定</span></span><br><span class="line"></span><br><span class="line">[tool.poetry.dependencies]</span><br><span class="line">requests = &#123; version = <span class="string">&quot;^2.13.0&quot;</span>, source = <span class="string">&quot;private&quot;</span> &#125;  <span class="comment">// 指定依赖存储库</span></span><br><span class="line"></span><br><span class="line">[tool.poetry.dependencies]</span><br><span class="line">python = <span class="string">&quot;^3.7&quot;</span>  <span class="comment">// 声明 python 版本</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="基本工作流（对于测试已存在项目）"><a href="#基本工作流（对于测试已存在项目）" class="headerlink" title="基本工作流（对于测试已存在项目）"></a>基本工作流（对于测试已存在项目）</h3><blockquote>
+<p>例举一个已存在项目的基本测试，配置虚拟环境，到安装依赖的基本流程。</p>
+</blockquote>
+<ul>
+<li><code>cd</code> 进入项目</li>
+<li><code>poetry init -n</code>   初始化项目</li>
+<li><code>poetry shell</code>    进入交互式 shell ，会自动建立虚拟隔离环境</li>
+<li><code>poetry add $(cat requirements.txt)</code>  安装当前项目依赖</li>
+<li><code>poetry run python  [yourpyname.py](http://yourpyname.py)</code>   运行项目测试</li>
+</ul>
+<hr>
+<blockquote>
+<p><strong>总结</strong></p>
+</blockquote>
+<p>细心看文章的朋友可能会发现这个工具的介绍比较长，是因为poetry 功能更多，可以实现完整的python 工作流程，无论是对于开发者，还是测试人员，都可以满足其需求。使用场景，需要完整编写一个项目进行测试发布。或是测试一个已经存在的项目。文章前提到过 poetry 可以理解为 pipenv 的超集。那为什么还需要pipenv 呢，因为如果仅仅是用于已存在项目的测试的话，pipenv 可以更加方便的进行测试。大概就是这样了。</p>
+<blockquote>
+</blockquote>
+<hr>
+<h1 id="Hatch"><a href="#Hatch" class="headerlink" title="Hatch"></a>Hatch</h1><aside>
+🍂 现代、可扩展的 Python 项目管理。标准化的构建系统，默认具有可重现的构建，强大的环境管理，支持自定义脚本，可配置的 Python 分发管理，轻松发布到 PyPI 或其他索引，项目生成，版本管理，依赖管理，环境隔离管理，包发布管理等等
+
+<p>项目地址：<a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/pypa/hatch">https://github.com/pypa/hatch</a></p>
+</aside>
+
+<h2 id="安装-3"><a href="#安装-3" class="headerlink" title="安装"></a>安装</h2><blockquote>
+<p>hatch 的包已经上传 pypi 。可以随意使用 pip，pipx 等等工具安装，也可以选择使用系统的包管理器安装，例如：</p>
+</blockquote>
+<ul>
+<li><code>pip install hatch</code>   使用 pip 安装</li>
+<li><code>pipx install hatch</code>  使用 pipx 安装到隔离环境</li>
+<li><code>brew install hatch</code>  使用 brew 安装到 mac</li>
+<li><code>pacman -S python-hatch</code>  使用 pacman 安装到 arch</li>
+<li>。。。😮</li>
+</ul>
+<blockquote>
+<p>安装完成后命令行执行 <code>hatch --version</code>  验证是否安装成功</p>
+</blockquote>
+<hr>
+<h2 id="使用-4"><a href="#使用-4" class="headerlink" title="使用"></a>使用</h2><h3 id="全局指令"><a href="#全局指令" class="headerlink" title="全局指令"></a>全局指令</h3><ul>
+<li><code>--verbose</code>  显示详细信息</li>
+<li><code>--quiet</code>  安静模式，不显示信息</li>
+<li><code>-help</code>   显示帮助信息</li>
+<li><code>--version</code>  显示版本信息</li>
+<li><code>--config</code>  指定配置文件</li>
+</ul>
+<h3 id="新建项目"><a href="#新建项目" class="headerlink" title="新建项目"></a>新建项目</h3><ul>
+<li><code>hatch new &quot;Hatch Demo&quot;</code>  指定名称新建项目</li>
+<li>项目目录结构</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">hatch-demo</span><br><span class="line">├── src</span><br><span class="line">│   └── hatch_demo</span><br><span class="line">│       ├── __about__.py</span><br><span class="line">│       └── __init__.py</span><br><span class="line">├── tests</span><br><span class="line">│   └── __init__.py</span><br><span class="line">├── LICENSE.txt</span><br><span class="line">├── README.md</span><br><span class="line">└── pyproject.toml</span><br></pre></td></tr></table></figure>
+
+<h3 id="初始化现有项目"><a href="#初始化现有项目" class="headerlink" title="初始化现有项目"></a>初始化现有项目</h3><ul>
+<li><code>hatch new --init</code></li>
+</ul>
+<h3 id="环境管理-1"><a href="#环境管理-1" class="headerlink" title="环境管理"></a>环境管理</h3><blockquote>
+<p>环境旨在为测试项目等提供隔离工作区。<br>生成 shell 或在 shell 中运行命令将自动触发创建。<br>在hatch 环境中只需要只用 pip 来安装 依赖包</p>
+</blockquote>
+<ul>
+<li><code>hatch shell</code>  进入hatch 交互式 shell ，会自动创建隔离环境</li>
+<li><code>pip list</code>   显示环境中的包</li>
+<li><code>hatch run python -c &quot;import sys;print(sys.executable)”</code>     在 hatch 隔离环境中 使用 run 运行程序</li>
+<li><code>hatch env show</code>  显示隔离环境信息</li>
+<li><code>hatch env remove 删除单个环境</code></li>
+<li><code>hatch env prune 删除所有环境</code></li>
+<li><code>hatch clean</code> 删除生成项目</li>
+<li><code>hatch dep show requirements -all</code>    显示环境依赖信息</li>
+<li><code>hatch env find</code>  查看虚拟环境路径</li>
+<li><code>hatch status</code>  显示有关当前环境的信息。</li>
+</ul>
+<h3 id="项目文件-1"><a href="#项目文件-1" class="headerlink" title="项目文件"></a>项目文件</h3><aside>
+🍂 `pyproject.toml`  该文件为项目配置文件，存储着关于此项目的所有配置信息
+
+</aside>
+
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">[project]</span><br><span class="line">name = <span class="string">&quot;your-app&quot;</span>  <span class="comment">//项目名称</span></span><br><span class="line">dynamic = [<span class="string">&quot;version&quot;</span>]  <span class="comment">// 版本</span></span><br><span class="line">description = <span class="string">&#x27;...&#x27;</span>  <span class="comment">// 描述信息</span></span><br><span class="line">readme = <span class="string">&quot;README.md&quot;</span> <span class="comment">// 自述文件</span></span><br><span class="line">requires-python = <span class="string">&quot;&gt;=3.8&quot;</span>  <span class="comment">// python 版本</span></span><br><span class="line">license = <span class="string">&quot;Apache-2.0 OR MIT&quot;</span><span class="comment">// 许可证</span></span><br><span class="line">keywords = [</span><br><span class="line">  <span class="string">&quot;...&quot;</span>,</span><br><span class="line">]  <span class="comment">// 关键字</span></span><br><span class="line">classifiers = [</span><br><span class="line">  <span class="string">&quot;...&quot;</span>,</span><br><span class="line">]  <span class="comment">// 分类信息</span></span><br><span class="line"></span><br><span class="line">[project.urls]</span><br><span class="line">Documentation = <span class="string">&quot;...&quot;</span></span><br><span class="line"><span class="string">&quot;Source code&quot;</span> = <span class="string">&quot;...&quot;</span> <span class="comment">// url信息</span></span><br><span class="line"></span><br><span class="line">dependencies = [</span><br><span class="line">  <span class="string">&quot;...&quot;</span>,</span><br><span class="line">] <span class="comment">// 依赖信息</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>命令控制</p>
+</blockquote>
+<ul>
+<li><code>hatch config set [OPTIONS] KEY [VALUE]</code>  设置配置文件</li>
+<li><code>hatch config find</code>  查看配置文件位置</li>
+<li><code>hatch config restore</code>  配置文件恢复默认</li>
+<li><code>hatch config show -a</code>   显示所有配置信息</li>
+<li><code>hatch config update</code>  更新配置文件</li>
+</ul>
+<h3 id="依赖管理-1"><a href="#依赖管理-1" class="headerlink" title="依赖管理"></a>依赖管理</h3><ul>
+<li>添加依赖，编写<code>pyproject.toml</code> 文件，并将其添加到组中 <code>dependencies</code>，例如cowsay：</li>
+<li>下次生成 shell 或运行命令时，将安装此依赖项。</li>
+<li>例</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[project]</span><br><span class="line">...</span><br><span class="line">dependencies = [</span><br><span class="line">  <span class="string">&quot;cryptography&quot;</span>,</span><br><span class="line">  <span class="string">&quot;click&gt;=7, &lt;9, != 8.0.0&quot;</span>,</span><br><span class="line">  <span class="string">&quot;python-dateutil==2.8.*&quot;</span>,</span><br><span class="line">  <span class="string">&quot;numpy~=1.21.4&quot;</span>,</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<h3 id="构建发布包"><a href="#构建发布包" class="headerlink" title="构建发布包"></a>构建发布包</h3><blockquote>
+<p>在配置文件中配置构建信息，</p>
+</blockquote>
+<ul>
+<li><code>hatch build -t wheel</code>  指定格式构建</li>
+<li><code>hatch publish</code>   发布包</li>
+<li><code>-r</code> &#x2F; <code>--repo</code>  指定仓库发布</li>
+<li><code>hatch build</code>  将构建 sdist 和 wheel 包</li>
+<li><code>hatch build -t wheel</code> 指定包格式构建，例如 <code>-t sdist -t wheel</code></li>
+<li><code>hatch publish</code>  发布包</li>
+<li><code>hatch publish /path/to/artifacts foo-1.tar.gz</code>  指定包发布</li>
+</ul>
+<blockquote>
+<p>常用参数</p>
+</blockquote>
+<ul>
+<li><code>--target</code>, <code>-t</code>  指定构建格式，例如 <code>-t sdist -t wheel</code></li>
+<li><code>--clean</code>, <code>-c</code>  构建前清除原有包文件</li>
+<li><code>-r</code> &#x2F; <code>--repo</code>  选择存储库，默认pypi</li>
+<li><code>-u</code>&#x2F; <code>--user</code>   ，<code>-a</code>&#x2F; <code>--auth</code>  设置认证</li>
+<li><code>--client-key</code>  配置客户端密钥</li>
+</ul>
+<h3 id="版本控制"><a href="#版本控制" class="headerlink" title="版本控制"></a>版本控制</h3><aside>
+🍂 关于 python 版本的控制
+
+</aside>
+
+<ul>
+<li><code>hatch python install all</code>   在环境中安装所有兼容的python 版本</li>
+<li><code>hatch python update all</code>  更新 所有python 版本</li>
+<li><code>hatch python find</code>  查看python 二进制文件信息</li>
+<li><code>hatch python remove all</code>  删除 python ，所有已安装</li>
+<li><code>hatch python show</code>  显示可用python信息</li>
+</ul>
+<h3 id="Hatch-常用插件"><a href="#Hatch-常用插件" class="headerlink" title="Hatch 常用插件"></a>Hatch 常用插件</h3><ul>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/repo-helper/hatch-requirements-txt">https://github.com/repo-helper/hatch-requirements-txt</a>   从 <code>requirements.txt</code> 文件中读取项目依赖项。hatch 可以直接使用虚拟环境中的 pip 安装依赖从<code>requirements.txt</code>。</li>
+</ul>
+<h2 id="基本工作流程"><a href="#基本工作流程" class="headerlink" title="基本工作流程"></a>基本工作流程</h2><ul>
+<li><code>hatch new --init .</code>     创建或初始化项目</li>
+<li><code>hatch shell</code>   进入交互式shell</li>
+<li><code>pip install -r requirements.txt</code>   安装项目依赖</li>
+<li><code>hatch run python [pyfile.py](http://pyfile.py)</code>   测试运行</li>
+<li><code>hatch env remove</code>  删除环境</li>
+</ul>
+<blockquote>
+<p><strong>总结</strong></p>
+<p>“Hatch 的高级价值主张是，如果一个人采用了所有功能，那么许多其他工具就变得不必要，因为它支持人们可能需要的一切。此外，如果选择仅使用特定功能，那么与替代方案相比仍然有好处“。以上这段话来自hatch 官方，本篇文章介绍了多种关于 python 项目管理的工具，功能相似但却有不同之处，我们不需要思考什么是最好的工具，我们只需要在不同的场景，选择合适的工具。最合适的方案。</p>
+<hr>
+</blockquote>
+<h1 id="Pdm"><a href="#Pdm" class="headerlink" title="Pdm"></a>Pdm</h1><aside>
+🦋 PDM 旨在成为下一代 Python 软件包管理工具。它最初是为个人兴趣而诞生的。如果你觉得 `pipenv` 或者`poetry` 用着非常好，并不想引入一个新的包管理器，那么继续使用它们吧；但如果你发现有些东西这些工具不支持，那么你很可能可以在 `pdm` 中找到。
+
+<p>项目地址：<a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/pdm-project/pdm">https://github.com/pdm-project/pdm</a></p>
+</aside>
+
+<h2 id="安装-4"><a href="#安装-4" class="headerlink" title="安装"></a>安装</h2><aside>
+🦋 Pdm 官方推荐将其安装到管理环境中，推荐使用 pipx 安装 Pdm
+
+</aside>
+
+<ul>
+<li><code>pipx install pdm</code>  将pdm安装到隔离环境，使用pipx</li>
+<li><code>pdm self update</code>   更新 pdm</li>
+</ul>
+<blockquote>
+<p>也可使用其他包管理器安装。</p>
+</blockquote>
+<h3 id="pdm-自身管理"><a href="#pdm-自身管理" class="headerlink" title="pdm 自身管理"></a>pdm 自身管理</h3><ul>
+<li><code>pdm self  list</code>  列出关于 pdm 的所有包</li>
+<li><code>pdm self add  packagename</code>  指定包安装给pdm</li>
+<li><code>pdm self remove  packagename</code>  删除pdm环境中的包</li>
+<li><code>pdm self remove update</code> 更新 pdm 本身</li>
+</ul>
+<h2 id="项目管理"><a href="#项目管理" class="headerlink" title="项目管理"></a>项目管理</h2><ul>
+<li><code>pdm init</code>  初始化项目</li>
+<li><code>pdm init -n</code>   跳过交互式初始化，使用默认配置</li>
+<li><code>pdm lock</code>：执行 lock任务 ，从<code>pyproject.toml</code> 文件中锁定依赖</li>
+<li><code>pdm sync</code>   从锁定文件同步（添加&#x2F;删除&#x2F;更新）</li>
+<li><code>pdm install</code>：执行 sync任务，先于 lock如果需要</li>
+<li><code>pdm add</code>：添加依赖包，重新锁定然后同步</li>
+<li><code>pdm remove</code>：删除依赖要求，重新锁定然后同步</li>
+<li><code>pdm update</code>：从最新版本重新锁定依赖项，然后同步</li>
+<li><code>pdm use</code>    切换python</li>
+<li><code>pdm run flask run -p 54321</code>   运行脚本程序等</li>
+<li><code>pdm run --list</code>  显示脚本列表</li>
+<li><code>pdm fix</code>    根据最新版本的PDM修复项目问题</li>
+</ul>
+<h2 id="环境管理-2"><a href="#环境管理-2" class="headerlink" title="环境管理"></a>环境管理</h2><aside>
+🦋 virtualenv 是默认模式。
+
+</aside>
+
+<ul>
+<li><code>pdm config venv.backend [virtualenv|venv|conda]</code>.  切换虚拟环境后端</li>
+<li><code>pdm venv create 3.8</code>  创建虚拟环境，指定python版本</li>
+<li><code>pdm venv create --with venv 3.9</code>  指定后端创建</li>
+<li><code>pdm venv list</code>   列出使用该项目创建的所有 virtualenv</li>
+<li><code>pdm venv remove for-test</code>  删除虚拟环境</li>
+<li><code>pdm venv activate for-test</code>  激活虚拟环境</li>
+<li><code>pdm venv purge</code>  清除 <code>选定/所有</code>  创建的 Virtualenv环境</li>
+<li><code>pdm use --venv test</code>  使用给定的 python 版本或路径作为基本解释器</li>
+<li><code>pdm run python -m ensurepip</code>  在项目中安装 pip</li>
+<li><code>pdm venv create --with-pip 3.9</code>  创建环境是包含 pip</li>
+</ul>
+<h2 id="配置管理"><a href="#配置管理" class="headerlink" title="配置管理"></a>配置管理</h2><ul>
+<li><code>pdm config</code>  显示当前配置信息</li>
+<li><code>pdm config pypi.url</code>  指定配置显示</li>
+<li><code>pdm config pypi.url &quot;https://test.pypi.org/simple&quot;</code>  传递参数修改配置</li>
+<li><code>pdm config --local pypi.url &quot;https://test.pypi.org/simple&quot;</code>  修改当前项目配置</li>
+<li><code>pdm config pypi.url &quot;https://test.pypi.org/simple&quot;</code>  修改软件仓库</li>
+<li><code>pdm config pypi.extra.url &quot;https://extra.pypi.org/simple&quot;</code> 添加额外软件仓库</li>
+<li><code>pdm cache clear</code>  清理缓存目录下的所有文件</li>
+</ul>
+<h2 id="依赖管理-2"><a href="#依赖管理-2" class="headerlink" title="依赖管理"></a>依赖管理</h2><blockquote>
+<p>导入其他依赖文件</p>
+</blockquote>
+<ul>
+<li><code>-f {pipfile,poetry,flit,setuppy,requirements}, --format {pipfile,poetry,flit,setuppy,requirements}</code></li>
+<li><code>pdm import</code>  从其他格式导入项目元数据</li>
+<li><code>pdm import --format requirements requirements.txt</code>   导入 requirements.txt 文件依赖列表</li>
+<li><code>pdm search httpx</code>    搜索软件包</li>
+<li><code>pdm show pyasn1-modules</code>    显示指定包信息</li>
+<li><code>pdm add requests</code>  添加依赖</li>
+<li><code>pdm add requests==2.25.1</code>  指定版本</li>
+<li><code>pdm add &quot;flask&gt;=1.0&quot;</code>  指定版本需求</li>
+<li><code>pdm add ./sub-package</code> 添加本地依赖，可以是目录和文件，需要以 <code>.</code> 开头</li>
+<li><code>pdm add &quot;https://github.com/numpy/numpy/releases/download/v1.20.0/numpy-1.20.0.tar.gz&quot;</code>  指定 url 添加依赖</li>
+<li><code>pdm add -dG test pytest</code>  通过指定组添加开发依赖</li>
+<li><code>pdm add -e ./sub-package --dev</code>  指定 -e 参数添加可编辑依赖</li>
+<li><code>pdm update</code>  更新依赖</li>
+<li><code>pdm update --update-all</code>  更新所有依赖项和子依赖项</li>
+<li><code>pdm update requests</code>  指定依赖包更新</li>
+<li><code>pdm update -G security -G http</code> &#x2F; <code>pdm update -G &quot;security,http&quot;</code> 指定组更新依赖</li>
+<li><code>pdm update -G security cryptography</code>  更新指定组中的指定包依赖</li>
+<li><code>pdm update -d</code>  更新开发依赖包</li>
+<li><code>pdm update -dG test pytest</code>  更新指定组开发依赖包</li>
+<li><code>pdm remove requests</code>  删除依赖</li>
+<li><code>pdm remove -G web h11</code>  指定组删除依赖</li>
+<li><code>pdm remove -dG test pytest-cov</code>  删除开发依赖，指定组包</li>
+<li><code>pdm sync</code> 从锁定文件安装包。 <code>--clean</code>  选项，清除不需要的包</li>
+<li><code>pdm update</code> 将更新锁定文件，然后 <code>sync</code> .</li>
+<li><code>pdm install</code> 将检查项目文件是否有更改，如果需要，更新锁定文件，然后 <code>sync</code> .</li>
+<li><code>pdm lock</code>  生成依赖锁定文件</li>
+<li><code>pdm lock</code>  <code>-L/--lockfile &lt;filepath&gt;</code>  指定依赖锁定文件</li>
+<li><code>pdm install</code>  安装锁定在 lockfile 中的所有组依赖</li>
+<li><code>pdm install -G extra1</code>  指定组安装</li>
+<li><code>pdm list</code> 列出packages目录中安装的所有软件包</li>
+<li><code>pdm list --tree</code>  树形列出</li>
+<li><code>pdm export -o requirements.txt</code>   导出依赖包格式</li>
+</ul>
+<h2 id="构建发布"><a href="#构建发布" class="headerlink" title="构建发布"></a>构建发布</h2><aside>
+🦋 使用 pdm 构建发布包到 pypi ，或私有存储库更加方便
+
+</aside>
+
+<ul>
+<li><code>pdm publish</code>将自动构建一个 wheel 包和一个源代码包（sdist），并将它们上传到PyPI索引。</li>
+<li><code>pdm publish --repository https://test.pypi.org/legacy/</code>  指定存储库，可以是url也可以是name</li>
+<li><code>pdm publish --repository testpypi</code>  指定存储库名称</li>
+<li><code>-r</code> ， <code>--repository</code> ：要将包发布到的存储库名称或 url [env var： <code>PDM_PUBLISH_REPO</code> ]</li>
+<li><code>-u</code> ， <code>--username</code> ： 访问存储库的用户名 [env var： <code>PDM_PUBLISH_USERNAME</code> ]</li>
+<li><code>-P</code> ， <code>--password</code> ： 访问存储库的密码 [env var： <code>PDM_PUBLISH_PASSWORD</code> ]</li>
+<li></li>
+</ul>
+<blockquote>
+<p>单独生成发布</p>
+</blockquote>
+<ul>
+<li><code>pdm build</code>  构建包</li>
+<li><code>pdm publish --no-build</code>  发布，因为上一步构建了所以加上 <code>--no-build</code>   选项</li>
+</ul>
+<blockquote>
+<p>构建配置，主配置文件中添加内容</p>
+</blockquote>
+<ul>
+<li>配置文件配置</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">[repository.pypi]</span><br><span class="line">username = <span class="string">&quot;frostming&quot;</span></span><br><span class="line">password = <span class="string">&quot;&lt;secret&gt;&quot;</span></span><br><span class="line"></span><br><span class="line">[repository.company]</span><br><span class="line">url = <span class="string">&quot;https://pypi.company.org/legacy/&quot;</span></span><br><span class="line">username = <span class="string">&quot;frostming&quot;</span></span><br><span class="line">password = <span class="string">&quot;&lt;secret&gt;&quot;</span></span><br><span class="line">ca_certs = <span class="string">&quot;/path/to/custom-cacerts.pem&quot;</span></span><br><span class="line"></span><br><span class="line">或者设置环境变量</span><br><span class="line">export PDM_PUBLISH_REPO=...</span><br><span class="line">export PDM_PUBLISH_USERNAME=...</span><br><span class="line">export PDM_PUBLISH_PASSWORD=...</span><br><span class="line">export PDM_PUBLISH_CA_CERTS=...</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>命令配置</li>
+<li><code>pdm config repository.pypi.username &quot;**token**&quot;</code></li>
+<li><code>pdm config repository.pypi.password &quot;my-pypi-token&quot;</code></li>
+<li><code>pdm config repository.company.url &quot;https://pypi.company.org/legacy/&quot;</code></li>
+<li><code>pdm config repository.company.ca_certs &quot;/path/to/custom-cacerts.pem&quot;</code></li>
+</ul>
+<h2 id="全局选项-1"><a href="#全局选项-1" class="headerlink" title="全局选项"></a>全局选项</h2><ul>
+<li><code>-h</code> 、 <code>--help</code> ：显示此帮助消息并退出。</li>
+<li><code>-V</code> ， <code>--version</code> ： 显示版本</li>
+<li><code>-c</code> ， <code>--config</code> ： 指定另一个配置文件路径 [env var： <code>PDM_CONFIG_FILE</code> ]</li>
+<li><code>-v</code> 、 <code>--verbose</code> ：用于 <code>-v</code> 详细输出和 <code>-vv</code> 更详细</li>
+<li><code>-q</code> ， <code>--quiet</code> ：安静模式，不输出信息</li>
+</ul>
+<hr>
+<h2 id="插件"><a href="#插件" class="headerlink" title="插件"></a>插件</h2><ul>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/pdm-project/awesome-pdm">https://github.com/pdm-project/awesome-pdm</a>  关于 pdm 的插件列表</li>
+</ul>
+<blockquote>
+<p><strong>总结</strong></p>
+</blockquote>
+<p>功能强大，完善，适用于任何使用场景。与其他管理器相比，PDM 并没有被和一个特定的构建后端绑定，你可以选择任何你喜欢的构建后端。跨平台，使用简单，现代的，旨在成为下一代 Python 软件包管理工具，python项目管理器。</p>
+<blockquote>
+</blockquote>
+<hr>
+<h1 id="Rye"><a href="#Rye" class="headerlink" title="Rye"></a>Rye</h1><aside>
+🍁 Python 的实验性包管理解决方案，它安装和管理 Python 安装，帮助处理 `pyproject.toml` 文件，安装和卸载依赖项，在后台创建和更新 virtualenv。它支持 monorepos 和全局工具安装。
+Rye 是一项实验性尝试，旨在为 Python 构建一种受 Rust 启发 `rustup` 的 `cargo` 新型打包体验。它尚未准备好生产，但非常感谢反馈和建议。
+
+<p>项目地址：<a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/mitsuhiko/rye">https://github.com/mitsuhiko/rye</a></p>
+</aside>
+
+<h2 id="管理-Rye"><a href="#管理-Rye" class="headerlink" title="管理 Rye"></a>管理 Rye</h2><aside>
+🍁 介绍关于 Rye 的安装方式，针对各种系统
+
+</aside>
+
+<h3 id="统一安装"><a href="#统一安装" class="headerlink" title="统一安装"></a>统一安装</h3><ul>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/mitsuhiko/rye/releases">https://github.com/mitsuhiko/rye/releases</a> 下载对应系统包进行安装。</li>
+<li><code>cargo install --git https://github.com/mitsuhiko/rye rye</code>   编译安装，因为Rye 是使用 rust 写的，所以可以用 cargo (<code>rust 包管理器</code>) 进行安装。</li>
+<li>以上两种方式是针对所有系统的安装方式，下面介绍单独的安装方式</li>
+</ul>
+<h3 id="针对系统安装"><a href="#针对系统安装" class="headerlink" title="针对系统安装"></a>针对系统安装</h3><ul>
+<li><strong>Linux</strong> ：<code>curl -sSf https://rye-up.com/get | bash</code>  使用官方脚本进行安装。<br>也可以使用特定 Linux 发行版自己的包管理器进行安装，例如：<code>sudo pacman -S rye</code></li>
+<li><strong>mac OS</strong>：<code>curl -sSf https://rye-up.com/get | bash</code> ，使用官方脚本进行安装，也可以使用包管理器进行安装，<code>brew install</code></li>
+<li><strong>Windows</strong>： 使用上述介绍的统一安装方式安装。</li>
+</ul>
+<h3 id="更新-Rye"><a href="#更新-Rye" class="headerlink" title="更新 Rye"></a>更新 Rye</h3><ul>
+<li><code>rye self update</code></li>
+</ul>
+<h3 id="卸载-Rye"><a href="#卸载-Rye" class="headerlink" title="卸载 Rye"></a>卸载 Rye</h3><ul>
+<li><code>rye self uninstall</code></li>
+</ul>
+<h2 id="基本使用"><a href="#基本使用" class="headerlink" title="基本使用"></a>基本使用</h2><aside>
+🍁 这里介绍基本使用流程
+
+</aside>
+
+<blockquote>
+<p>项目管理</p>
+</blockquote>
+<ul>
+<li><code>rye init my-project</code>  创建一个新项目</li>
+<li><code>rye init</code>   或进入目录，初始化存在项目</li>
+<li><code>rye init -r requirements.txt</code>     初始化项目，从<code>requirements.txt</code> 文件中导入依赖</li>
+<li>目录结构</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">.</span><br><span class="line">├── .git</span><br><span class="line">├── .gitignore</span><br><span class="line">├── .python-version</span><br><span class="line">├── README.md</span><br><span class="line">├── pyproject.toml</span><br><span class="line">└── src</span><br><span class="line">    └── my_project</span><br><span class="line">        └── __init__.py</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>初始化同步</p>
+</blockquote>
+<ul>
+<li><code>rye pin 3.10</code>   可选指定版本，默认最新稳定版</li>
+<li><code>rye sync</code>   同步项目，会在项目目录中建立virtualenv隔离文件夹，<code>.venv</code>   ，也会自动下载兼容的 python 解释器，生成<code>requirements.lock</code> <code>requirements-dev.lock</code>。以及根据项目文件安装依赖</li>
+</ul>
+<blockquote>
+<p>激活环境</p>
+</blockquote>
+<ul>
+<li><code>rye shell</code>  shell 生成一个激活 virtualenv 的 shell.。推荐方式</li>
+<li><code>. .venv/bin/activate</code>  标准激活环境方式</li>
+<li><code>deactivate</code>  退出环境</li>
+<li><code>python -c &quot;import sys; print(sys.prefix)&quot;</code>  查看python 可执行文件路径，确定隔离环境是否激活</li>
+<li><code>rye run black</code>  隔离环境运行程序</li>
+</ul>
+<blockquote>
+<p>依赖管理</p>
+</blockquote>
+<ul>
+<li><code>rye add &quot;flask&gt;=2.0&quot;</code>   指定依赖添加，并不会安装</li>
+<li><code>rye sync</code>  重新同步安装依赖</li>
+<li><code>rye remove flask</code>  删除依赖</li>
+</ul>
+<h2 id="环境管理-3"><a href="#环境管理-3" class="headerlink" title="环境管理"></a>环境管理</h2><blockquote>
+<p>Rye 支持三种 python ，CPython，PyPy，自定义本地。</p>
+</blockquote>
+<ul>
+<li><code>rye pin cpython@3.11.4</code>  指定使用 cpython 版本</li>
+<li><code>rye pin pypy</code>   指定使用 pypy</li>
+<li><code>rye toolchain list</code>  列出 python 工具链</li>
+<li><code>rye toolchain list --include-downloadable</code>  查看可选安装的工具链列表</li>
+<li><code>rye toolchain fetch pypy@3.10.12</code>     安装工具链，不指定安装会默认安装</li>
+<li><code>rye toolchain register /path/to/python</code>  使用外部python 作为工具链</li>
+<li><code>rye toolchain register --name=custom /path/to/python</code>  指定名称，路径</li>
+<li><code>rye toolchain remove cpython@3.8.5</code>  删除工具链</li>
+</ul>
+<blockquote>
+<p>全局工具安装</p>
+</blockquote>
+<ul>
+<li><code>rye install ruff</code>  安装全局工具</li>
+<li><code>rye install black --features colorama</code>  安装全局工具，传递额外依赖功能</li>
+<li><code>rye tools list</code>  列出安装工具</li>
+<li><code>rye tools list --include-scripts</code>  查看工具提供了什么脚本</li>
+<li><code>rye uninstall black</code>  删除工具</li>
+</ul>
+<blockquote>
+<p>信息查看</p>
+</blockquote>
+<ul>
+<li><code>rye show</code>   显示当前环境信息</li>
+<li><code>rye show --installed-deps</code>    显示环境安装依赖</li>
+<li><code>rye --version</code>    显示rye 版本</li>
+<li><code>rye help</code>  显示帮助信息</li>
+<li><code>rye command -h</code>  显示命令帮助信息</li>
+</ul>
+<h2 id="依赖管理-3"><a href="#依赖管理-3" class="headerlink" title="依赖管理"></a>依赖管理</h2><blockquote>
+<p><code>requirements.lock</code> 和 <code>requirements-dev.lock</code> 是rye项目的依赖锁定文件，<code>pyproject.toml</code>  文件为项目配置文件，除了存储当前项目配置信息，里面还有依赖配置信息</p>
+</blockquote>
+<ul>
+<li><code>rye add Flask</code>  添加依赖</li>
+<li><code>rye add &quot;Flask&gt;=2.0&quot;</code>  指定版本添加</li>
+<li><code>rye add &quot;Flask[dotenv]&quot;</code> 添加额外依赖</li>
+<li><code>rye add --dev black</code> 添加开发依赖</li>
+<li><code>rye add Flask --git=https://github.com/pallets/flask</code> 添加git依赖</li>
+<li><code>rye add My-Utility --path ./my-utility</code> 添加本地依赖</li>
+<li><code>rye sync</code> 更新 lockfiles 以及 virtualenv</li>
+<li><code>rye lock</code>  只更新锁定文件</li>
+<li><code>rye lock --update-all</code>   更新所有依赖到最新合适版本，没有这个标志<br> 仅在必要时才会更新依赖项。</li>
+<li><code>rye lock --all-features</code>  额外依赖</li>
+<li><code>rye sync --no-lock</code>  不执行锁定步骤</li>
+<li><code>rye sync --no-dev</code>  不同步开发</li>
+</ul>
+<h2 id="构建发布-1"><a href="#构建发布-1" class="headerlink" title="构建发布"></a>构建发布</h2><aside>
+🍁 关于 python 包的构建与发布
+
+</aside>
+
+<ul>
+<li><code>rye build</code>  默认情况下， <code>rye</code>将在中构建 sdist 和 Wheel 目标 <code>dist</code>目录。</li>
+<li><code>rye build --wheel --out target</code>  使用 <code>--sdist</code>或者 <code>--wheel</code>标志来构建特定目标，或指定输出目录 <code>--out</code>.</li>
+<li><code>rye build --clean</code>  构建之前清理构建目录</li>
+<li><code>rye publish</code>  默认情况下，Rye 会将 <code>dist</code> 目录下的分发文件发布到 PyPI 中。</li>
+<li><code>rye publish dist/example-0.1.0.tar.gz</code>  指定文件发布</li>
+<li><code>rye publish --repository testpypi --repository-url https://test.pypi.org/legacy/</code>  指定存储库</li>
+<li><code>rye publish --token &lt;your_token&gt; --yes</code>  指定 token ，自动确认</li>
+</ul>
+<blockquote>
+<p><strong>总结</strong></p>
+</blockquote>
+<p>这是本文章介绍的最后一款关于 python 项目管理的工具，本身也是一款功能完整的工具，和文章上述提到的pdm ，poetry ，hatch等等相似，都具有项目管理，版本控制，依赖管理，环境隔离等功能，几款工具有一些细微的差别，但都是非常优秀的 python 项目管理工具。大家可根据自己的爱好，习惯以及使用场景来选择合适的工具</p>
+<blockquote>
+</blockquote>
+<hr>
+<p>🐦🐦🐦🐦🐦🐦🐦🐦🐦🐦🐦🐦🐦🐦🐦🐦🐦🐦🐦🐦🐦🐦🐦🐦🐦🐦🐦🐦🐦🐦🐦🐦🐦🐦🐦🐦🐦🐦🐦🐦🐦🐦🐦🐦🐦🐦🐦🐦🐦🐦🐦🐦🐦🐦🐦🐦🐦🐦🐦🐦🐦🐦🐦🐦🐦🐦🐦🐦🐦🐦🐦🐦</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><aside>
+🍁 文章的结构是按照文章中提到的工具功能完整性从简单到完整的流程来写的。
+pip==pipx==pipenv==conda==poetry、hatch、pdm、rye。
+参考这个简单的流程说明。
+pip 是一款官方默认的python包管理器，可以处理依赖问题，功能比较单一，需要配合其他工具才能做好完整的项目管理。pipx是一款将python软件包直接安装到隔离环境使用的包管理器，功能仅此。conda 有完整的项目管理功能，但主要是为人工智能，机器学习，科学计算等等领域的用户提供更好，简单的环境，该功能后面的几款工具也都能实现。poetry、hatch、pdm、rye。这几款项目管理工具都具有完整的项目管理功能，可根据自己爱好，需求，场景，随意选择。
+文章列举出了几乎所有的主流的关于 python 项目管理的工具方案。关于安装到使用都有较详细的说明。但并不完整，大家如果想除了基本使用等等更深入的了解该工具，可以去项目地址自行查看，文章都有一一列出。其次，文章难免会出现错误，见谅。
+
+</aside>
+
+<h1 id="参考地址"><a href="#参考地址" class="headerlink" title="参考地址"></a>参考地址</h1><ul>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://packaging.python.org/en/latest/key_projects/#project-summaries">https://packaging.python.org/en/latest/key_projects/#project-summaries</a></li>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://pypi.org/help/#installing">https://pypi.org/help/#installing</a></li>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://pip.pypa.io/en/stable/">https://pip.pypa.io/en/stable/</a></li>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://pipx.pypa.io/stable/">https://pipx.pypa.io/stable/</a></li>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://wiki.archlinux.org/title/Conda">https://wiki.archlinux.org/title/Conda</a></li>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://docs.conda.io/">https://docs.conda.io</a></li>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://python-poetry.org/docs/">https://python-poetry.org/docs/</a></li>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://hatch.pypa.io/">https://hatch.pypa.io</a></li>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/pypa/hatch">https://github.com/pypa/hatch</a></li>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/pdm-project/pdm">https://github.com/pdm-project/pdm</a></li>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://pdm-project.org/latest/">https://pdm-project.org/latest/</a></li>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/mitsuhiko/rye">https://github.com/mitsuhiko/rye</a></li>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://rye-up.com/">https://rye-up.com/</a></li>
+</ul>
+<hr>
+<h1 id="Over-。-。-。-。"><a href="#Over-。-。-。-。" class="headerlink" title="Over 。  。    。     。"></a>Over 。  。    。     。</h1><h1 id="🥱🥱🥱🥱🥱🥱🥱🥱🥱🥱🥱🥱🥱🥱🥱🥱🥱🥱🥱"><a href="#🥱🥱🥱🥱🥱🥱🥱🥱🥱🥱🥱🥱🥱🥱🥱🥱🥱🥱🥱" class="headerlink" title="🥱🥱🥱🥱🥱🥱🥱🥱🥱🥱🥱🥱🥱🥱🥱🥱🥱🥱🥱"></a>🥱🥱🥱🥱🥱🥱🥱🥱🥱🥱🥱🥱🥱🥱🥱🥱🥱🥱🥱</h1></div></div></div>
+
+<div class="note red icon-padding modern"><i class="note-icon fas fa-fan"></i><p>啊，再见了，再见了，哈</p>
+</div>
+
+<div class="note orange icon-padding modern"><i class="note-icon fas fa-battery-half"></i><p>我们会再见的对么</p>
+</div>
+
+<div class="note blue icon-padding modern"><i class="note-icon fas fa-bullhorn"></i><p>再见你要幸福</p>
+</div>
+
+<div class="note purple icon-padding modern"><i class="note-icon far fa-hand-scissors"></i><p>燕子，燕子</p>
+</div>
+
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://0a00.github.io">方糖</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://0a00.github.io/2024/02/20/Python-%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/">https://0a00.github.io/2024/02/20/Python-%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow noreferrer" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://0a00.github.io" target="_blank">方糖</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/python/">python</a><a class="post-meta__tags" href="/tags/pip/">pip</a><a class="post-meta__tags" href="/tags/poetry/">poetry</a></div><div class="post_share"><div class="social-share" data-image="/imgs/bg.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i> 打赏</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/imgs/wx.png" target="_blank"><img class="post-qr-code-img" src="/imgs/wx.png" alt="wechat"/></a><div class="post-qr-code-desc">wechat</div></li><li class="reward-item"><a href="/imgs/zfb.jpg" target="_blank"><img class="post-qr-code-img" src="/imgs/zfb.jpg" alt="alipay"/></a><div class="post-qr-code-desc">alipay</div></li></ul></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-full"><a href="/2024/02/20/%E6%B5%81%E9%87%8F%E9%9A%A7%E9%81%93/" title="流量隧道手册"><img class="cover" src="/imgs/bg.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">流量隧道手册</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/imgs/gt.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">方糖</div><div class="author-info__description">嘿嘿 呼呼 嘻嘻 哈哈</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">18</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">30</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">24</div></a></div><a id="card-info-btn" target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/0a00"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="/rss2.xml" target="_blank" title="RSS订阅"><i class="fas fa-solid fa-rss" style="color: #ffaa00;"></i></a><a class="social-icon" href="/sitemap.xml" target="_blank" title="站点地图"><i class="fas fa-solid fa-sitemap" style="color: #aaaa7f;"></i></a><a class="social-icon" href="mailto:xxxxxx@gmail.com" rel="external nofollow noreferrer" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #6673c6;"></i></a><a class="social-icon" href="https://github.com/0a00" rel="external nofollow noreferrer" target="_blank" title="Github"><i class="fab fa-github" style="color: #aa557f;"></i></a><a class="social-icon" href="https://mp.weixin.qq.com/mp/profile_ext?action=home&amp;__biz=Mzk0NDQwMDY1Nw==&amp;scene=110==#wechat_redirect" rel="external nofollow noreferrer" target="_blank" title="微信公众号"><i class="fa-brands fa-weixin" style="color: #7bb65b;"></i></a><a class="social-icon" href="https://music.163.com/#/user/home?id=1364059112" rel="external nofollow noreferrer" target="_blank" title="网易云"><i class="fas fa-solid fa-music" style="color: #ff0000;"></i></a><a class="social-icon" href="https://0a00.github.io/" target="_blank" title="mac"><i class="fas fa-brands fa-apple" style="color: #55aaff;"></i></a><a class="social-icon" href="https://0a00.github.io/" target="_blank" title="linux"><i class="fas fa-brands fa-linux" style="color: #ffaaff;"></i></a><a class="social-icon" href="https://0a00.github.io/" target="_blank" title="windowss"><i class="fa-brands fa-windows" style="color: #35a0a0;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">满怀热爱 勇往直前</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AE%80%E4%BB%8B"><span class="toc-number">2.</span> <span class="toc-text">简介</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BE%9D%E8%B5%96%E5%8C%85"><span class="toc-number">2.1.</span> <span class="toc-text">依赖包</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A1%B9%E7%9B%AE%E6%96%87%E4%BB%B6"><span class="toc-number">2.2.</span> <span class="toc-text">项目文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#requirements-txt"><span class="toc-number">2.3.</span> <span class="toc-text">requirements.txt</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%99%9A%E6%8B%9F%E7%8E%AF%E5%A2%83"><span class="toc-number">2.4.</span> <span class="toc-text">虚拟环境</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Pip"><span class="toc-number">3.</span> <span class="toc-text">Pip</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85"><span class="toc-number">3.1.</span> <span class="toc-text">安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8"><span class="toc-number">3.2.</span> <span class="toc-text">使用</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Pipx"><span class="toc-number">4.</span> <span class="toc-text">Pipx</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85-pipx"><span class="toc-number">4.1.</span> <span class="toc-text">安装 pipx</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8-1"><span class="toc-number">4.2.</span> <span class="toc-text">使用</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Pipenv"><span class="toc-number">5.</span> <span class="toc-text">Pipenv</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8%E5%8A%9F%E8%83%BD"><span class="toc-number">6.</span> <span class="toc-text">常用功能</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E6%95%B0%E9%80%89%E9%A1%B9"><span class="toc-number">6.1.</span> <span class="toc-text">参数选项</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B"><span class="toc-number">6.2.</span> <span class="toc-text">工作流程</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Conda"><span class="toc-number">7.</span> <span class="toc-text">Conda</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85-1"><span class="toc-number">7.1.</span> <span class="toc-text">安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8-2"><span class="toc-number">7.2.</span> <span class="toc-text">使用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%8E%AF%E5%A2%83%E7%AE%A1%E7%90%86"><span class="toc-number">7.2.1.</span> <span class="toc-text">环境管理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BD%AF%E4%BB%B6%E5%8C%85%E7%AE%A1%E7%90%86"><span class="toc-number">7.2.2.</span> <span class="toc-text">软件包管理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#python-%E7%AE%A1%E7%90%86"><span class="toc-number">7.2.3.</span> <span class="toc-text">python 管理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#environment-yaml-%E6%96%87%E4%BB%B6"><span class="toc-number">7.2.4.</span> <span class="toc-text">environment.yaml 文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#conda%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6-condarc"><span class="toc-number">7.2.5.</span> <span class="toc-text">conda配置文件 .condarc</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%AF%E9%80%89%E4%BC%98%E5%8C%96"><span class="toc-number">7.3.</span> <span class="toc-text">可选优化</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#libmamba-solver"><span class="toc-number">7.3.1.</span> <span class="toc-text">libmamba solver</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Poetry"><span class="toc-number">8.</span> <span class="toc-text">Poetry</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85-2"><span class="toc-number">8.1.</span> <span class="toc-text">安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%A1%E7%90%86-poetry-%E5%AE%89%E8%A3%85%E6%9C%AC%E8%BA%AB"><span class="toc-number">8.2.</span> <span class="toc-text">管理 poetry 安装本身</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8-3"><span class="toc-number">8.3.</span> <span class="toc-text">使用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%A8%E5%B1%80%E9%80%89%E9%A1%B9"><span class="toc-number">8.3.1.</span> <span class="toc-text">全局选项</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E6%96%B0%E9%A1%B9%E7%9B%AE"><span class="toc-number">8.3.2.</span> <span class="toc-text">创建新项目</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96%E5%B7%B2%E5%AD%98%E5%9C%A8%E9%A1%B9%E7%9B%AE"><span class="toc-number">8.3.3.</span> <span class="toc-text">初始化已存在项目</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%85%E4%BE%9D%E8%B5%96%E9%A1%B9"><span class="toc-number">8.3.4.</span> <span class="toc-text">安装依赖项</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%BB%E5%8A%A0%E5%AE%89%E8%A3%85%E4%BE%9D%E8%B5%96"><span class="toc-number">8.3.5.</span> <span class="toc-text">添加安装依赖</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BE%9D%E8%B5%96%E5%8C%85%E6%9B%B4%E6%96%B0"><span class="toc-number">8.3.6.</span> <span class="toc-text">依赖包更新</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BE%9D%E8%B5%96%E5%8C%85%E5%88%A0%E9%99%A4"><span class="toc-number">8.3.7.</span> <span class="toc-text">依赖包删除</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%99%9A%E6%8B%9F%E7%8E%AF%E5%A2%83-1"><span class="toc-number">8.3.8.</span> <span class="toc-text">虚拟环境</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%89%A7%E8%A1%8C%E8%84%9A%E6%9C%AC"><span class="toc-number">8.3.9.</span> <span class="toc-text">执行脚本</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BE%9D%E8%B5%96%E5%8C%85%E6%90%9C%E7%B4%A2"><span class="toc-number">8.3.10.</span> <span class="toc-text">依赖包搜索</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BD%AF%E4%BB%B6%E4%BB%93%E5%BA%93"><span class="toc-number">8.3.11.</span> <span class="toc-text">软件仓库</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BE%9D%E8%B5%96%E7%AE%A1%E7%90%86"><span class="toc-number">8.4.</span> <span class="toc-text">依赖管理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BE%9D%E8%B5%96%E7%BB%84"><span class="toc-number">8.4.1.</span> <span class="toc-text">依赖组</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A1%B9%E7%9B%AE%E5%8F%91%E5%B8%83"><span class="toc-number">8.5.</span> <span class="toc-text">项目发布</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%98%E5%82%A8%E5%BA%93"><span class="toc-number">8.5.1.</span> <span class="toc-text">存储库</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="toc-number">8.6.</span> <span class="toc-text">环境配置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%91%BD%E4%BB%A4%E9%85%8D%E7%BD%AE"><span class="toc-number">8.6.1.</span> <span class="toc-text">命令配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A1%B9%E7%9B%AE%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6-pyproject-toml"><span class="toc-number">8.6.2.</span> <span class="toc-text">项目配置文件 pyproject.toml</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E5%B7%A5%E4%BD%9C%E6%B5%81%EF%BC%88%E5%AF%B9%E4%BA%8E%E6%B5%8B%E8%AF%95%E5%B7%B2%E5%AD%98%E5%9C%A8%E9%A1%B9%E7%9B%AE%EF%BC%89"><span class="toc-number">8.6.3.</span> <span class="toc-text">基本工作流（对于测试已存在项目）</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Hatch"><span class="toc-number">9.</span> <span class="toc-text">Hatch</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85-3"><span class="toc-number">9.1.</span> <span class="toc-text">安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8-4"><span class="toc-number">9.2.</span> <span class="toc-text">使用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%A8%E5%B1%80%E6%8C%87%E4%BB%A4"><span class="toc-number">9.2.1.</span> <span class="toc-text">全局指令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B0%E5%BB%BA%E9%A1%B9%E7%9B%AE"><span class="toc-number">9.2.2.</span> <span class="toc-text">新建项目</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96%E7%8E%B0%E6%9C%89%E9%A1%B9%E7%9B%AE"><span class="toc-number">9.2.3.</span> <span class="toc-text">初始化现有项目</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%8E%AF%E5%A2%83%E7%AE%A1%E7%90%86-1"><span class="toc-number">9.2.4.</span> <span class="toc-text">环境管理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A1%B9%E7%9B%AE%E6%96%87%E4%BB%B6-1"><span class="toc-number">9.2.5.</span> <span class="toc-text">项目文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BE%9D%E8%B5%96%E7%AE%A1%E7%90%86-1"><span class="toc-number">9.2.6.</span> <span class="toc-text">依赖管理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9E%84%E5%BB%BA%E5%8F%91%E5%B8%83%E5%8C%85"><span class="toc-number">9.2.7.</span> <span class="toc-text">构建发布包</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6"><span class="toc-number">9.2.8.</span> <span class="toc-text">版本控制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Hatch-%E5%B8%B8%E7%94%A8%E6%8F%92%E4%BB%B6"><span class="toc-number">9.2.9.</span> <span class="toc-text">Hatch 常用插件</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B"><span class="toc-number">9.3.</span> <span class="toc-text">基本工作流程</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Pdm"><span class="toc-number">10.</span> <span class="toc-text">Pdm</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85-4"><span class="toc-number">10.1.</span> <span class="toc-text">安装</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#pdm-%E8%87%AA%E8%BA%AB%E7%AE%A1%E7%90%86"><span class="toc-number">10.1.1.</span> <span class="toc-text">pdm 自身管理</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86"><span class="toc-number">10.2.</span> <span class="toc-text">项目管理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%8E%AF%E5%A2%83%E7%AE%A1%E7%90%86-2"><span class="toc-number">10.3.</span> <span class="toc-text">环境管理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE%E7%AE%A1%E7%90%86"><span class="toc-number">10.4.</span> <span class="toc-text">配置管理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BE%9D%E8%B5%96%E7%AE%A1%E7%90%86-2"><span class="toc-number">10.5.</span> <span class="toc-text">依赖管理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9E%84%E5%BB%BA%E5%8F%91%E5%B8%83"><span class="toc-number">10.6.</span> <span class="toc-text">构建发布</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%A8%E5%B1%80%E9%80%89%E9%A1%B9-1"><span class="toc-number">10.7.</span> <span class="toc-text">全局选项</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8F%92%E4%BB%B6"><span class="toc-number">10.8.</span> <span class="toc-text">插件</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Rye"><span class="toc-number">11.</span> <span class="toc-text">Rye</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%A1%E7%90%86-Rye"><span class="toc-number">11.1.</span> <span class="toc-text">管理 Rye</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%9F%E4%B8%80%E5%AE%89%E8%A3%85"><span class="toc-number">11.1.1.</span> <span class="toc-text">统一安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%92%88%E5%AF%B9%E7%B3%BB%E7%BB%9F%E5%AE%89%E8%A3%85"><span class="toc-number">11.1.2.</span> <span class="toc-text">针对系统安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9B%B4%E6%96%B0-Rye"><span class="toc-number">11.1.3.</span> <span class="toc-text">更新 Rye</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%B8%E8%BD%BD-Rye"><span class="toc-number">11.1.4.</span> <span class="toc-text">卸载 Rye</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8"><span class="toc-number">11.2.</span> <span class="toc-text">基本使用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%8E%AF%E5%A2%83%E7%AE%A1%E7%90%86-3"><span class="toc-number">11.3.</span> <span class="toc-text">环境管理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BE%9D%E8%B5%96%E7%AE%A1%E7%90%86-3"><span class="toc-number">11.4.</span> <span class="toc-text">依赖管理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9E%84%E5%BB%BA%E5%8F%91%E5%B8%83-1"><span class="toc-number">11.5.</span> <span class="toc-text">构建发布</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">12.</span> <span class="toc-text">总结</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E5%9C%B0%E5%9D%80"><span class="toc-number">13.</span> <span class="toc-text">参考地址</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Over-%E3%80%82-%E3%80%82-%E3%80%82-%E3%80%82"><span class="toc-number">14.</span> <span class="toc-text">Over 。  。    。     。</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%F0%9F%A5%B1%F0%9F%A5%B1%F0%9F%A5%B1%F0%9F%A5%B1%F0%9F%A5%B1%F0%9F%A5%B1%F0%9F%A5%B1%F0%9F%A5%B1%F0%9F%A5%B1%F0%9F%A5%B1%F0%9F%A5%B1%F0%9F%A5%B1%F0%9F%A5%B1%F0%9F%A5%B1%F0%9F%A5%B1%F0%9F%A5%B1%F0%9F%A5%B1%F0%9F%A5%B1%F0%9F%A5%B1"><span class="toc-number">15.</span> <span class="toc-text">🥱🥱🥱🥱🥱🥱🥱🥱🥱🥱🥱🥱🥱🥱🥱🥱🥱🥱🥱</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2024/02/20/Python-%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/" title="Python 项目管理"><img src="/imgs/bg.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Python 项目管理"/></a><div class="content"><a class="title" href="/2024/02/20/Python-%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/" title="Python 项目管理">Python 项目管理</a><time datetime="2024-02-20T05:43:42.000Z" title="发表于 2024-02-20 13:43:42">2024-02-20</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/02/20/%E6%B5%81%E9%87%8F%E9%9A%A7%E9%81%93/" title="流量隧道手册"><img src="/imgs/bg.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="流量隧道手册"/></a><div class="content"><a class="title" href="/2024/02/20/%E6%B5%81%E9%87%8F%E9%9A%A7%E9%81%93/" title="流量隧道手册">流量隧道手册</a><time datetime="2024-02-20T05:35:00.000Z" title="发表于 2024-02-20 13:35:00">2024-02-20</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/11/26/401-and-403-Bypass/" title="401-and-403-Bypass 手册"><img src="/imgs/bg.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="401-and-403-Bypass 手册"/></a><div class="content"><a class="title" href="/2023/11/26/401-and-403-Bypass/" title="401-and-403-Bypass 手册">401-and-403-Bypass 手册</a><time datetime="2023-11-26T10:09:18.000Z" title="发表于 2023-11-26 18:09:18">2023-11-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/11/26/HTTPX-Reference/" title="HTTPX-参考手册"><img src="/imgs/bg.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="HTTPX-参考手册"/></a><div class="content"><a class="title" href="/2023/11/26/HTTPX-Reference/" title="HTTPX-参考手册">HTTPX-参考手册</a><time datetime="2023-11-26T09:55:00.000Z" title="发表于 2023-11-26 17:55:00">2023-11-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/11/26/Nmap-Reference/" title="Nmap-参考手册"><img src="/imgs/bg.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Nmap-参考手册"/></a><div class="content"><a class="title" href="/2023/11/26/Nmap-Reference/" title="Nmap-参考手册">Nmap-参考手册</a><time datetime="2023-11-26T09:48:43.000Z" title="发表于 2023-11-26 17:48:43">2023-11-26</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('/imgs/bg.jpg')"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2024 By 方糖</div><div class="footer_custom_text">Power by Hexo | Butterfly</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="translateLink" type="button" title="简繁转换">繁</button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.js"></script><script>function panguFn () {
+  if (typeof pangu === 'object') pangu.autoSpacingPage()
+  else {
+    getScript('https://cdn.jsdelivr.net/npm/pangu/dist/browser/pangu.min.js')
+      .then(() => {
+        pangu.autoSpacingPage()
+      })
+  }
+}
+
+function panguInit () {
+  if (false){
+    GLOBAL_CONFIG_SITE.isPost && panguFn()
+  } else {
+    panguFn()
+  }
+}
+
+document.addEventListener('DOMContentLoaded', panguInit)</script><div class="js-pjax"></div><script defer="defer" id="fluttering_ribbon" mobile="true" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-fluttering-ribbon.min.js"></script><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/click-show-text.min.js" data-mobile="true" data-text="I,LOVE,YOU,Linux,Hacker,Arch Linux,Flag,Rce,CTF,XSS,CSRF,Exploit,Payload,POC,EXP,DDOS,Kali,Sqlmap,Nessus,AWVS,Xray,Burp suite,Metasploit" data-fontsize="15px" data-random="true" async="async"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div class="no-result" id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>
