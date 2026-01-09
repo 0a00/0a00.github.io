@@ -127,6 +127,117 @@
       </tags>
   </entry>
   <entry>
+    <title>ChatGPT-CN 客户端下载</title>
+    <url>/2026/01/09/ai-app/</url>
+    <content><![CDATA[<h1 id="ChatGPT-CN-下载与安装指南"><a href="#ChatGPT-CN-下载与安装指南" class="headerlink" title="ChatGPT-CN 下载与安装指南"></a>ChatGPT-CN 下载与安装指南</h1><p>欢迎使用 <strong>ChatGPT-CN</strong>。我们提供全平台客户端支持，确保您在任何设备上都能获得流畅的 AI 对话体验。</p>
+<h3 id="📥-下载方式"><a href="#📥-下载方式" class="headerlink" title="📥 下载方式"></a>📥 下载方式</h3><ol>
+<li><strong>官网下载</strong>：访问 <a href="https://gpt-cn.pro/">gpt-cn.pro</a>，点击页面右上角菜单即可获取。</li>
+<li><strong>直连下载</strong>：直接访问 App 文件服务器地址：<a href="https://filecli2.gpt-all.chat/">https://filecli2.gpt-all.chat/</a></li>
+</ol>
+<h3 id="💻-支持系统"><a href="#💻-支持系统" class="headerlink" title="💻 支持系统"></a>💻 支持系统</h3><p>ChatGPT-CN 已实现全平台覆盖，支持以下操作系统：</p>
+<ul>
+<li><strong>移动端</strong>：Android, iOS</li>
+<li><strong>桌面端</strong>：Windows, macOS, Linux</li>
+</ul>
+<h3 id="🌐-官方地址"><a href="#🌐-官方地址" class="headerlink" title="🌐 官方地址"></a>🌐 官方地址</h3><ul>
+<li><strong>官方网站</strong>：<a href="https://gpt-cn.pro/">https://gpt-cn.pro</a></li>
+</ul>
+<div class="note red icon-padding modern"><i class="note-icon fas fa-fan"></i><p>啊，再见了，再见了，哈</p>
+</div>
+
+<div class="note orange icon-padding modern"><i class="note-icon fas fa-battery-half"></i><p>我们会再见的对么</p>
+</div>
+
+<div class="note blue icon-padding modern"><i class="note-icon fas fa-bullhorn"></i><p>再见你要幸福</p>
+</div>
+
+<div class="note purple icon-padding modern"><i class="note-icon far fa-hand-scissors"></i><p>燕子，燕子</p>
+</div>
+
+]]></content>
+      <categories>
+        <category>ChatGPT-CN 客户端</category>
+      </categories>
+      <tags>
+        <tag>ChatGPT-CN 客户端</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>API 系统，全模型 api 接入</title>
+    <url>/2026/01/09/ai-api/</url>
+    <content><![CDATA[<h1 id="AI-API-CHAT-全球顶级-AI-大模型一站式聚合平台"><a href="#AI-API-CHAT-全球顶级-AI-大模型一站式聚合平台" class="headerlink" title="AI-API.CHAT | 全球顶级 AI 大模型一站式聚合平台"></a>AI-API.CHAT | 全球顶级 AI 大模型一站式聚合平台</h1><p><strong>官方 0.5 折优惠 · 全球直连加速 · 极速响应</strong></p>
+<p><a href="https://ai-api.chat/">AI-API.CHAT</a> 是一个专业的高性能 AI 接口集成平台，致力于为开发者和企业提供最稳定、最经济的全球顶级大模型接入服务。</p>
+<hr>
+<h2 id="🚀-核心优势"><a href="#🚀-核心优势" class="headerlink" title="🚀 核心优势"></a>🚀 核心优势</h2><h3 id="1-极致性价比"><a href="#1-极致性价比" class="headerlink" title="1. 极致性价比"></a>1. 极致性价比</h3><ul>
+<li><strong>官方 0.5 折：</strong> 仅需官方价格的 5% 即可享受同等质量的服务。</li>
+<li><strong>按量计费：</strong> 无月费压力，用多少扣多少，额度永久有效。</li>
+</ul>
+<h3 id="2-全球大模型全覆盖"><a href="#2-全球大模型全覆盖" class="headerlink" title="2. 全球大模型全覆盖"></a>2. 全球大模型全覆盖</h3><p>一站式集成市面上最顶尖的 AI 模型，无需维护多个账号：</p>
+<ul>
+<li><strong>OpenAI:</strong> ChatGPT (GPT-5, GPT-4 Turbo, o1-preview, o1-mini)</li>
+<li><strong>Anthropic:</strong> Claude 4.5 Sonnet, Claude 4.5 Opus&#x2F;Haiku</li>
+<li><strong>Google:</strong> Gemini 3 Pro, Gemini 3 Flash</li>
+<li><strong>xAI:</strong> Grok-4, Grok-3</li>
+<li><strong>其他:</strong> 更多主流开源及商业模型持续更新中…</li>
+</ul>
+<h3 id="3-全球直连加速"><a href="#3-全球直连加速" class="headerlink" title="3. 全球直连加速"></a>3. 全球直连加速</h3><ul>
+<li><strong>低延迟：</strong> 优化全球路由，无需特殊网络环境即可直连，响应速度极快。</li>
+<li><strong>高可用：</strong> 多机房冗余架构，确保 99.9% 的服务稳定性。</li>
+</ul>
+<h3 id="4-完美兼容-OpenAI-接口"><a href="#4-完美兼容-OpenAI-接口" class="headerlink" title="4. 完美兼容 OpenAI 接口"></a>4. 完美兼容 OpenAI 接口</h3><ul>
+<li>采用标准 OpenAI API 格式，只需修改 <code>Base URL</code> 和 <code>API Key</code> 即可无缝切换，支持各类开源插件和客户端（如 NextChat, LobeChat, Chatbox 等）。</li>
+</ul>
+<hr>
+<h2 id="🛠️-快速接入"><a href="#🛠️-快速接入" class="headerlink" title="🛠️ 快速接入"></a>🛠️ 快速接入</h2><h3 id="接口信息"><a href="#接口信息" class="headerlink" title="接口信息"></a>接口信息</h3><ul>
+<li><strong>API Base URL:</strong> <code>https://ai-api.chat</code></li>
+<li><strong>API Key:</strong> 从官网后台获取</li>
+</ul>
+<h3 id="Python-调用示例"><a href="#Python-调用示例" class="headerlink" title="Python 调用示例"></a>Python 调用示例</h3><pre><code class="python">import openai
+
+client = openai.OpenAI(
+    api_key=&quot;您的_API_KEY&quot;,
+    base_url=&quot;https://ai-api.chat/v1&quot;
+)
+
+response = client.chat.completions.create(
+    model=&quot;gpt-4o&quot;,
+    messages=[
+        &#123;&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: &quot;你好，请介绍一下你自己。&quot;&#125;
+    ]
+)
+
+print(response.choices[0].message.content)
+
+
+&#123;% note red 'fas fa-fan' modern %&#125;
+啊，再见了，再见了，哈
+&#123;% endnote %&#125;
+
+&#123;% note orange 'fas fa-battery-half' modern %&#125;
+我们会再见的对么
+&#123;% endnote %&#125;
+
+&#123;% note blue 'fas fa-bullhorn' modern %&#125;
+再见你要幸福
+&#123;% endnote %&#125;
+
+&#123;% note purple 'far fa-hand-scissors' modern %&#125;
+燕子，燕子
+&#123;% endnote %&#125;
+</code></pre>
+]]></content>
+      <categories>
+        <category>AI API</category>
+      </categories>
+      <tags>
+        <tag>AI API</tag>
+        <tag>chatgpt</tag>
+        <tag>gemini</tag>
+        <tag>claude</tag>
+        <tag>grok</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>  </title>
     <url>/archlinux/index.html</url>
     <content><![CDATA[<div class="note blue icon-padding modern"><i class="note-icon fas fa-battery-half"></i><p>arch linux 一个很棒的linux发行版</p>
