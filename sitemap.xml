@@ -2,6 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://0a00.github.io/2026/01/14/ai-plug/</loc>
+    
+    <lastmod>2026-01-14</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://0a00.github.io/2026/01/09/ai-api/</loc>
     
     <lastmod>2026-01-09</lastmod>
@@ -139,7 +148,7 @@
 
   <url>
     <loc>https://0a00.github.io/</loc>
-    <lastmod>2026-01-09</lastmod>
+    <lastmod>2026-01-14</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
@@ -147,56 +156,63 @@
   
   <url>
     <loc>https://0a00.github.io/tags/AI/</loc>
-    <lastmod>2026-01-09</lastmod>
+    <lastmod>2026-01-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://0a00.github.io/tags/ChatGPT-CN/</loc>
-    <lastmod>2026-01-09</lastmod>
+    <lastmod>2026-01-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://0a00.github.io/tags/ChatGPT-CN-%E5%AE%A2%E6%88%B7%E7%AB%AF/</loc>
-    <lastmod>2026-01-09</lastmod>
+    <lastmod>2026-01-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://0a00.github.io/tags/AI-API/</loc>
-    <lastmod>2026-01-09</lastmod>
+    <lastmod>2026-01-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://0a00.github.io/tags/chatgpt/</loc>
-    <lastmod>2026-01-09</lastmod>
+    <lastmod>2026-01-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://0a00.github.io/tags/gemini/</loc>
-    <lastmod>2026-01-09</lastmod>
+    <lastmod>2026-01-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://0a00.github.io/tags/claude/</loc>
-    <lastmod>2026-01-09</lastmod>
+    <lastmod>2026-01-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://0a00.github.io/tags/grok/</loc>
-    <lastmod>2026-01-09</lastmod>
+    <lastmod>2026-01-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://0a00.github.io/tags/%E6%8F%92%E4%BB%B6%E9%9B%86%E6%88%90/</loc>
+    <lastmod>2026-01-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
@@ -205,28 +221,35 @@
   
   <url>
     <loc>https://0a00.github.io/categories/AI/</loc>
-    <lastmod>2026-01-09</lastmod>
+    <lastmod>2026-01-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://0a00.github.io/categories/ChatGPT-CN/</loc>
-    <lastmod>2026-01-09</lastmod>
+    <lastmod>2026-01-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://0a00.github.io/categories/ChatGPT-CN-%E5%AE%A2%E6%88%B7%E7%AB%AF/</loc>
-    <lastmod>2026-01-09</lastmod>
+    <lastmod>2026-01-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://0a00.github.io/categories/AI-API/</loc>
-    <lastmod>2026-01-09</lastmod>
+    <lastmod>2026-01-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://0a00.github.io/categories/%E6%8F%92%E4%BB%B6/</loc>
+    <lastmod>2026-01-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
